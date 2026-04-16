@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LabStend_AFAR.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="Управление БУАФ"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Border>
+            <Grid HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  />
+                    <ColumnDefinition  />
+                    <ColumnDefinition  />
+                    <ColumnDefinition  />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Label Text="Управление:"  Grid.Column="0" Grid.Row="0" />
+                <Label Text="БКУ"  Grid.Column="1" Grid.Row="0" />
+                <Switch x:Name="controllerSwitch" Grid.Column="2" Grid.Row="0" />
+                    <Label Text="Преобразователь" Grid.Column="3" Grid.Row="0" />
+
+                </Grid>
+            </Border>
+            
+            <!--Блок с управлениями МШУ, Атт, ФВ-->
+            <HorizontalStackLayout>
+                <!--Управление МШУ-->
+                <Border>
+                <StackLayout>
+                    <Label x:Name="header_Gain" FontSize="Title" Text="Режим МШУ" />
+                    <RadioButton GroupName="Gain" Content="Усиление"/>
+                    <RadioButton GroupName="Gain" Content="Проходной"/>
+                    <RadioButton GroupName="Gain" Content="Выкл."/>
+                </StackLayout>
+                </Border>
+                
+                <!--Управление амплитудой-->
+                <Border>
+                <StackLayout>
+                    <Label x:Name="header_Amp" FontSize="Title" Text="Управление амплитудой"/>
+                        <Border>
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+                                <Border>
+                                    <Label Text="D6" Grid.Column="0" Grid.Row="0" />
+                                </Border>
+                                <Label Text="D5" Grid.Column="1" Grid.Row="0" />
+                                <Label Text="D4" Grid.Column="2" Grid.Row="0" />
+                                <Label Text="D3" Grid.Column="3" Grid.Row="0" />
+                                <Label Text="D2" Grid.Column="4" Grid.Row="0" />
+                                <Label Text="D1" Grid.Column="5" Grid.Row="0" />
+
+                                <Button x:Name="ButtonAtt1" Text="0" Grid.Column="0" Grid.Row="1" Clicked="OnClickedBit"/>
+                                <Button x:Name="ButtonAtt2" Text="0" Grid.Column="1" Grid.Row="1" Clicked="OnClickedBit"/>
+                                <Button x:Name="ButtonAtt3" Text="0" Grid.Column="2" Grid.Row="1" Clicked="OnClickedBit"/>
+                                <Button x:Name="ButtonAtt4" Text="0" Grid.Column="3" Grid.Row="1" Clicked="OnClickedBit"/>
+                                <Button x:Name="ButtonAtt5" Text="0" Grid.Column="4" Grid.Row="1" Clicked="OnClickedBit"/>
+                                <Button x:Name="ButtonAtt6" Text="0" Grid.Column="5" Grid.Row="1" Clicked="OnClickedBit"/>
+                                
+
+                            </Grid>
+                        </Border>
+                        <Button class="OK_button" Text="ОК"/>
+                        <Label Text="Ослабление"/>
+                    
+                </StackLayout>
+                </Border>
+
+                <!--Управление фазой-->
+                <Border>
+                <StackLayout>
+                    <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазой"/>
+                        <Border>
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+                                <Border>
+                                    <Label Text="D6" Grid.Column="0" Grid.Row="0" />
+                                </Border>
+                                <Label Text="D5" Grid.Column="1" Grid.Row="0" />
+                                <Label Text="D4" Grid.Column="2" Grid.Row="0" />
+                                <Label Text="D3" Grid.Column="3" Grid.Row="0" />
+                                <Label Text="D2" Grid.Column="4" Grid.Row="0" />
+                                <Label Text="D1" Grid.Column="5" Grid.Row="0" />
+
+                                <Button x:Name="ButtonPh1" Text="0" Grid.Column="0" Grid.Row="1" Clicked="OnClickedBitPh"/>
+                                <Button x:Name="ButtonPh2" Text="0" Grid.Column="1" Grid.Row="1" Clicked="OnClickedBitPh"/>
+                                <Button x:Name="ButtonPh3" Text="0" Grid.Column="2" Grid.Row="1" Clicked="OnClickedBitPh"/>
+                                <Button x:Name="ButtonPh4" Text="0" Grid.Column="3" Grid.Row="1" Clicked="OnClickedBitPh"/>
+                                <Button x:Name="ButtonPh5" Text="0" Grid.Column="4" Grid.Row="1" Clicked="OnClickedBitPh"/>
+                                <Button x:Name="ButtonPh6" Text="0" Grid.Column="5" Grid.Row="1" Clicked="OnClickedBitPh"/>
+
+                            </Grid>
+                        </Border>
+                        <Button class="OK_button" Text="ОК"/>
+                        <Label Text="Сдвиг"/>
+                </StackLayout>
+                </Border>
+
+
+            </HorizontalStackLayout>
+            
+            <Button
+                x:Name="CounterBtn"
+                Text="Click me" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Fill" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
