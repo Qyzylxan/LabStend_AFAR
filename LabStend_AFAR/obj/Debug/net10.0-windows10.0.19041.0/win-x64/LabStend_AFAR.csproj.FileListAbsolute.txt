@@ -1034,3 +1034,4 @@ C:\Users\a.tan\Documents\ЛМ АФАР\ПО\Графическое СПО\LabSte
 C:\Users\a.tan\Documents\ЛМ АФАР\ПО\Графическое СПО\LabStend_AFAR\LabStend_AFAR\obj\Debug\net10.0-windows10.0.19041.0\win-x64\qualifiers.txt
 C:\Users\a.tan\Documents\ЛМ АФАР\ПО\Графическое СПО\LabStend_AFAR\LabStend_AFAR\obj\Debug\net10.0-windows10.0.19041.0\win-x64\qualifiers.txt.intermediate
 C:\Users\a.tan\Documents\ЛМ АФАР\ПО\Графическое СПО\LabStend_AFAR\LabStend_AFAR\obj\Debug\net10.0-windows10.0.19041.0\win-x64\MultipleQualifiersPerDimensionFound.txt
+C:\Users\a.tan\Documents\ЛМ АФАР\ПО\Графическое СПО\LabStend_AFAR\LabStend_AFAR\bin\Debug\net10.0-windows10.0.19041.0\win-x64\System.IO.Ports.dll

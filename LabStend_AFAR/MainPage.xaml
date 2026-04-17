@@ -38,9 +38,9 @@
                 <Border>
                 <StackLayout>
                     <Label x:Name="header_Gain" FontSize="Title" Text="Режим МШУ" />
-                    <RadioButton GroupName="Gain" Content="Усиление"/>
-                    <RadioButton GroupName="Gain" Content="Проходной"/>
-                    <RadioButton GroupName="Gain" Content="Выкл."/>
+                        <RadioButton GroupName="Gain" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
+                        <RadioButton GroupName="Gain" Content="Проходной" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                        <RadioButton GroupName="Gain" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
                 </StackLayout>
                 </Border>
                 
@@ -83,16 +83,20 @@
 
                             </Grid>
                         </Border>
-                        <Button class="OK_button" Text="ОК"/>
-                        <Label Text="Ослабление"/>
-                    
-                </StackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Ослабление "/>
+                            <Entry MaxLength="3" Keyboard="Numeric"/>
+                            <Label Text=" дБ"/>
+                        </HorizontalStackLayout>
+                        <Button x:Name="OkButtonAtt" class="OK_button" Text="ОК"/>
+
+                    </StackLayout>
                 </Border>
 
                 <!--Управление фазой-->
                 <Border>
-                <StackLayout>
-                    <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазой"/>
+                    <StackLayout>
+                        <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазой"/>
                         <Border>
                             <Grid>
 
@@ -127,9 +131,14 @@
 
                             </Grid>
                         </Border>
+                        
+                        <HorizontalStackLayout>
+                            <Label Text="Сдвиг фазы "/>
+                            <Entry MaxLength="3" Keyboard="Numeric"/>
+                            <Label Text=" град"/>
+                        </HorizontalStackLayout>
                         <Button class="OK_button" Text="ОК"/>
-                        <Label Text="Сдвиг"/>
-                </StackLayout>
+                    </StackLayout>
                 </Border>
 
 
