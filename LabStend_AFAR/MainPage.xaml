@@ -7,7 +7,8 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-
+            
+            <!--Режим управления БУАФ-->
             <Label
                 Text="Управление БУАФ"
                 Style="{StaticResource Headline}"
@@ -23,11 +24,15 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <Label Text="Управление:"  Grid.Column="0" Grid.Row="0" />
-                <Label Text="БКУ"  Grid.Column="1" Grid.Row="0" />
+                <Label Text="Управление:"  Grid.Column="0" Grid.Row="0" FontSize="Medium" HorizontalTextAlignment="Start" />
+                <Label Text="БКУ"  Grid.Column="1" Grid.Row="0" FontSize="Medium" />
                 <Switch x:Name="controllerSwitch" Grid.Column="2" Grid.Row="0" />
-                    <Label Text="Преобразователь" Grid.Column="3" Grid.Row="0" />
+                <Label Text="Преобразователь" Grid.Column="3" Grid.Row="0" FontSize="Medium" />
+                
+                <Label x:Name="LabelStatus_BKU"  Text="(не подключён)" Grid.Column="1" Grid.Row="1" FontSize="Micro" />
+                <Label x:Name="LabelStatus_Pr" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
 
                 </Grid>
             </Border>
@@ -48,6 +53,12 @@
                 <Border>
                 <StackLayout>
                     <Label x:Name="header_Amp" FontSize="Title" Text="Управление амплитудой"/>
+                        <HorizontalStackLayout>
+                            <Label Text="Ослабление "/>
+                            <Entry x:Name="EntryAmp"  MaxLength="5" Keyboard="Numeric"/>
+                            <Label Text=" дБ"/>
+                        </HorizontalStackLayout>
+                        <Button x:Name="OkButtonAtt" class="OK_button" Text="ОК" Clicked="OnClickedOkButton" />
                         <Border>
                             <Grid>
 
@@ -79,16 +90,10 @@
                                 <Button x:Name="ButtonAtt4" Text="0" Grid.Column="3" Grid.Row="1" Clicked="OnClickedBit"/>
                                 <Button x:Name="ButtonAtt5" Text="0" Grid.Column="4" Grid.Row="1" Clicked="OnClickedBit"/>
                                 <Button x:Name="ButtonAtt6" Text="0" Grid.Column="5" Grid.Row="1" Clicked="OnClickedBit"/>
-                                
+
 
                             </Grid>
                         </Border>
-                        <HorizontalStackLayout>
-                            <Label Text="Ослабление "/>
-                            <Entry MaxLength="3" Keyboard="Numeric"/>
-                            <Label Text=" дБ"/>
-                        </HorizontalStackLayout>
-                        <Button x:Name="OkButtonAtt" class="OK_button" Text="ОК"/>
 
                     </StackLayout>
                 </Border>

@@ -1,5 +1,6 @@
 ﻿using System.IO.Ports;
 using System.Text;
+using static LabStend_AFAR.COMport;
 
 namespace LabStend_AFAR
 {
@@ -14,7 +15,14 @@ namespace LabStend_AFAR
         LNA lna;
 
         SerialPort serialPort1;
+
+        //
+        double[] AttenuationLevels = {0.5, 1, 2, 4, 8, 16};
+
+        //
+        bool[] attenuationWord = new bool[7];
         
+        //
 
         public MainPage()
         {
@@ -31,24 +39,11 @@ namespace LabStend_AFAR
             ph = new Phaser(buttons6Ph);
             lna = new LNA();
 
-            COMConnect(serialPort1);
-
+            LabelStatus_BKU.Text = Connect(serialPort1, "COM5"); // Пока тут реализовано жёстко подключение к БКУ по COM5
+            // В будущем заменить здесь и в COMport.cs на множество портов
         }
 
-        // Функция подключения к COM-порту
-        private void COMConnect(SerialPort port)
-        {
-            try
-            {
-                port = new SerialPort("", 115200);
-                port.Open();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Ошибка подключения COM-порта: {e.Message}");
-            }
-        }
-
+        
         // Функция нажатия кнопки
         private void OnCounterClicked(object? sender, EventArgs e)
         {
@@ -100,6 +95,32 @@ namespace LabStend_AFAR
         }
         private void OnClickedOkButton(object? sender, EventArgs e) {
             Button button = (Button)sender;
+
+            if (serialPort1 == null || !serialPort1.IsOpen) {
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+
+            if (double.TryParse(EntryAmp.Text, out double attenuationValue)) {
+                if (attenuationValue < 0)
+                {
+                    attenuationValue = 0;
+                    EntryAmp.Text = "0";
+                }
+                if (attenuationValue > 31.5)
+                {
+                    attenuationValue = 31.5;
+                    EntryAmp.Text = "31.5";
+                }
+            }
+
+            for (int i = 0; i < attenuationWord.Length; i++) {
+                attenuationWord[i] = (attenuationValue%AttenuationLevels[i] == 0);
+                //attenuationValue - AttenuationLevels[i];
+            }
+            
+            
+
             
         }
 
