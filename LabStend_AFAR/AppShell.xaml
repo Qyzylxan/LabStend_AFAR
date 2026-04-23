@@ -7,7 +7,7 @@
     Title="LabStend_AFAR">
 
     <ShellContent
-        Title="Home Alone"
+        Title=""
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

@@ -7,8 +7,8 @@ namespace LabStend_AFAR
     public partial class MainPage : ContentPage
     {
         int count = 0;
-        Button[] buttons6Att;
-        Button[] buttons6Ph;
+        Label[] buttons6Att;
+        Label[] buttons6Ph;
 
         Attenuator att;
         Phaser ph;
@@ -28,10 +28,10 @@ namespace LabStend_AFAR
         {
             InitializeComponent();
 
-            buttons6Att = new Button[] {
-                ButtonAtt1, ButtonAtt2, ButtonAtt3, ButtonAtt4, ButtonAtt5, ButtonAtt6
+            buttons6Att = new Label[] {
+                AttD1, AttD2, AttD3, AttD4, AttD5, AttD6
             };
-            buttons6Ph = new Button[] {
+            buttons6Ph = new Label[] {
                 ButtonPh1, ButtonPh2, ButtonPh3, ButtonPh4, ButtonPh5, ButtonPh6
             };
 
@@ -45,6 +45,7 @@ namespace LabStend_AFAR
 
         
         // Функция нажатия кнопки
+        /*
         private void OnCounterClicked(object? sender, EventArgs e)
         {
             count++;
@@ -58,7 +59,7 @@ namespace LabStend_AFAR
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
-
+        */
 
 
         // Функция нажатия кнопки
@@ -93,7 +94,8 @@ namespace LabStend_AFAR
             }
                 lna.Set(code);
         }
-        private void OnClickedOkButton(object? sender, EventArgs e) {
+        private void OnClickedOkButton(object? sender, EventArgs e) 
+        {
             Button button = (Button)sender;
 
             if (serialPort1 == null || !serialPort1.IsOpen) {
@@ -120,10 +122,11 @@ namespace LabStend_AFAR
             }
             
             
-
-            
         }
 
+        private void OnClickedRadioButtonRCOM(object? sender, EventArgs e) { 
+            
+        }
 
     }
 
@@ -131,9 +134,9 @@ namespace LabStend_AFAR
     public class Attenuator 
     {
         private bool[] bitword = new bool[6];
-        public Button[] buttons6 = new Button[6]; // подумать над доступом
+        public Label[] buttons6 = new Label[6]; // подумать над доступом
 
-        public Attenuator(Button[] buttons) {
+        public Attenuator(Label[] buttons) {
             for (int i = 0; i<buttons6.Length; i++) {
                 buttons6[i] = buttons[i];
                 bitword[i] = false; 
@@ -151,9 +154,9 @@ namespace LabStend_AFAR
     public class Phaser
     {
         private bool[] bitword = new bool[6];
-        public Button[] buttons6 = new Button[6]; // подумать над доступом
+        public Label[] buttons6 = new Label[6]; // подумать над доступом
 
-        public Phaser(Button[] buttons)
+        public Phaser(Label[] buttons)
         {
             for (int i = 0; i < buttons6.Length; i++)
             {
