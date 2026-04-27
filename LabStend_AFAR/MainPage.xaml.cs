@@ -6,6 +6,7 @@ namespace LabStend_AFAR
 {
     public partial class MainPage : ContentPage
     {
+        double eps = 0.001;
         int count = 0;
         Label[] buttons6Att;
         Label[] buttons6Ph;
@@ -17,10 +18,10 @@ namespace LabStend_AFAR
         SerialPort serialPort1;
 
         //
-        double[] AttenuationLevels = {0.5, 1, 2, 4, 8, 16};
+        double[] AttenuationLevels = {0.25, 0.5, 1, 2, 4, 8, 16};
 
         //
-        bool[] attenuationWord = new bool[7];
+        byte attenuationWord;
         
         //
 
@@ -116,13 +117,26 @@ namespace LabStend_AFAR
                 }
             }
 
-            for (int i = 0; i < attenuationWord.Length; i++) {
-                attenuationWord[i] = (attenuationValue%AttenuationLevels[i] == 0);
-                //attenuationValue - AttenuationLevels[i];
+            attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
+            byte flag = 1;
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (attenuationValue / AttenuationLevels[i] >= eps)
+                {
+                    attenuationWord = (byte)(attenuationWord ^ flag);
+                    attenuationValue -= AttenuationLevels[i];
+                }
+                flag <<= 1;
             }
-            
-            
+            Console.WriteLine(attenuationWord);
+            Console.WriteLine(Convert.ToString(attenuationWord, 2));
+
+
+
         }
+
+
 
         private void OnClickedRadioButtonRCOM(object? sender, EventArgs e) { 
             
