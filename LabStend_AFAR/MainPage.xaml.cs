@@ -17,9 +17,7 @@ namespace LabStend_AFAR
         Phaser ph;
         LNA lna;
 
-        SerialPort serialPortBKU;
-        List<string> availablePorts;
-
+        
         //
         double[] AttenuationLevels = {0.25, 0.5, 1, 2, 4, 8, 16};
 
@@ -34,12 +32,15 @@ namespace LabStend_AFAR
         {
             // Инициализация
             InitializeComponent();
+            Console.WriteLine("Запуск СПО...");
+
+            // Запуск COM-портов
+            COMport.Init();
 
             // Создание команды выхода как объекта команды
             ExitCommand = new Command(OnExit);
 
-            // Создание объекта списка доступных COM-портов
-            availablePorts = new List<string>();
+
 
             // объявление кнопок битов (неактуально, упразднить)
             buttons6Att = new Label[] {
@@ -54,11 +55,13 @@ namespace LabStend_AFAR
             ph = new Phaser(buttons6Ph);
             lna = new LNA();
 
-            ConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPicker, availablePorts); // Пока тут реализовано жёстко подключение к БКУ по COM5
+            Thread.Sleep(1000);
+
+            AutoConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPicker, availablePorts); // Пока тут реализовано жёстко подключение к БКУ по COM5
             // В будущем заменить здесь и в COMport.cs на множество портов
         }
 
-        
+
         // Функция нажатия кнопки
         /*
         private void OnCounterClicked(object? sender, EventArgs e)
@@ -76,6 +79,13 @@ namespace LabStend_AFAR
         }
         */
 
+        // Функция нажатия кнопки ручного подключения к БКУ
+        private void OnClickedBKUConnect(object? sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            ConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPicker.SelectedIndex);
+
+        }
 
         // Функция нажатия кнопки
         private void OnClickedBit(object? sender, EventArgs e) 

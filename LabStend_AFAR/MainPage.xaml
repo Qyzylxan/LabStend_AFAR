@@ -24,11 +24,7 @@
     <!--Основная часть окна программы-->
     <VerticalStackLayout Padding="30,0" Spacing="25">
         <Border>
-            <Picker x:Name="COMportPicker" Title="Доступные COM-порты">
-                <Picker.Items>
-
-                </Picker.Items>
-            </Picker>
+            
         </Border>
         <!--Режим управления БУАФ-->
             <Label
@@ -53,6 +49,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
 
                             <Label Text="БКУ"  Grid.Column="1" Grid.Row="0" FontSize="Medium" />
@@ -62,7 +60,15 @@
                             <Label x:Name="LabelStatus_BKU"  Text="(не подключён)" Grid.Column="1" Grid.Row="1" FontSize="Micro" />
                             <Label x:Name="LabelStatus_Pr" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
 
+                            <Picker x:Name="COMportPicker" Title="Доступные COM-порты" Grid.Column="1" Grid.Row="2">
+                                <Picker.Items>
+
+                                </Picker.Items>
+                            </Picker>
+                            <Button x:Name="BKU_connect" Text="Подключиться" Clicked="OnClickedBKUConnect" Grid.Column="1" Grid.Row="3"/>
                         </Grid>
+
+
                         <ActivityIndicator x:Name="ConnectionActivity"
                                            IsRunning="False"
                                            IsVisible="False" />
@@ -74,10 +80,10 @@
                         <Border>
                             <Label FontSize="Title" Text="Состояние коммутатора" />
                         </Border>
-                        <RadioButton GroupName="Gain" Content="RF1" Value="0" CheckedChanged="OnClickedRadioButtonRCOM" />
-                    <RadioButton GroupName="Gain" Content="RF2" Value="1" CheckedChanged="OnClickedRadioButtonRCOM" />
-                    <RadioButton GroupName="Gain" Content="RF3" Value="2" CheckedChanged="OnClickedRadioButtonRCOM" />
-                    <RadioButton GroupName="Gain" Content="RF4" Value="3" CheckedChanged="OnClickedRadioButtonRCOM" />
+                        <RadioButton GroupName="RFcom" Content="RF1" Value="0" CheckedChanged="OnClickedRadioButtonRCOM" />
+                        <RadioButton GroupName="RFcom" Content="RF2" Value="1" CheckedChanged="OnClickedRadioButtonRCOM" />
+                        <RadioButton GroupName="RFcom" Content="RF3" Value="2" CheckedChanged="OnClickedRadioButtonRCOM" />
+                        <RadioButton GroupName="RFcom" Content="RF4" Value="3" CheckedChanged="OnClickedRadioButtonRCOM" />
                 </StackLayout>
 
             </Border>
