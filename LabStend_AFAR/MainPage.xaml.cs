@@ -1,5 +1,7 @@
 ﻿using System.IO.Ports;
 using System.Text;
+using System.Collections.Generic;
+
 using static LabStend_AFAR.COMport;
 
 namespace LabStend_AFAR
@@ -15,19 +17,26 @@ namespace LabStend_AFAR
         Phaser ph;
         LNA lna;
 
-        SerialPort serialPort1;
+        SerialPort serialPortBKU;
+        List<string> availablePorts;
 
         //
         double[] AttenuationLevels = {0.25, 0.5, 1, 2, 4, 8, 16};
 
         //
         byte attenuationWord;
-        
+
         //
+
+        public Command ExitCommand { get; }
 
         public MainPage()
         {
+            // Инициализация
             InitializeComponent();
+
+            // Объявление команды выхода
+            ExitCommand = new Command(OnExit);
 
             buttons6Att = new Label[] {
                 AttD1, AttD2, AttD3, AttD4, AttD5, AttD6
@@ -40,7 +49,7 @@ namespace LabStend_AFAR
             ph = new Phaser(buttons6Ph);
             lna = new LNA();
 
-            LabelStatus_BKU.Text = Connect(serialPort1, "COM5"); // Пока тут реализовано жёстко подключение к БКУ по COM5
+            ConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPicker, availablePorts); // Пока тут реализовано жёстко подключение к БКУ по COM5
             // В будущем заменить здесь и в COMport.cs на множество портов
         }
 
@@ -99,7 +108,7 @@ namespace LabStend_AFAR
         {
             Button button = (Button)sender;
 
-            if (serialPort1 == null || !serialPort1.IsOpen) {
+            if (serialPortBKU == null || !serialPortBKU.IsOpen) {
                 Console.WriteLine("Порт не найден");
                 return;
             }
@@ -142,7 +151,29 @@ namespace LabStend_AFAR
             
         }
 
+        /// Обработчик выхода из программы
+        private async void OnExit()
+        {
+            // Если есть активное подключение - закрываем его
+            //if (isMCconnected && _serialPort != null && _serialPort.IsOpen)
+            //{
+            //    DisconnectDevice();
+            //}
+
+            // Запрашиваем подтверждение выхода
+            bool confirm = await DisplayAlertAsync("Выход из программы",
+                "Вы уверены, что хотите выйти?", "Да", "Нет");
+
+            if (confirm)
+            {
+                // Закрываем приложение
+                Application.Current.Quit();
+            }
+        }
     }
+
+
+    // ------------- КЛАССЫ -------------------------------
 
     // Класс Аттенюатора
     public class Attenuator 

@@ -1,10 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--xmlns:local="clr-namespace:LabStendAFAR"
+x:Class="LabStend_AFAR.MainPage"-->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LabStend_AFAR.MainPage">
-
+             >
     
-        <VerticalStackLayout Padding="30,0" Spacing="25">
+    <!--Верхняя панель-->
+    <StackLayout>
+        <!--
+        <!--Строка меню- ->
+        <ContentPage.MenuBarItems>
+
+            <MenuBarItem Text="Файл">
+                <MenuFlyoutItem Text="Выход"
+                            Command="{Binding ExitCommand}" />
+
+            </MenuBarItem>
+            
+        </ContentPage.MenuBarItems>
+        <Border>
+            <Picker x:Name="COMportPicker" Title="Доступные COM-порты">
+                <Picker.Items>
+                    
+                </Picker.Items>
+            </Picker>
+        </Border>
+        -->
+    </StackLayout>
+
+    <!--Основная часть окна программы-->
+    <VerticalStackLayout Padding="30,0" Spacing="25">
             
             <!--Режим управления БУАФ-->
             <Label
@@ -15,7 +40,9 @@
             <HorizontalStackLayout>
                 <Border>
                     <StackLayout>
-                        <Label Text="Управление БУАФ через:" FontSize="Medium" HorizontalTextAlignment="Center"/>
+                        <Border>
+                            <Label Text="Управление БУАФ через:" FontSize="Medium" HorizontalTextAlignment="Center"/>
+                        </Border>
                         <Grid HorizontalOptions="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition  />
@@ -31,18 +58,23 @@
                             <Label Text="БКУ"  Grid.Column="1" Grid.Row="0" FontSize="Medium" />
                             <Switch x:Name="controllerSwitch" Grid.Column="2" Grid.Row="0" />
                             <Label Text="Преобразователь" Grid.Column="3" Grid.Row="0" FontSize="Medium" />
-
+                            
                             <Label x:Name="LabelStatus_BKU"  Text="(не подключён)" Grid.Column="1" Grid.Row="1" FontSize="Micro" />
                             <Label x:Name="LabelStatus_Pr" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
 
                         </Grid>
+                        <ActivityIndicator x:Name="ConnectionActivity"
+                                           IsRunning="False"
+                                           IsVisible="False" />
                     </StackLayout>
             </Border>
 
             <Border>
                 <StackLayout>
-                    <Label FontSize="Title" Text="Состояние коммутатора" />
-                    <RadioButton GroupName="Gain" Content="RF1" Value="0" CheckedChanged="OnClickedRadioButtonRCOM" />
+                        <Border>
+                            <Label FontSize="Title" Text="Состояние коммутатора" />
+                        </Border>
+                        <RadioButton GroupName="Gain" Content="RF1" Value="0" CheckedChanged="OnClickedRadioButtonRCOM" />
                     <RadioButton GroupName="Gain" Content="RF2" Value="1" CheckedChanged="OnClickedRadioButtonRCOM" />
                     <RadioButton GroupName="Gain" Content="RF3" Value="2" CheckedChanged="OnClickedRadioButtonRCOM" />
                     <RadioButton GroupName="Gain" Content="RF4" Value="3" CheckedChanged="OnClickedRadioButtonRCOM" />
@@ -173,6 +205,9 @@
         </ScrollView>
 
     </VerticalStackLayout>
-    
+
+    <Border>
+        <Label x:Name="StatusLabel" Text=""/>
+    </Border>
 
 </ContentPage>
