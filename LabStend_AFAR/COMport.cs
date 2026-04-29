@@ -13,7 +13,8 @@ namespace LabStend_AFAR
 
 
         // Функция подключения к COM-порту
-        public async static void ConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel, Picker COMportPicker, List<string> availablePorts)
+        public async static void ConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel, 
+                                                    Picker COMportPicker, List<string> availablePorts)
         {
             LoadAvailablePorts(statusLabel, COMportPicker, availablePorts);
 

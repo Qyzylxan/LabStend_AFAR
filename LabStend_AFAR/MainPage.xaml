@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--xmlns:local="clr-namespace:LabStendAFAR"
-x:Class="LabStend_AFAR.MainPage"-->
+-->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LabStend_AFAR.MainPage"
              >
     
     <!--Верхняя панель-->
-    <StackLayout>
+    
         <!--
-        <!--Строка меню- ->
+        <!- -Строка меню- ->
         <ContentPage.MenuBarItems>
 
             <MenuBarItem Text="Файл">
@@ -17,25 +18,24 @@ x:Class="LabStend_AFAR.MainPage"-->
 
             </MenuBarItem>
             
-        </ContentPage.MenuBarItems>
-        <Border>
-            <Picker x:Name="COMportPicker" Title="Доступные COM-порты">
-                <Picker.Items>
-                    
-                </Picker.Items>
-            </Picker>
-        </Border>
-        -->
-    </StackLayout>
+        </ContentPage.MenuBarItems> -->
+        
 
     <!--Основная часть окна программы-->
     <VerticalStackLayout Padding="30,0" Spacing="25">
-            
-            <!--Режим управления БУАФ-->
+        <Border>
+            <Picker x:Name="COMportPicker" Title="Доступные COM-порты">
+                <Picker.Items>
+
+                </Picker.Items>
+            </Picker>
+        </Border>
+        <!--Режим управления БУАФ-->
             <Label
                 Text=""
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
+        
         <Border>
             <HorizontalStackLayout>
                 <Border>
@@ -203,11 +203,12 @@ x:Class="LabStend_AFAR.MainPage"-->
                 HorizontalOptions="Fill" /-->
                 </VerticalStackLayout>
         </ScrollView>
-
+        
+        <Border>
+            <Label x:Name="StatusLabel" Text=""/>
+        </Border>
     </VerticalStackLayout>
 
-    <Border>
-        <Label x:Name="StatusLabel" Text=""/>
-    </Border>
+    
 
 </ContentPage>

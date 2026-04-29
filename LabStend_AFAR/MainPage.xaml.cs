@@ -35,9 +35,13 @@ namespace LabStend_AFAR
             // Инициализация
             InitializeComponent();
 
-            // Объявление команды выхода
+            // Создание команды выхода как объекта команды
             ExitCommand = new Command(OnExit);
 
+            // Создание объекта списка доступных COM-портов
+            availablePorts = new List<string>();
+
+            // объявление кнопок битов (неактуально, упразднить)
             buttons6Att = new Label[] {
                 AttD1, AttD2, AttD3, AttD4, AttD5, AttD6
             };
@@ -45,6 +49,7 @@ namespace LabStend_AFAR
                 ButtonPh1, ButtonPh2, ButtonPh3, ButtonPh4, ButtonPh5, ButtonPh6
             };
 
+            // Объявление объетов классов Устройств
             att = new Attenuator(buttons6Att);
             ph = new Phaser(buttons6Ph);
             lna = new LNA();
