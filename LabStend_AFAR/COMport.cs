@@ -5,15 +5,15 @@ using System.IO.Ports;
 
 namespace LabStend_AFAR
 {
-    public class COMport
+    public static class COMport
     {
-        bool isBKUconnected = false;
+        static bool isBKUconnected = false;
         static string portNameBKU = "";
         static Int32 baudBKU = 115200;
 
         public static SerialPort serialPortBKU;
         public static List<string> availablePorts;
-        public static List<string> availablePortNames;
+        public static List<string> availablePortNames = new List<string>();
 
         static SerialPort testPort;
 
@@ -31,7 +31,7 @@ namespace LabStend_AFAR
 
 
         // Функция ручного подключения к COM-порту
-        public async static void ConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel,
+        public static void ConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel,
                                             int pickedPortIndex)
         {
             
@@ -57,16 +57,17 @@ namespace LabStend_AFAR
         }
 
         // Функция автоподключения к COM-порту
-        public async static void AutoConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel, 
+        public static void AutoConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel, 
                                                     Picker COMportPicker, List<string> availablePorts)
         {
             LoadAvailablePorts(statusLabel, COMportPicker, availablePorts);
             Thread.Sleep(500);
 
             // Автоматический поиск БКУ (ESP32 с загруженным СПО БКУ)
-            AutoDetectBKU(statusLabel, COMportPicker, availablePorts, port, labelStatusBKU);
+            
+            AutoDetectBKU(statusLabel, COMportPicker, availablePortNames, port, labelStatusBKU);
             Thread.Sleep(500);
-
+            
             try
             {
                 port.PortName = portNameBKU;
@@ -90,6 +91,8 @@ namespace LabStend_AFAR
         // Загрузка списка доступных COM-портов
         private static async void LoadAvailablePorts(Label statusLabel, Picker COMportPicker, List<string> availablePorts)
         {
+            availablePorts = null;
+            availablePorts = new List<string>();
             try
             {
                 
@@ -118,7 +121,7 @@ namespace LabStend_AFAR
                 else
                 {
                     COMportPicker.Title = "Список COM-портов";
-                    statusLabel.Text = "Найден COM-порт.";
+                    statusLabel.Text += "\nНайдены COM-порты";
                     statusLabel.TextColor = Colors.Green;
 
                 }
@@ -142,41 +145,47 @@ namespace LabStend_AFAR
         private static void AutoDetectBKU(Label statusLabel, Picker COMportPicker, List<string> availablePorts, SerialPort portBKU, Label labelStatusBKU)
         {
             statusLabel.Text = "Автопоиск БКУ...";
-            var testPort = new SerialPort("COM1", baudBKU);
-            foreach (var portName in availablePorts)
+            Thread.Sleep(500);
+
+            foreach (string portName in availablePorts)
             {
+
                 try
                 {
                     //using (var testPort = new SerialPort(portName, baudBKU))
-                    testPort.PortName = portName;
-                    testPort.BaudRate = baudBKU;
-                    
+
+                    var testPort = new SerialPort(portName, baudBKU);
+                    testPort.ReadTimeout = 50;
+                    testPort.WriteTimeout = 50;
+
+                    testPort.Open();
+
+                    // Отправка команду запроса идентификации
+                    testPort.WriteLine("BKU?\n");
+
+                    // Ожидание ответа
+                    string response = "";
+                    try
                     {
-                        testPort.ReadTimeout = 500;
-                        testPort.WriteTimeout = 500;
-                        testPort.Open();
-
-                        // Отправка команду запроса идентификации
-                        testPort.WriteLine("BKU?\n");
-
-                        // Ожидание ответа
-                        var response = testPort.ReadLine();
-
-                        if (response.Contains("BKU!") || response.Contains("PE43702"))
-                        {
-                            // ESP32 найден
-                            COMportPicker.SelectedItem = portName;
-                            statusLabel.Text = $"БКУ обнаружен на порту {portName}";
-                            statusLabel.TextColor = Colors.Green;
-
-                            portNameBKU = portName;
-                            testPort.Close();
-                            break;
-                        }
-                        
-                        testPort.Close();
-                        
+                        response = testPort.ReadLine();
                     }
+                    catch (TimeoutException) { }
+
+                    if (response.Contains("BKU!"))
+                    {
+                        // ESP32 найден
+                        COMportPicker.SelectedItem = portName;
+                        statusLabel.Text = $"БКУ обнаружен на порту {portName}";
+                        statusLabel.TextColor = Colors.Green;
+
+                        portNameBKU = portName;
+                        testPort.Close();
+                        return;
+                    }
+                        
+                    testPort.Close();
+                        
+                    
 
                 }
                 catch

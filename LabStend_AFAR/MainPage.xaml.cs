@@ -1,6 +1,7 @@
 ﻿using System.IO.Ports;
 using System.Text;
 using System.Collections.Generic;
+using static LabStend_AFAR.Devices;
 
 using static LabStend_AFAR.COMport;
 
@@ -56,7 +57,7 @@ namespace LabStend_AFAR
             lna = new LNA();
 
             Thread.Sleep(1000);
-
+            COMport.Init();
             AutoConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPicker, availablePorts); // Пока тут реализовано жёстко подключение к БКУ по COM5
             // В будущем заменить здесь и в COMport.cs на множество портов
         }
@@ -190,66 +191,7 @@ namespace LabStend_AFAR
 
     // ------------- КЛАССЫ -------------------------------
 
-    // Класс Аттенюатора
-    public class Attenuator 
-    {
-        private bool[] bitword = new bool[6];
-        public Label[] buttons6 = new Label[6]; // подумать над доступом
-
-        public Attenuator(Label[] buttons) {
-            for (int i = 0; i<buttons6.Length; i++) {
-                buttons6[i] = buttons[i];
-                bitword[i] = false; 
-            }
-        }
-        public void Set(int n) {
-            bitword[n] = !bitword[n];
-        }
-        public bool Get(int n) {
-            return bitword[n];
-        }
-
-    }
-    // Класс Фазовращателя
-    public class Phaser
-    {
-        private bool[] bitword = new bool[6];
-        public Label[] buttons6 = new Label[6]; // подумать над доступом
-
-        public Phaser(Label[] buttons)
-        {
-            for (int i = 0; i < buttons6.Length; i++)
-            {
-                buttons6[i] = buttons[i];
-                bitword[i] = false;
-            }
-        }
-        public void Set(int n)
-        {
-            bitword[n] = !bitword[n];
-        }
-        public bool Get(int n)
-        {
-            return bitword[n];
-        }
-
-    }
-
-    // Класс Малошумящего усилителя (МШУ)
-    public class LNA {
-        private int mode;
-        public LNA() {
-            mode = 0;
-        }
-        public void Set(int m)
-        {
-            mode = m;
-        }
-        public int Get()
-        {
-            return mode;
-        }
-    }
+    
     // Добавить класс/функции в Main битовых посылок
 }
 
