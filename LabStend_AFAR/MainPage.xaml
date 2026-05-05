@@ -58,14 +58,23 @@
                             <Label Text="Преобразователь" Grid.Column="3" Grid.Row="0" FontSize="Medium" />
                             
                             <Label x:Name="LabelStatus_BKU"  Text="(не подключён)" Grid.Column="1" Grid.Row="1" FontSize="Micro" />
-                            <Label x:Name="LabelStatus_Pr" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
-
-                            <Picker x:Name="COMportPicker" Title="Доступные COM-порты" Grid.Column="1" Grid.Row="2">
+                            <Label x:Name="LabelStatus_PI" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
+                            
+                            <!--Выбор портов БКУ-->
+                            <Picker x:Name="COMportPickerBKU" Title="Доступные COM-порты" Grid.Column="1" Grid.Row="2">
                                 <Picker.Items>
 
                                 </Picker.Items>
                             </Picker>
                             <Button x:Name="BKU_connect" Text="Подключиться" Clicked="OnClickedBKUConnect" Grid.Column="1" Grid.Row="3"/>
+
+                            <!--Выбор портов ПИ-->
+                            <Picker x:Name="COMportPickerPI" Title="Доступные COM-порты" Grid.Column="3" Grid.Row="2">
+                                <Picker.Items>
+
+                                </Picker.Items>
+                            </Picker>
+                            <Button x:Name="PI_connect" Text="Подключиться" Clicked="OnClickedPIConnect" Grid.Column="3" Grid.Row="3"/>
                         </Grid>
 
 

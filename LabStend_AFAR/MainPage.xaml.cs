@@ -1,7 +1,7 @@
 ﻿using System.IO.Ports;
 using System.Text;
 using System.Collections.Generic;
-using static LabStend_AFAR.Devices;
+using static LabStend_AFAR.MUAF;
 
 using static LabStend_AFAR.COMport;
 
@@ -18,9 +18,9 @@ namespace LabStend_AFAR
         Phaser ph;
         LNA lna;
 
-        
+
         //
-        double[] AttenuationLevels = {0.25, 0.5, 1, 2, 4, 8, 16};
+        bool writeMode = false;
 
         //
         byte attenuationWord;
@@ -56,10 +56,16 @@ namespace LabStend_AFAR
             ph = new Phaser(buttons6Ph);
             lna = new LNA();
 
+            // Списки портов
+            Picker[] COMportPickers = { COMportPickerBKU, COMportPickerPI };
+
             Thread.Sleep(1000);
             COMport.Init();
-            AutoConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPicker, availablePorts); // Пока тут реализовано жёстко подключение к БКУ по COM5
+
+            LoadAvailablePorts(StatusLabel, COMportPickers, availablePorts);
+            AutoConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPickerBKU, availablePorts); 
             // В будущем заменить здесь и в COMport.cs на множество портов
+
         }
 
 
@@ -84,7 +90,14 @@ namespace LabStend_AFAR
         private void OnClickedBKUConnect(object? sender, EventArgs e)
         {
             Button button = (Button)sender;
-            ConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPicker.SelectedIndex);
+            ConnectToCOM(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPickerBKU.SelectedIndex, 'e');
+
+        }
+        // Функция нажатия кнопки ручного подключения к ПИ
+        private void OnClickedPIConnect(object? sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            ConnectToCOM(serialPortPI, LabelStatus_PI, StatusLabel, COMportPickerPI.SelectedIndex, 'f');
 
         }
 
@@ -111,7 +124,8 @@ namespace LabStend_AFAR
         }
         private void OnClickedRadioButtonLNA(object? sender, EventArgs e) {
             RadioButton radioButton = (RadioButton)sender;
-            int code;
+
+            byte code;
             switch (radioButton.Value) {
                 case "1": code = 1; break;
                 case "2": code = 2; break;
@@ -119,6 +133,7 @@ namespace LabStend_AFAR
                 default: code = 0; break;
             }
                 lna.Set(code);
+            lna.SendCommand(code, writeMode);
         }
         private void OnClickedOkButton(object? sender, EventArgs e) 
         {
@@ -147,10 +162,10 @@ namespace LabStend_AFAR
 
             for (int i = 0; i < 7; i++)
             {
-                if (attenuationValue / AttenuationLevels[i] >= eps)
+                if (attenuationValue / att.AttenuationLevels[i] >= eps)
                 {
                     attenuationWord = (byte)(attenuationWord ^ flag);
-                    attenuationValue -= AttenuationLevels[i];
+                    attenuationValue -= att.AttenuationLevels[i];
                 }
                 flag <<= 1;
             }
@@ -158,7 +173,11 @@ namespace LabStend_AFAR
             Console.WriteLine(Convert.ToString(attenuationWord, 2));
 
 
+        }
 
+        public void OnToggledMode(object? sender, EventArgs a) {
+            Switch switcher = (Switch)sender;
+            writeMode = switcher.IsToggled;
         }
 
 
@@ -185,6 +204,11 @@ namespace LabStend_AFAR
                 // Закрываем приложение
                 Application.Current.Quit();
             }
+        }
+
+        private void PI_connect_Clicked(System.Object sender, System.EventArgs e)
+        {
+
         }
     }
 
