@@ -144,7 +144,8 @@ namespace LabStend_AFAR
                 return;
             }
 
-            if (double.TryParse(EntryAmp.Text, out double attenuationValue)) {
+            if (double.TryParse(EntryAmp.Text, out double attenuationValue))
+            {
                 if (attenuationValue < 0)
                 {
                     attenuationValue = 0;
@@ -156,11 +157,14 @@ namespace LabStend_AFAR
                     EntryAmp.Text = "31.5";
                 }
             }
+            else { 
+                
+            }
 
             attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
             byte flag = 1;
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 6; i++)
             {
                 if (attenuationValue / att.AttenuationLevels[i] >= eps)
                 {

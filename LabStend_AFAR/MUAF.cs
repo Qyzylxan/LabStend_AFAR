@@ -12,7 +12,7 @@ namespace LabStend_AFAR
     // Класс Аттенюатора
     public class Attenuator
     {
-        public double[] AttenuationLevels = { 0.25, 0.5, 1, 2, 4, 8, 16 };
+        public double[] AttenuationLevels = {0.5, 1, 2, 4, 8, 16 };
         private bool[] bitword = new bool[6];
         public Label[] buttons6 = new Label[6]; // подумать над доступом
 
@@ -37,6 +37,7 @@ namespace LabStend_AFAR
     // Класс Фазовращателя
     public class Phaser
     {
+        public double[] PhaseShifts = { 5.6, 11.2, 22.5, 45, 90, 180};
         private bool[] bitword = new bool[6];
         public Label[] buttons6 = new Label[6]; // подумать над доступом
 
