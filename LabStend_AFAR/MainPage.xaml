@@ -100,6 +100,7 @@
         </Border>
             
         <ScrollView HeightRequest="500">
+            
             <!--Блок с управлениями МШУ, Атт, ФВ-->
                 <VerticalStackLayout>
                     <HorizontalStackLayout>
@@ -210,7 +211,119 @@
 
                     </HorizontalStackLayout>
 
-                    <!--Button
+
+
+                <HorizontalStackLayout>
+                    <!--Номер МУАФ-->
+                    <Border>
+                        <Label FontSize="Title"  Text="МУАФ 2" />
+                    </Border>
+                    <!--Управление МШУ-->
+                    <Border>
+                        <StackLayout>
+                            <Label x:Name="header_Gain2" FontSize="Title" Text="Режим работы МШУ" />
+                            <RadioButton GroupName="Gain2" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
+                            <RadioButton GroupName="Gain2" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                            <RadioButton GroupName="Gain2" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
+                        </StackLayout>
+                    </Border>
+
+                    <!--Управление амплитудой-->
+                    <Border>
+                        <StackLayout>
+                            <Label x:Name="header_Amp2" FontSize="Title" Text="Управление аттенюаторами"/>
+                            <HorizontalStackLayout>
+                                <Label Text="Ослабление амплитуды "/>
+                                <Entry x:Name="EntryAmp2"  MaxLength="5" Keyboard="Numeric"/>
+                                <Label Text=" дБ"/>
+                            </HorizontalStackLayout>
+                            <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButton" />
+
+                            <Border>
+                                <Label Text="Кодовая посылка" />
+                            </Border>
+
+                            <Border>
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label x:Name="AttD1_2" Text="0" Grid.Column="0" Grid.Row="0"/>
+                                    <Label x:Name="AttD2_2" Text="0" Grid.Column="1" Grid.Row="0"/>
+                                    <Label x:Name="AttD3_2" Text="0" Grid.Column="2" Grid.Row="0"/>
+                                    <Label x:Name="AttD4_2" Text="0" Grid.Column="3" Grid.Row="0"/>
+                                    <Label x:Name="AttD5_2" Text="0" Grid.Column="4" Grid.Row="0"/>
+                                    <Label x:Name="AttD6_2" Text="0" Grid.Column="5" Grid.Row="0"/>
+
+
+                                </Grid>
+                            </Border>
+
+                        </StackLayout>
+                    </Border>
+
+                    <!--Управление фазой-->
+                    <Border>
+                        <StackLayout>
+                            <Label x:Name="header_Ph_2" FontSize="Title" Text="Управление фазовращателями"/>
+                            <HorizontalStackLayout>
+                                <Label Text="Сдвиг фазы "/>
+                                <Entry x:Name="EntryPh_2" MaxLength="3" Keyboard="Numeric"/>
+                                <Label Text=" град"/>
+                            </HorizontalStackLayout>
+                            <Button class="OK_button" Text="ОК"/>
+
+                            <Border>
+                                <Label Text="Кодовая посылка" />
+                            </Border>
+
+                            <Border>
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                        <ColumnDefinition  />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label x:Name="ButtonPh1_2" Text="0" Grid.Column="0" Grid.Row="0" />
+                                    <Label x:Name="ButtonPh2_2" Text="0" Grid.Column="1" Grid.Row="0" />
+                                    <Label x:Name="ButtonPh3_2" Text="0" Grid.Column="2" Grid.Row="0" />
+                                    <Label x:Name="ButtonPh4_2" Text="0" Grid.Column="3" Grid.Row="0" />
+                                    <Label x:Name="ButtonPh5_2" Text="0" Grid.Column="4" Grid.Row="0" />
+                                    <Label x:Name="ButtonPh6_2" Text="0" Grid.Column="5" Grid.Row="0" />
+
+                                </Grid>
+                            </Border>
+
+
+                        </StackLayout>
+                    </Border>
+
+
+                </HorizontalStackLayout>
+
+
+
+                <!--Button
                 x:Name="CounterBtn"
                 Text="Click me" 
                 SemanticProperties.Hint="Counts the number of times you click"

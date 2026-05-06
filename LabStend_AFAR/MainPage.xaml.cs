@@ -31,6 +31,8 @@ namespace LabStend_AFAR
 
         public MainPage()
         {
+
+
             // Инициализация
             InitializeComponent();
             Console.WriteLine("Запуск СПО...");
@@ -43,7 +45,7 @@ namespace LabStend_AFAR
 
 
 
-            // объявление кнопок битов (неактуально, упразднить)
+            // объявление полей битов (неактуально, упразднить или модифицировать)
             buttons6Att = new Label[] {
                 AttD1, AttD2, AttD3, AttD4, AttD5, AttD6
             };
