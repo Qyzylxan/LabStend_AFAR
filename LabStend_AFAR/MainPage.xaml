@@ -98,7 +98,8 @@
             </Border>
         </HorizontalStackLayout>
         </Border>
-            
+
+        <Border>
         <ScrollView HeightRequest="500">
             
             <!--Блок с управлениями МШУ, Атт, ФВ-->
@@ -157,15 +158,9 @@
                                 <Border>
                                     <Label Text="Кодовая посылка" />
                                 </Border>
-
+                                <!--Текст кодовой посылки-->
                                 <Border>
-                                    
-
-                                        <Label x:Name="LabelAttBitWord" Text="00000000" Grid.Column="0" Grid.Row="0"/>
-
-
-
-                                    
+                                    <Label x:Name="LabelAttBitWord" Text="00000000" Grid.Column="0" Grid.Row="0"/>
                                 </Border>
 
                             </StackLayout>
@@ -175,42 +170,20 @@
                         <Border>
                             <StackLayout>
                                 <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазовращателями"/>
-                                <HorizontalStackLayout>
-                                    <Label Text="Сдвиг фазы "/>
-                                    <Entry x:Name="EntryPh" MaxLength="3" Keyboard="Numeric"/>
-                                    <Label Text=" град"/>
-                                </HorizontalStackLayout>
-                                <Button class="OK_button" Text="ОК"/>
+                                    <HorizontalStackLayout>
+                                        <Label Text="Сдвиг фазы "/>
+                                        <Entry x:Name="EntryPh" MaxLength="3" Keyboard="Numeric"/>
+                                        <Label Text=" град"/>
+                                    </HorizontalStackLayout>
+                                
+                                    <Button class="OK_button" Text="ОК"/>
 
-                                <Border>
-                                    <Label Text="Кодовая посылка" />
-                                </Border>
-
-                                <Border>
-                                    <Grid>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                        </Grid.RowDefinitions>
-
-                                        <Label x:Name="ButtonPh1" Text="0" Grid.Column="0" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh2" Text="0" Grid.Column="1" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh3" Text="0" Grid.Column="2" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh4" Text="0" Grid.Column="3" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh5" Text="0" Grid.Column="4" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh6" Text="0" Grid.Column="5" Grid.Row="0" />
-
-                                    </Grid>
-                                </Border>
+                                    <Border>
+                                        <Label Text="Кодовая посылка" />
+                                    </Border>
+                                    <Border>
+                                        <Label x:Name="LabelPhBitWord" Text="00000000" />
+                                    </Border>
 
 
                             </StackLayout>
@@ -449,7 +422,8 @@
                 </VerticalStackLayout>
             </Border>
         </ScrollView>
-        
+        </Border>
+
         <Border>
             <Label x:Name="StatusLabel" Text=""/>
         </Border>

@@ -20,8 +20,8 @@ namespace LabStend_AFAR
         double deg = Math.PI / 180;
         double eps = 0.001; // Машинный эпсилон
 
-        Label[] buttons6Ph;
 
+        // нужно по 4 устройства 
         Attenuator att;
         Phaser ph;
         LNA lna;
@@ -32,6 +32,7 @@ namespace LabStend_AFAR
 
         //
         byte attenuationWord;
+        byte phaseWord;
 
         //
 
@@ -55,16 +56,9 @@ namespace LabStend_AFAR
 
 
 
-            // объявление полей битов (неактуально, упразднить или модифицировать)
-
-            
-            buttons6Ph = new Label[] {
-                ButtonPh1, ButtonPh2, ButtonPh3, ButtonPh4, ButtonPh5, ButtonPh6
-            };
-
             // Объявление объетов классов Устройств
             att = new Attenuator(LabelAttBitWord);
-            ph = new Phaser(buttons6Ph);
+            ph = new Phaser(LabelAttBitWord);
             lna = new LNA();
 
             // Списки портов
@@ -114,31 +108,22 @@ namespace LabStend_AFAR
 
 
 
-        // Функция нажатия кнопки
-        
-        private void OnClickedBitPh(object? sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            int index = Array.IndexOf(ph.buttons6, button); // рассмотреть целесообразность Array.IndexOf()
-
-            ph.Set(index);
-            if (ph.Get(index) == true) button.Text = "1";
-            else button.Text = "0";
-
-        }
-
 
         // Кнопка Ок угла отклонения луча АФАР (БУАФ)
         private void OnClickedOkBUAF(object? sender, EventArgs e) {
             Button button = (Button)sender;
 
-            double thetaShift = 0;
+            string errorMessageBlockName = "БУАФ";
+
+            double angleShift = 0;  // фазовый сдвиг между соседними элементами АФАР
+            // Парсинг введённых данных
             if (double.TryParse(EntryAngle.Text, out double angle))
             {
+                // В пределах максимального угла отклонения?
                 if (angle < -thetaMax)
                 {
                     angle = -thetaMax;
-                    EntryAngle.Text = $"{thetaMax}";
+                    EntryAngle.Text = $"{-thetaMax}";
                 }
                 if (angle > thetaMax)
                 {
@@ -146,18 +131,26 @@ namespace LabStend_AFAR
                     EntryAngle.Text = $"{thetaMax}";
                 }
                 else {
-                    thetaShift = PhaseDelay(angle);
+                    angleShift = PhaseDelay(angle);
+
                 }
 
             }
             else
             {
-
+                // Если не распарсил текст с ввода
+                WriteToStatusLabel($"Текст с поля ввода не распознан. Введите число от {-thetaMax} до {thetaMax}", errorMessageBlockName);
+                return;
             }
 
+            // написать код установки значений сдвигов фазы на каждый ФВ
+
+
         }
+
+        // Функция расчёта угла отклонения луча АФАР
         double PhaseDelay(double angle) {
-            return 2*Math.PI*d*Math.Sin(angle*deg)/lambda;
+            return 360*d*Math.Sin(angle*deg)/lambda; // Результат возвращается в градусах
         }
 
 
@@ -206,10 +199,10 @@ namespace LabStend_AFAR
 
         }
 
-
-
+        // Обработчик нажатия кнопки Ок Аттенюатора
         private void OkHandlerAtt(Entry entryAmp) {
             string errorMessageBlockName = "Аттенюатор 1";
+
             if (double.TryParse(EntryAmp.Text, out double attenuationValue))
             {
                 if (attenuationValue < 0)
@@ -225,24 +218,33 @@ namespace LabStend_AFAR
             }
             else
             {
-                StatusLabel.Text += $"\n{errorMessageBlockName}: Текст с поля ввода не распознан. Введите число от 0 до 31.5";
                 // Если не распарсил текст с ввода
+                WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 31,5", errorMessageBlockName);
+                return;
             }
 
+            
             attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
+            double value = attenuationValue;
             byte flag = 1<<6;
-
+            // Цикл перевода полученного значения в битовую посылку
             for (int i = 5; i >= 0; i--)
             {
-                if (attenuationValue / att.AttenuationLevels[i] > (1 - eps))
+                if (value / att.AttenuationLevels[i] > (1 - eps))
                 {
                     attenuationWord = (byte)(attenuationWord ^ flag);
-                    attenuationValue -= att.AttenuationLevels[i];
+                    value -= att.AttenuationLevels[i];
                 }
                 flag >>= 1;
             }
 
-            // Вывод команды
+            // Проверка на кратность шагу
+            if (value > eps) {
+                WriteToStatusLabel("Значение ослабления не кратно шагу 0,5 дБ. Округление...", errorMessageBlockName);
+                entryAmp.Text = $"{attenuationValue - value}";
+            }
+
+            // Вывод команды в поля
             Console.WriteLine(attenuationWord);
             Console.WriteLine(Convert.ToString(attenuationWord, 2));
 
@@ -252,7 +254,7 @@ namespace LabStend_AFAR
             // Проверка на доступность порта перед записью команды
             if (serialPortBKU == null || !serialPortBKU.IsOpen)
             {
-                StatusLabel.Text += "\nПорт не найден";
+                WriteToStatusLabel("\nПорт не найден");
                 Console.WriteLine("Порт не найден");
                 return;
             }
@@ -271,7 +273,6 @@ namespace LabStend_AFAR
         private void OnClickedRadioButtonRCOM(object? sender, EventArgs e) { 
             
         }
-
 
 
         /// Обработчик выхода из программы
@@ -294,11 +295,21 @@ namespace LabStend_AFAR
             }
         }
 
+        public void WriteToStatusLabel(string message) {
+            StatusLabel.Text += message;
+        }
+        public void WriteToStatusLabel(string message, string blockName)
+        {
+            StatusLabel.Text += "\n" + blockName + ": " + message;
+        }
+
         private void PI_connect_Clicked(System.Object sender, System.EventArgs e)
         {
 
         }
     }
+
+
 
 
     // ------------- КЛАССЫ -------------------------------

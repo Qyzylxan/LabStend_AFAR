@@ -223,7 +223,7 @@ namespace LabStend_AFAR
         // Запись состояний МШУ в БКУ
         public static void WriteBKU() { 
             
-        
+            
         }
 
     }
