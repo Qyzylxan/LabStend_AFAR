@@ -9,8 +9,17 @@ namespace LabStend_AFAR
 {
     public partial class MainPage : ContentPage
     {
-        double eps = 0.001;
-        int count = 0;
+        double f = 2; // ГГц
+        double c = 0.3; // м/с * 10^9 
+        double thetaMax = 30; // Макс. угол отклонения луча, град
+
+        double lambda; // Длина волны, м
+        double d; // Шаг решётки, м
+
+
+        double deg = Math.PI / 180;
+        double eps = 0.001; // Машинный эпсилон
+
         Label[] buttons6Att;
         Label[] buttons6Ph;
 
@@ -32,6 +41,8 @@ namespace LabStend_AFAR
         public MainPage()
         {
 
+            lambda = c / f;
+            d = lambda / (1 + Math.Sin(thetaMax*deg));
 
             // Инициализация
             InitializeComponent();
@@ -103,6 +114,8 @@ namespace LabStend_AFAR
 
         }
 
+
+
         // Функция нажатия кнопки
         private void OnClickedBit(object? sender, EventArgs e) 
         {            
@@ -124,20 +137,67 @@ namespace LabStend_AFAR
             else button.Text = "0";
 
         }
+
+
+        // Кнопка Ок угла отклонения луча АФАР (БУАФ)
+        private void OnClickedOkBUAF(object? sender, EventArgs e) {
+            Button button = (Button)sender;
+
+            double thetaShift = 0;
+            if (double.TryParse(EntryAngle.Text, out double angle))
+            {
+                if (angle < -thetaMax)
+                {
+                    angle = -thetaMax;
+                    EntryAngle.Text = $"{thetaMax}";
+                }
+                if (angle > thetaMax)
+                {
+                    angle = thetaMax;
+                    EntryAngle.Text = $"{thetaMax}";
+                }
+                else {
+                    thetaShift = PhaseDelay(angle);
+                }
+
+            }
+            else
+            {
+
+            }
+
+        }
+        double PhaseDelay(double angle) {
+            return 2*Math.PI*d*Math.Sin(angle*deg)/lambda;
+        }
+
+
+        //Радиокнопки выбора режима работы МШУ
         private void OnClickedRadioButtonLNA(object? sender, EventArgs e) {
             RadioButton radioButton = (RadioButton)sender;
 
+            OkHandlerLNA(radioButton);
+        }
+
+
+        private void OkHandlerLNA(RadioButton radioButton) {
             byte code;
-            switch (radioButton.Value) {
+            switch (radioButton.Value)
+            {
                 case "1": code = 1; break;
                 case "2": code = 2; break;
                 case "0": code = 0; break;
                 default: code = 0; break;
             }
-                lna.Set(code);
+            lna.Set(code);
             lna.SendCommand(code, writeMode);
         }
-        private void OnClickedOkButton(object? sender, EventArgs e) 
+
+
+
+
+        // Кнопка Ок аттенюатора
+        private void OnClickedOkButtonAtt(object? sender, EventArgs e) 
         {
             Button button = (Button)sender;
 
@@ -145,22 +205,41 @@ namespace LabStend_AFAR
                 Console.WriteLine("Порт не найден");
                 return;
             }
+            OkHandlerAtt(EntryAmp);
+            
+        }
+        private void OnClickedOkButtonAtt2(object? sender, EventArgs e)
+        {
+            Button button = (Button)sender;
 
+            if (serialPortBKU == null || !serialPortBKU.IsOpen)
+            {
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+            OkHandlerAtt(EntryAmp2);
+
+        }
+
+
+
+        private void OkHandlerAtt(Entry entryAmp) {
             if (double.TryParse(EntryAmp.Text, out double attenuationValue))
             {
                 if (attenuationValue < 0)
                 {
                     attenuationValue = 0;
-                    EntryAmp.Text = "0";
+                    entryAmp.Text = "0";
                 }
                 if (attenuationValue > 31.5)
                 {
                     attenuationValue = 31.5;
-                    EntryAmp.Text = "31.5";
+                    entryAmp.Text = "31.5";
                 }
             }
-            else { 
-                
+            else
+            {
+
             }
 
             attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
@@ -177,9 +256,8 @@ namespace LabStend_AFAR
             }
             Console.WriteLine(attenuationWord);
             Console.WriteLine(Convert.ToString(attenuationWord, 2));
-
-
         }
+
 
         public void OnToggledMode(object? sender, EventArgs a) {
             Switch switcher = (Switch)sender;
@@ -188,9 +266,12 @@ namespace LabStend_AFAR
 
 
 
+        // Обработчик кнопки выбора режима коммутатора
         private void OnClickedRadioButtonRCOM(object? sender, EventArgs e) { 
             
         }
+
+
 
         /// Обработчик выхода из программы
         private async void OnExit()

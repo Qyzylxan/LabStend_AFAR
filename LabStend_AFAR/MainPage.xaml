@@ -102,7 +102,32 @@
         <ScrollView HeightRequest="500">
             
             <!--Блок с управлениями МШУ, Атт, ФВ-->
+            <Border>
                 <VerticalStackLayout>
+                    <Border>
+                        <HorizontalStackLayout>
+                            <Label FontSize="Title"  Text="БУАФ"/>
+                            <Label FontSize="Title" Text="                                           ." Opacity="255"/>
+                            <Label FontSize="Title" Text="                                                    ." Opacity="255"/>
+                            <Border>
+                                <StackLayout>
+
+                                    <HorizontalStackLayout>
+
+
+                                        <Label FontSize="Subtitle" Text="Угол отклонения луча АФАР"/>
+                                        <Entry x:Name="EntryAngle" MaxLength="3" Keyboard="Numeric"/>
+                                        <Label Text=" град"/>
+                                    </HorizontalStackLayout>
+
+                                    <Button class="OK_buttonAngle" Text="ОК" Clicked="OnClickedOkBUAF"/>
+                                </StackLayout>
+                            </Border>
+                        </HorizontalStackLayout>
+                    </Border>
+
+
+                        <!--МУАФ 1-->
                     <HorizontalStackLayout>
                         <!--Номер МУАФ-->
                         <Border>
@@ -127,7 +152,7 @@
                                     <Entry x:Name="EntryAmp"  MaxLength="5" Keyboard="Numeric"/>
                                     <Label Text=" дБ"/>
                                 </HorizontalStackLayout>
-                                <Button x:Name="OkButtonAtt" class="OK_button" Text="ОК" Clicked="OnClickedOkButton" />
+                                <Button x:Name="OkButtonAtt" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
 
                                 <Border>
                                     <Label Text="Кодовая посылка" />
@@ -212,8 +237,8 @@
                     </HorizontalStackLayout>
 
 
-
-                <HorizontalStackLayout>
+                    <!--МУАФ 2-->
+                    <HorizontalStackLayout>
                     <!--Номер МУАФ-->
                     <Border>
                         <Label FontSize="Title"  Text="МУАФ 2" />
@@ -237,7 +262,7 @@
                                 <Entry x:Name="EntryAmp2"  MaxLength="5" Keyboard="Numeric"/>
                                 <Label Text=" дБ"/>
                             </HorizontalStackLayout>
-                            <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButton" />
+                            <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt2" />
 
                             <Border>
                                 <Label Text="Кодовая посылка" />
@@ -282,7 +307,7 @@
                                 <Entry x:Name="EntryPh_2" MaxLength="3" Keyboard="Numeric"/>
                                 <Label Text=" град"/>
                             </HorizontalStackLayout>
-                            <Button class="OK_button" Text="ОК"/>
+                            <Button class="OK_button2" Text="ОК"/>
 
                             <Border>
                                 <Label Text="Кодовая посылка" />
@@ -330,6 +355,7 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" /-->
                 </VerticalStackLayout>
+            </Border>
         </ScrollView>
         
         <Border>
