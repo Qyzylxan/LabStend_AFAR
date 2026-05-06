@@ -117,7 +117,7 @@
 
 
                                         <Label FontSize="Subtitle" Text="Угол отклонения луча АФАР"/>
-                                        <Entry x:Name="EntryAngle" MaxLength="3" Keyboard="Numeric"/>
+                                        <Entry x:Name="EntryAngle" MaxLength="4" Keyboard="Numeric"/>
                                         <Label Text=" град"/>
                                     </HorizontalStackLayout>
 
@@ -172,11 +172,11 @@
                                     <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазовращателями"/>
                                     <HorizontalStackLayout>
                                         <Label Text="Сдвиг фазы "/>
-                                        <Entry x:Name="EntryPh" MaxLength="3" Keyboard="Numeric"/>
+                                        <Entry x:Name="EntryPh" MaxLength="5" Keyboard="Numeric"/>
                                         <Label Text=" град"/>
                                     </HorizontalStackLayout>
 
-                                    <Button x:Name="OkButtonPh" class="OK_button" Text="ОК"/>
+                                    <Button x:Name="OkButtonPh" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
 
                                     <Border>
                                         <Label Text="Кодовая посылка" />
@@ -233,13 +233,16 @@
                     <!--Управление фазой-->
                     <Border>
                         <StackLayout>
-                            <Label x:Name="header_Ph_2" FontSize="Title" Text="Управление фазовращателями"/>
+                            <Label x:Name="header_Ph2" FontSize="Title" Text="Управление фазовращателями"/>
                             <HorizontalStackLayout>
                                 <Label Text="Сдвиг фазы "/>
-                                <Entry x:Name="EntryPh_2" MaxLength="3" Keyboard="Numeric"/>
+                                <Entry x:Name="EntryPh2" MaxLength="5" Keyboard="Numeric"/>
                                 <Label Text=" град"/>
                             </HorizontalStackLayout>
-                            <Button class="OK_button2" Text="ОК"/>
+
+
+                                    <Button x:Name="OkButtonPh2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
+
 
                             <Border>
                                 <Label Text="Кодовая посылка" />
@@ -300,15 +303,16 @@
                         <!--Управление фазой-->
                         <Border>
                             <StackLayout>
-                                <Label x:Name="header_Ph_3" FontSize="Title" Text="Управление фазовращателями"/>
+                                <Label x:Name="header_Ph3" FontSize="Title" Text="Управление фазовращателями"/>
                                 <HorizontalStackLayout>
                                     <Label Text="Сдвиг фазы "/>
-                                    <Entry x:Name="EntryPh_3" MaxLength="3" Keyboard="Numeric"/>
+                                    <Entry x:Name="EntryPh3" MaxLength="5" Keyboard="Numeric"/>
                                     <Label Text=" град"/>
                                 </HorizontalStackLayout>
-                                <Button class="OK_button3" Text="ОК"/>
 
-                                <Border>
+                                    <Button x:Name="OkButtonPh3" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
+
+                                    <Border>
                                     <Label Text="Кодовая посылка" />
                                 </Border>
 
@@ -365,13 +369,14 @@
                             <!--Управление фазой-->
                             <Border>
                                 <StackLayout>
-                                    <Label x:Name="header_Ph_4" FontSize="Title" Text="Управление фазовращателями"/>
+                                    <Label x:Name="header_Ph4" FontSize="Title" Text="Управление фазовращателями"/>
                                     <HorizontalStackLayout>
                                         <Label Text="Сдвиг фазы "/>
-                                        <Entry x:Name="EntryPh_4" MaxLength="3" Keyboard="Numeric"/>
+                                        <Entry x:Name="EntryPh4" MaxLength="5" Keyboard="Numeric"/>
                                         <Label Text=" град"/>
                                     </HorizontalStackLayout>
-                                    <Button class="OK_button4" Text="ОК"/>
+
+                                    <Button x:Name="OkButtonPh4" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
 
                                     <Border>
                                         <Label Text="Кодовая посылка" />

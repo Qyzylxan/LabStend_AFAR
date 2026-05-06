@@ -37,8 +37,8 @@ namespace LabStend_AFAR
         bool writeMode = false;
 
         //
-        byte attenuationWord;
-        byte phaseWord;
+        //byte attenuationWord;
+        //byte phaseshiftWord;
 
         //
 
@@ -64,7 +64,7 @@ namespace LabStend_AFAR
 
             // Объявление объетов классов Устройств
             att = new Attenuator(LabelAttBitWord);
-            ph = new Phaser(LabelAttBitWord);
+            ph = new Phaser(LabelPhBitWord);
             lna = new LNA();
 
             // Списки портов
@@ -149,7 +149,7 @@ namespace LabStend_AFAR
                 return;
             }
 
-            // написать код установки значений сдвигов фазы на каждый ФВ
+            // написать код установки значений сдвигов фазы на каждый ФВ -------------------------------------
 
 
         }
@@ -159,6 +159,7 @@ namespace LabStend_AFAR
             return 360*d*Math.Sin(angle*deg)/lambda; // Результат возвращается в градусах
         }
 
+        //-------------------------------------
 
         // Радиокнопки выбора режима работы МШУ
         private void OnClickedRadioButtonLNA(object? sender, EventArgs e) {
@@ -198,8 +199,7 @@ namespace LabStend_AFAR
             lna.SendCommand(code, writeMode);
         }
 
-
-
+        //----------------------------
 
         // Кнопка Ок аттенюатора
         private void OnClickedOkButtonAtt(object? sender, EventArgs e) 
@@ -249,7 +249,7 @@ namespace LabStend_AFAR
             }
 
             
-            attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
+            byte attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
             double value = attenuationValue;
             byte flag = 1<<6;
             // Цикл перевода полученного значения в битовую посылку
@@ -289,6 +289,100 @@ namespace LabStend_AFAR
             }
 
         }
+
+        //----------------------------------
+
+        // Кнопка ОК Фазовращателя
+        private void OnClickedOkButtonPh(object? sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+
+            OkHandlerPh(button);
+
+        }
+        // Обработчик нажатия кнопки Ок Фазовращателя
+        private void OkHandlerPh(Button button)
+        {
+            // Структура битовой посылки: 0000 0000 , 0000 0000
+            //                              command   addr id
+            // Определение битов адреса; соответствие поля ввода блоку фазовращателя
+            string errorMessageBlockName = "Фазовращатель 1";
+            byte addr = 0;
+            Entry entry = EntryPh;
+            Label labelBit = LabelPhBitWord;
+
+            if (button == OkButtonPh) { }
+            else if (button == OkButtonPh2) { addr = 1; entry = EntryPh2; errorMessageBlockName = "Фазовращатель 2"; labelBit = LabelPhBitWord2; }
+            else if (button == OkButtonPh3) { addr = 2; entry = EntryPh3; errorMessageBlockName = "Фазовращатель 3"; labelBit = LabelPhBitWord3; }
+            else if (button == OkButtonPh4) { addr = 3; entry = EntryPh4; errorMessageBlockName = "Фазовращатель 4"; labelBit = LabelPhBitWord4; }
+            addr <<= 4;
+            addr += phID;
+
+            // Парсинг вводимого текста
+            if (double.TryParse(entry.Text, out double phaseshiftValue))
+            {
+                if (phaseshiftValue < 0)
+                {
+                    phaseshiftValue = 0;
+                    entry.Text = $"{phaseshiftValue}";
+                }
+                if (phaseshiftValue > 354.4)
+                {
+                    phaseshiftValue = 354.4;
+                    entry.Text = $"{phaseshiftValue}";
+                }
+            }
+            else
+            {
+                // Если не распарсил текст с ввода
+                WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 354,4", errorMessageBlockName);
+                return;
+            }
+
+
+            byte phaseshiftWord = 0; // установка значения битовой посылки в исходный 00000000
+            double value = phaseshiftValue;
+            byte flag = 1 << 6;
+            // Цикл перевода полученного значения в битовую посылку
+            for (int i = 5; i >= 0; i--)
+            {
+                if (value / ph.PhaseShifts[i] > (1 - eps))
+                {
+                    phaseshiftWord = (byte)(phaseshiftWord ^ flag);
+                    value -= ph.PhaseShifts[i];
+                }
+                flag >>= 1;
+            }
+
+            // Проверка на кратность шагу
+            if (value > eps)
+            {
+                WriteToStatusLabel("Значение сдвига фазы не кратно шагу 5,6 град. Округление...", errorMessageBlockName);
+                entry.Text = $"{phaseshiftValue - value}";
+            }
+
+            // Вывод команды в поля
+            Console.WriteLine(phaseshiftWord);
+            Console.WriteLine(Convert.ToString(phaseshiftWord, 2));
+
+
+            labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
+
+
+            // Проверка на доступность порта перед записью команды
+            if (serialPortBKU == null || !serialPortBKU.IsOpen)
+            {
+                WriteToStatusLabel("\nПорт не найден");
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+            else
+            {
+                // запись команды в порт
+            }
+
+        }
+
 
 
         public void OnToggledMode(object? sender, EventArgs a) {
