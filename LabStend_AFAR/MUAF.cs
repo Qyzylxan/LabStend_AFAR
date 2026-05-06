@@ -13,24 +13,22 @@ namespace LabStend_AFAR
     public class Attenuator
     {
         public double[] AttenuationLevels = {0.5, 1, 2, 4, 8, 16 };
-        private bool[] bitword = new bool[6];
-        public Label[] buttons6 = new Label[6]; // подумать над доступом
+        private byte bitword = 0b00000000;
+        public Label bitWordLabel = new Label(); // подумать над доступом
 
-        public Attenuator(Label[] buttons)
+        public Attenuator(Label bitWordLabel)
         {
-            for (int i = 0; i < buttons6.Length; i++)
-            {
-                buttons6[i] = buttons[i];
-                bitword[i] = false;
-            }
+            bitWordLabel = bitWordLabel;
+            bitword = 0;
+            
         }
-        public void Set(int n)
+        public void Set(byte word)
         {
-            bitword[n] = !bitword[n];
+            bitword = word;
         }
-        public bool Get(int n)
+        public byte Get()
         {
-            return bitword[n];
+            return bitword;
         }
     }
 

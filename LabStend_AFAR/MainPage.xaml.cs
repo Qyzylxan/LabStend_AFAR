@@ -20,7 +20,6 @@ namespace LabStend_AFAR
         double deg = Math.PI / 180;
         double eps = 0.001; // Машинный эпсилон
 
-        Label[] buttons6Att;
         Label[] buttons6Ph;
 
         Attenuator att;
@@ -57,15 +56,14 @@ namespace LabStend_AFAR
 
 
             // объявление полей битов (неактуально, упразднить или модифицировать)
-            buttons6Att = new Label[] {
-                AttD1, AttD2, AttD3, AttD4, AttD5, AttD6
-            };
+
+            
             buttons6Ph = new Label[] {
                 ButtonPh1, ButtonPh2, ButtonPh3, ButtonPh4, ButtonPh5, ButtonPh6
             };
 
             // Объявление объетов классов Устройств
-            att = new Attenuator(buttons6Att);
+            att = new Attenuator(LabelAttBitWord);
             ph = new Phaser(buttons6Ph);
             lna = new LNA();
 
@@ -117,23 +115,14 @@ namespace LabStend_AFAR
 
 
         // Функция нажатия кнопки
-        private void OnClickedBit(object? sender, EventArgs e) 
-        {            
-            Button button = (Button)sender;
-            int index = Array.IndexOf(att.buttons6, button); // рассмотреть целесообразность Array.IndexOf()
-
-            att.Set(index);
-            if (att.Get(index) == true) button.Text = "1";
-            else button.Text = "0";
-
-        }
+        
         private void OnClickedBitPh(object? sender, EventArgs e)
         {
             Button button = (Button)sender;
             int index = Array.IndexOf(ph.buttons6, button); // рассмотреть целесообразность Array.IndexOf()
 
-            att.Set(index);
-            if (att.Get(index) == true) button.Text = "1";
+            ph.Set(index);
+            if (ph.Get(index) == true) button.Text = "1";
             else button.Text = "0";
 
         }
@@ -201,10 +190,6 @@ namespace LabStend_AFAR
         {
             Button button = (Button)sender;
 
-            if (serialPortBKU == null || !serialPortBKU.IsOpen) {
-                Console.WriteLine("Порт не найден");
-                return;
-            }
             OkHandlerAtt(EntryAmp);
             
         }
@@ -224,38 +209,54 @@ namespace LabStend_AFAR
 
 
         private void OkHandlerAtt(Entry entryAmp) {
+            string errorMessageBlockName = "Аттенюатор 1";
             if (double.TryParse(EntryAmp.Text, out double attenuationValue))
             {
                 if (attenuationValue < 0)
                 {
                     attenuationValue = 0;
-                    entryAmp.Text = "0";
+                    entryAmp.Text = $"{attenuationValue}";
                 }
                 if (attenuationValue > 31.5)
                 {
                     attenuationValue = 31.5;
-                    entryAmp.Text = "31.5";
+                    entryAmp.Text = $"{attenuationValue}";
                 }
             }
             else
             {
-
+                StatusLabel.Text += $"\n{errorMessageBlockName}: Текст с поля ввода не распознан. Введите число от 0 до 31.5";
+                // Если не распарсил текст с ввода
             }
 
             attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
-            byte flag = 1;
+            byte flag = 1<<6;
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 5; i >= 0; i--)
             {
-                if (attenuationValue / att.AttenuationLevels[i] >= eps)
+                if (attenuationValue / att.AttenuationLevels[i] > (1 - eps))
                 {
                     attenuationWord = (byte)(attenuationWord ^ flag);
                     attenuationValue -= att.AttenuationLevels[i];
                 }
-                flag <<= 1;
+                flag >>= 1;
             }
+
+            // Вывод команды
             Console.WriteLine(attenuationWord);
             Console.WriteLine(Convert.ToString(attenuationWord, 2));
+
+            LabelAttBitWord.Text = Convert.ToString(attenuationWord, 2).PadLeft(8, '0');
+
+
+            // Проверка на доступность порта перед записью команды
+            if (serialPortBKU == null || !serialPortBKU.IsOpen)
+            {
+                StatusLabel.Text += "\nПорт не найден";
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+
         }
 
 

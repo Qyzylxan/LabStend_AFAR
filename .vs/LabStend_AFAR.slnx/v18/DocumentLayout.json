@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\comport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\comport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\bku.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\bku.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\lpt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\lpt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|c:\\users\\a.tan\\documents\\\u043B\u043C \u0430\u0444\u0430\u0440\\\u043F\u043E\\\u0441\u043F\u043E \u0431\u0443\u0430\u0444\\labstend_afar\\labstend_afar\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -50,66 +50,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BKU.cs",
-              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\BKU.cs",
-              "RelativeDocumentMoniker": "LabStend_AFAR\\BKU.cs",
-              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\BKU.cs",
-              "RelativeToolTip": "LabStend_AFAR\\BKU.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T08:21:46.971Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MUAF.cs",
-              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MUAF.cs",
-              "RelativeDocumentMoniker": "LabStend_AFAR\\MUAF.cs",
-              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MUAF.cs",
-              "RelativeToolTip": "LabStend_AFAR\\MUAF.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwA4AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T16:09:54.05Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "LPT.cs",
-              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\LPT.cs",
-              "RelativeDocumentMoniker": "LabStend_AFAR\\LPT.cs",
-              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\LPT.cs",
-              "RelativeToolTip": "LabStend_AFAR\\LPT.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-29T17:43:00.467Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MainPage.xaml",
-              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml",
-              "RelativeDocumentMoniker": "LabStend_AFAR\\MainPage.xaml",
-              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml",
-              "RelativeToolTip": "LabStend_AFAR\\MainPage.xaml",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAAAHoAAABlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-15T16:37:05.245Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "MainPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "LabStend_AFAR\\MainPage.xaml.cs",
               "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml.cs",
               "RelativeToolTip": "LabStend_AFAR\\MainPage.xaml.cs",
-              "ViewState": "AgIAAAgBAAAAAAAAAAAuwIkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAANQAAAAAAAAAAADwv/MAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T16:28:46.684Z",
               "EditorCaption": ""
@@ -117,6 +68,58 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "BKU.cs",
+              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\BKU.cs",
+              "RelativeDocumentMoniker": "LabStend_AFAR\\BKU.cs",
+              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\BKU.cs",
+              "RelativeToolTip": "LabStend_AFAR\\BKU.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T08:21:46.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MUAF.cs",
+              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MUAF.cs",
+              "RelativeDocumentMoniker": "LabStend_AFAR\\MUAF.cs",
+              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MUAF.cs",
+              "RelativeToolTip": "LabStend_AFAR\\MUAF.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T16:09:54.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LPT.cs",
+              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\LPT.cs",
+              "RelativeDocumentMoniker": "LabStend_AFAR\\LPT.cs",
+              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\LPT.cs",
+              "RelativeToolTip": "LabStend_AFAR\\LPT.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-29T17:43:00.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml",
+              "RelativeDocumentMoniker": "LabStend_AFAR\\MainPage.xaml",
+              "ToolTip": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml",
+              "RelativeToolTip": "LabStend_AFAR\\MainPage.xaml",
+              "ViewState": "AgIAAHkAAAAAAAAAAAApwJoAAAB2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-15T16:37:05.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "COMport.cs",
               "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\COMport.cs",
               "RelativeDocumentMoniker": "LabStend_AFAR\\COMport.cs",
@@ -124,7 +127,8 @@
               "RelativeToolTip": "LabStend_AFAR\\COMport.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-20T16:25:22.009Z"
+              "WhenOpened": "2026-04-20T16:25:22.009Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -140,7 +144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\Users\\a.tan\\Documents\\\u041B\u041C \u0410\u0424\u0410\u0420\\\u041F\u041E\\\u0421\u041F\u041E \u0411\u0423\u0410\u0424\\LabStend_AFAR\\LabStend_AFAR\\MauiProgram.cs",
               "RelativeDocumentMoniker": "LabStend_AFAR\\MauiProgram.cs",
