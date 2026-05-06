@@ -26,6 +26,12 @@ namespace LabStend_AFAR
         Phaser ph;
         LNA lna;
 
+        // константы идентификаторов устройсты для распознавания БКУ во время адресации команд
+        const byte lnaID = 0b00000001;
+        const byte attID = 0b00000010;
+        const byte phID = 0b00000011;
+        const byte rcomID = 0b00000100;
+
 
         //
         bool writeMode = false;
@@ -154,15 +160,29 @@ namespace LabStend_AFAR
         }
 
 
-        //Радиокнопки выбора режима работы МШУ
+        // Радиокнопки выбора режима работы МШУ
         private void OnClickedRadioButtonLNA(object? sender, EventArgs e) {
             RadioButton radioButton = (RadioButton)sender;
 
             OkHandlerLNA(radioButton);
         }
 
-
+        // Обработчик выбора радиокнопок МШУ
         private void OkHandlerLNA(RadioButton radioButton) {
+            // Структура битовой посылки: 0000 0000
+            //                         command addr
+
+            // Определение битов адреса
+            byte addr;
+            switch (radioButton.GroupName) {
+                case "Gain": addr = 0; break;
+                case "Gain2": addr = 1; break;
+                case "Gain3": addr = 2; break;
+                case "Gain4": addr = 3; break;
+                    default: addr = 0; break;
+            }
+            
+            // Определение битов команды
             byte code;
             switch (radioButton.Value)
             {
@@ -171,6 +191,9 @@ namespace LabStend_AFAR
                 case "0": code = 0; break;
                 default: code = 0; break;
             }
+            code <<= 4; // сдвиг битов команды в старшие регистры
+            code += addr;
+
             lna.Set(code);
             lna.SendCommand(code, writeMode);
         }
@@ -183,37 +206,39 @@ namespace LabStend_AFAR
         {
             Button button = (Button)sender;
 
-            OkHandlerAtt(EntryAmp);
+            OkHandlerAtt(button);
             
-        }
-        private void OnClickedOkButtonAtt2(object? sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-
-            if (serialPortBKU == null || !serialPortBKU.IsOpen)
-            {
-                Console.WriteLine("Порт не найден");
-                return;
-            }
-            OkHandlerAtt(EntryAmp2);
-
         }
 
         // Обработчик нажатия кнопки Ок Аттенюатора
-        private void OkHandlerAtt(Entry entryAmp) {
+        private void OkHandlerAtt(Button button) {
+            // Структура битовой посылки: 0000 0000 , 0000 0000
+            //                              command   addr id
+            // Определение битов адреса; соответствие поля ввода блоку аттенюатора
             string errorMessageBlockName = "Аттенюатор 1";
+            byte addr = 0;
+            Entry entry = EntryAmp;
+            Label labelBit = LabelAttBitWord;
 
-            if (double.TryParse(EntryAmp.Text, out double attenuationValue))
+            if (button == OkButtonAtt)          { }
+            else if (button == OkButtonAtt2)    { addr = 1; entry = EntryAmp2; errorMessageBlockName = "Аттенюатор 2"; labelBit = LabelAttBitWord2; }
+            else if (button == OkButtonAtt3)    { addr = 2; entry = EntryAmp3; errorMessageBlockName = "Аттенюатор 3"; labelBit = LabelAttBitWord3; }
+            else if (button == OkButtonAtt4)    { addr = 3; entry = EntryAmp4; errorMessageBlockName = "Аттенюатор 4"; labelBit = LabelAttBitWord4;}
+            addr <<= 4;
+            addr += attID;
+
+            // Парсинг вводимого текста
+            if (double.TryParse(entry.Text, out double attenuationValue))
             {
                 if (attenuationValue < 0)
                 {
                     attenuationValue = 0;
-                    entryAmp.Text = $"{attenuationValue}";
+                    entry.Text = $"{attenuationValue}";
                 }
                 if (attenuationValue > 31.5)
                 {
                     attenuationValue = 31.5;
-                    entryAmp.Text = $"{attenuationValue}";
+                    entry.Text = $"{attenuationValue}";
                 }
             }
             else
@@ -241,14 +266,15 @@ namespace LabStend_AFAR
             // Проверка на кратность шагу
             if (value > eps) {
                 WriteToStatusLabel("Значение ослабления не кратно шагу 0,5 дБ. Округление...", errorMessageBlockName);
-                entryAmp.Text = $"{attenuationValue - value}";
+                entry.Text = $"{attenuationValue - value}";
             }
 
             // Вывод команды в поля
             Console.WriteLine(attenuationWord);
             Console.WriteLine(Convert.ToString(attenuationWord, 2));
 
-            LabelAttBitWord.Text = Convert.ToString(attenuationWord, 2).PadLeft(8, '0');
+
+            labelBit.Text = Convert.ToString(attenuationWord, 2).PadLeft(8, '0');
 
 
             // Проверка на доступность порта перед записью команды
@@ -257,6 +283,9 @@ namespace LabStend_AFAR
                 WriteToStatusLabel("\nПорт не найден");
                 Console.WriteLine("Порт не найден");
                 return;
+            }
+            else { 
+                // запись команды в порт
             }
 
         }

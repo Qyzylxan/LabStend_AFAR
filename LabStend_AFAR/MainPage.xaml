@@ -160,23 +160,23 @@
                                 </Border>
                                 <!--Текст кодовой посылки-->
                                 <Border>
-                                    <Label x:Name="LabelAttBitWord" Text="00000000" Grid.Column="0" Grid.Row="0"/>
+                                    <Label x:Name="LabelAttBitWord" Text="00000000"/>
                                 </Border>
 
                             </StackLayout>
                         </Border>
 
                         <!--Управление фазой-->
-                        <Border>
-                            <StackLayout>
-                                <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазовращателями"/>
+                            <Border>
+                                <StackLayout>
+                                    <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазовращателями"/>
                                     <HorizontalStackLayout>
                                         <Label Text="Сдвиг фазы "/>
                                         <Entry x:Name="EntryPh" MaxLength="3" Keyboard="Numeric"/>
                                         <Label Text=" град"/>
                                     </HorizontalStackLayout>
-                                
-                                    <Button class="OK_button" Text="ОК"/>
+
+                                    <Button x:Name="OkButtonPh" class="OK_button" Text="ОК"/>
 
                                     <Border>
                                         <Label Text="Кодовая посылка" />
@@ -185,12 +185,10 @@
                                         <Label x:Name="LabelPhBitWord" Text="00000000" />
                                     </Border>
 
+                                </StackLayout>
+                            </Border>
 
-                            </StackLayout>
-                        </Border>
-
-
-                    </HorizontalStackLayout>
+                        </HorizontalStackLayout>
 
 
                     <!--                                МУАФ 2                              -->
@@ -218,40 +216,18 @@
                                 <Entry x:Name="EntryAmp2"  MaxLength="5" Keyboard="Numeric"/>
                                 <Label Text=" дБ"/>
                             </HorizontalStackLayout>
-                            <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt2" />
+                            <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
 
                             <Border>
                                 <Label Text="Кодовая посылка" />
                             </Border>
 
-                            <Border>
-                                <Grid>
+                                    <!--Текст кодовой посылки-->
+                                    <Border>
+                                        <Label x:Name="LabelAttBitWord2" Text="00000000"/>
+                                    </Border>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <Label x:Name="AttD1_2" Text="0" Grid.Column="0" Grid.Row="0"/>
-                                    <Label x:Name="AttD2_2" Text="0" Grid.Column="1" Grid.Row="0"/>
-                                    <Label x:Name="AttD3_2" Text="0" Grid.Column="2" Grid.Row="0"/>
-                                    <Label x:Name="AttD4_2" Text="0" Grid.Column="3" Grid.Row="0"/>
-                                    <Label x:Name="AttD5_2" Text="0" Grid.Column="4" Grid.Row="0"/>
-                                    <Label x:Name="AttD6_2" Text="0" Grid.Column="5" Grid.Row="0"/>
-
-
-                                </Grid>
-                            </Border>
-
-                        </StackLayout>
+                                </StackLayout>
                     </Border>
 
                     <!--Управление фазой-->
@@ -269,34 +245,13 @@
                                 <Label Text="Кодовая посылка" />
                             </Border>
 
-                            <Border>
-                                <Grid>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                        <ColumnDefinition  />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <Label x:Name="ButtonPh1_2" Text="0" Grid.Column="0" Grid.Row="0" />
-                                    <Label x:Name="ButtonPh2_2" Text="0" Grid.Column="1" Grid.Row="0" />
-                                    <Label x:Name="ButtonPh3_2" Text="0" Grid.Column="2" Grid.Row="0" />
-                                    <Label x:Name="ButtonPh4_2" Text="0" Grid.Column="3" Grid.Row="0" />
-                                    <Label x:Name="ButtonPh5_2" Text="0" Grid.Column="4" Grid.Row="0" />
-                                    <Label x:Name="ButtonPh6_2" Text="0" Grid.Column="5" Grid.Row="0" />
-
-                                </Grid>
-                            </Border>
+                                    <!--Текст кодовой посылки-->
+                                    <Border>
+                                        <Label x:Name="LabelPhBitWord2" Text="00000000"/>
+                                    </Border>
 
 
-                        </StackLayout>
+                                </StackLayout>
                     </Border>
 
 
@@ -328,40 +283,18 @@
                                     <Entry x:Name="EntryAmp3"  MaxLength="5" Keyboard="Numeric"/>
                                     <Label Text=" дБ"/>
                                 </HorizontalStackLayout>
-                                <Button x:Name="OkButtonAtt3" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt2" />
+                                <Button x:Name="OkButtonAtt3" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
 
                                 <Border>
                                     <Label Text="Кодовая посылка" />
                                 </Border>
 
-                                <Border>
-                                    <Grid>
+                                    <!--Текст кодовой посылки-->
+                                    <Border>
+                                        <Label x:Name="LabelAttBitWord3" Text="00000000"/>
+                                    </Border>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                        </Grid.RowDefinitions>
-
-                                        <Label x:Name="AttD1_3" Text="0" Grid.Column="0" Grid.Row="0"/>
-                                        <Label x:Name="AttD2_3" Text="0" Grid.Column="1" Grid.Row="0"/>
-                                        <Label x:Name="AttD3_3" Text="0" Grid.Column="2" Grid.Row="0"/>
-                                        <Label x:Name="AttD4_3" Text="0" Grid.Column="3" Grid.Row="0"/>
-                                        <Label x:Name="AttD5_3" Text="0" Grid.Column="4" Grid.Row="0"/>
-                                        <Label x:Name="AttD6_3" Text="0" Grid.Column="5" Grid.Row="0"/>
-
-
-                                    </Grid>
-                                </Border>
-
-                            </StackLayout>
+                                </StackLayout>
                         </Border>
 
                         <!--Управление фазой-->
@@ -379,41 +312,83 @@
                                     <Label Text="Кодовая посылка" />
                                 </Border>
 
-                                <Border>
-                                    <Grid>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                            <ColumnDefinition  />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                        </Grid.RowDefinitions>
-
-                                        <Label x:Name="ButtonPh1_3" Text="0" Grid.Column="0" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh2_3" Text="0" Grid.Column="1" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh3_3" Text="0" Grid.Column="2" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh4_3" Text="0" Grid.Column="3" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh5_3" Text="0" Grid.Column="4" Grid.Row="0" />
-                                        <Label x:Name="ButtonPh6_3" Text="0" Grid.Column="5" Grid.Row="0" />
-
-                                    </Grid>
-                                </Border>
+                                    <Border>
+                                        <Label x:Name="LabelPhBitWord3" Text="00000000" />
+                                    </Border>
 
 
-                            </StackLayout>
+                                </StackLayout>
                         </Border>
 
 
                     </HorizontalStackLayout>
 
+                        <!--                                МУАФ 4                              -->
+                        <HorizontalStackLayout>
+                            <!--Номер МУАФ-->
+                            <Border>
+                                <Label FontSize="Title"  Text="МУАФ 4" />
+                            </Border>
+                            <!--Управление МШУ-->
+                            <Border>
+                                <StackLayout>
+                                    <Label x:Name="header_Gain4" FontSize="Title" Text="Режим работы МШУ" />
+                                    <RadioButton GroupName="Gain4" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
+                                    <RadioButton GroupName="Gain4" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                    <RadioButton GroupName="Gain4" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
+                                </StackLayout>
+                            </Border>
 
-                    <!--Button
+                            <!--Управление амплитудой-->
+                            <Border>
+                                <StackLayout>
+                                    <Label x:Name="header_Amp4" FontSize="Title" Text="Управление аттенюаторами"/>
+                                    <HorizontalStackLayout>
+                                        <Label Text="Ослабление амплитуды "/>
+                                        <Entry x:Name="EntryAmp4"  MaxLength="5" Keyboard="Numeric"/>
+                                        <Label Text=" дБ"/>
+                                    </HorizontalStackLayout>
+                                    <Button x:Name="OkButtonAtt4" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
+
+                                    <Border>
+                                        <Label Text="Кодовая посылка" />
+                                    </Border>
+
+                                    <!--Текст кодовой посылки-->
+                                    <Border>
+                                        <Label x:Name="LabelAttBitWord4" Text="00000000"/>
+                                    </Border>
+
+                                </StackLayout>
+                            </Border>
+
+                            <!--Управление фазой-->
+                            <Border>
+                                <StackLayout>
+                                    <Label x:Name="header_Ph_4" FontSize="Title" Text="Управление фазовращателями"/>
+                                    <HorizontalStackLayout>
+                                        <Label Text="Сдвиг фазы "/>
+                                        <Entry x:Name="EntryPh_4" MaxLength="3" Keyboard="Numeric"/>
+                                        <Label Text=" град"/>
+                                    </HorizontalStackLayout>
+                                    <Button class="OK_button4" Text="ОК"/>
+
+                                    <Border>
+                                        <Label Text="Кодовая посылка" />
+                                    </Border>
+
+                                    <Border>
+                                        <Label x:Name="LabelPhBitWord4" Text="00000000" />
+                                    </Border>
+
+
+                                </StackLayout>
+                            </Border>
+
+
+                        </HorizontalStackLayout>
+
+                        <!--Button
                 x:Name="CounterBtn"
                 Text="Click me" 
                 SemanticProperties.Hint="Counts the number of times you click"
@@ -425,7 +400,9 @@
         </Border>
 
         <Border>
-            <Label x:Name="StatusLabel" Text=""/>
+            <ScrollView>
+                <Label x:Name="StatusLabel" Text=""/>
+            </ScrollView>
         </Border>
     </VerticalStackLayout>
 
