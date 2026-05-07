@@ -80,23 +80,6 @@ namespace LabStend_AFAR
         }
 
 
-        // Функция нажатия кнопки
-        /*
-        private void OnCounterClicked(object? sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Нажато {count} разок";
-            else if ((count > 1) && (count < 5))
-                CounterBtn.Text = $"Нажато {count} раза";
-            else
-                CounterBtn.Text = $"Нажато {count} раз";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
-        */
-
         // Функция нажатия кнопки ручного подключения к БКУ
         private void OnClickedBKUConnect(object? sender, EventArgs e)
         {
@@ -121,7 +104,7 @@ namespace LabStend_AFAR
 
             string errorMessageBlockName = "БУАФ";
 
-            double angleShift = 0;  // фазовый сдвиг между соседними элементами АФАР
+            double phaseShift = 0;  // фазовый сдвиг между соседними элементами АФАР
             // Парсинг введённых данных
             if (double.TryParse(EntryAngle.Text, out double angle))
             {
@@ -131,13 +114,13 @@ namespace LabStend_AFAR
                     angle = -thetaMax;
                     EntryAngle.Text = $"{-thetaMax}";
                 }
-                if (angle > thetaMax)
+                else if (angle > thetaMax)
                 {
                     angle = thetaMax;
                     EntryAngle.Text = $"{thetaMax}";
                 }
                 else {
-                    angleShift = PhaseDelay(angle);
+                    phaseShift = PhaseDelay(angle);
 
                 }
 
@@ -150,14 +133,72 @@ namespace LabStend_AFAR
             }
 
             // написать код установки значений сдвигов фазы на каждый ФВ -------------------------------------
-
-
+            if (phaseShift >= 0)
+            {
+                PhaseWriter(0, EntryPh, LabelPhBitWord, "Фазовращатель 1");
+                PhaseWriter(phaseShift, EntryPh2, LabelPhBitWord2, "Фазовращатель 2");
+                PhaseWriter(2 * phaseShift, EntryPh3, LabelPhBitWord3, "Фазовращатель 3");
+                PhaseWriter(3 * phaseShift, EntryPh4, LabelPhBitWord4, "Фазовращатель 4");
+            }
+            else {
+                PhaseWriter(-3 * phaseShift, EntryPh, LabelPhBitWord, "Фазовращатель 1");
+                PhaseWriter(-2 * phaseShift, EntryPh2, LabelPhBitWord2, "Фазовращатель 2");
+                PhaseWriter(-phaseShift, EntryPh3, LabelPhBitWord3, "Фазовращатель 3");
+                PhaseWriter(0, EntryPh4, LabelPhBitWord4, "Фазовращатель 4");
+            }
         }
 
         // Функция расчёта угла отклонения луча АФАР
         double PhaseDelay(double angle) {
             return 360*d*Math.Sin(angle*deg)/lambda; // Результат возвращается в градусах
         }
+
+        private void PhaseWriter(double phaseshiftValue, Entry entry, Label labelBit, string errorMessageBlockName) {
+            byte phaseshiftWord = 0; // установка значения битовой посылки в исходный 00000000
+            double value = phaseshiftValue;
+            byte flag = 1 << 6;
+            // Цикл перевода полученного значения в битовую посылку
+            for (int i = 5; i >= 0; i--)
+            {
+                if (value / ph.PhaseShifts[i] > (1 - eps))
+                {
+                    phaseshiftWord = (byte)(phaseshiftWord ^ flag);
+                    value -= ph.PhaseShifts[i];
+                }
+                flag >>= 1;
+            }
+
+            // Проверка на кратность шагу
+            if (value > eps)
+            {
+                WriteToStatusLabel("Значение сдвига фазы не кратно шагу 5,6 град. Округление...", errorMessageBlockName);
+                entry.Text = $"{phaseshiftValue - value}";
+            }
+            else entry.Text = $"{phaseshiftValue}";
+
+            // Вывод команды в поля
+            Console.WriteLine(phaseshiftWord);
+            Console.WriteLine(Convert.ToString(phaseshiftWord, 2));
+
+
+            labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
+
+
+            // Проверка на доступность порта перед записью команды
+            if (serialPortBKU == null || !serialPortBKU.IsOpen)
+            {
+                WriteToStatusLabel("\nПорт не найден");
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+            else
+            {
+                // запись команды в порт
+            }
+
+        }
+
+
 
         //-------------------------------------
 

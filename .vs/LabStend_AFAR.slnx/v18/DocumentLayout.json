@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\\u0423\u0447\u0451\u0431\u0430\\\u0414\u0418\u041F\u041B\u041E\u041C\\\u041F\u041E\\LabStend_AFAR\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|d:\\\u0443\u0447\u0451\u0431\u0430\\\u0434\u0438\u043F\u043B\u043E\u043C\\\u043F\u043E\\labstend_afar\\labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|d:\\\u0443\u0447\u0451\u0431\u0430\\\u0434\u0438\u043F\u043B\u043E\u043C\\\u043F\u043E\\labstend_afar\\labstend_afar\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|d:\\\u0443\u0447\u0451\u0431\u0430\\\u0434\u0438\u043F\u043B\u043E\u043C\\\u043F\u043E\\labstend_afar\\labstend_afar\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|d:\\\u0443\u0447\u0451\u0431\u0430\\\u0434\u0438\u043F\u043B\u043E\u043C\\\u043F\u043E\\labstend_afar\\labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|solutionrelative:labstend_afar\\muaf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2B84617-127D-438D-78D1-5DF29D3A9537}|LabStend_AFAR\\LabStend_AFAR.csproj|d:\\\u0443\u0447\u0451\u0431\u0430\\\u0434\u0438\u043F\u043B\u043E\u043C\\\u043F\u043E\\labstend_afar\\labstend_afar\\errors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
@@ -70,39 +70,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MUAF.cs",
               "DocumentMoniker": "D:\\\u0423\u0447\u0451\u0431\u0430\\\u0414\u0418\u041F\u041B\u041E\u041C\\\u041F\u041E\\LabStend_AFAR\\LabStend_AFAR\\MUAF.cs",
               "RelativeDocumentMoniker": "LabStend_AFAR\\MUAF.cs",
               "ToolTip": "D:\\\u0423\u0447\u0451\u0431\u0430\\\u0414\u0418\u041F\u041B\u041E\u041C\\\u041F\u041E\\LabStend_AFAR\\LabStend_AFAR\\MUAF.cs",
               "RelativeToolTip": "LabStend_AFAR\\MUAF.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAuwEQAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwEQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-04T16:09:54.05Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "MainPage.xaml",
               "DocumentMoniker": "D:\\\u0423\u0447\u0451\u0431\u0430\\\u0414\u0418\u041F\u041B\u041E\u041C\\\u041F\u041E\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml",
               "RelativeDocumentMoniker": "LabStend_AFAR\\MainPage.xaml",
               "ToolTip": "D:\\\u0423\u0447\u0451\u0431\u0430\\\u0414\u0418\u041F\u041B\u041E\u041C\\\u041F\u041E\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml",
               "RelativeToolTip": "LabStend_AFAR\\MainPage.xaml",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAcwHcAAABMAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAcwHsAAABlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-04-15T16:37:05.245Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainPage.xaml.cs",
               "DocumentMoniker": "D:\\\u0423\u0447\u0451\u0431\u0430\\\u0414\u0418\u041F\u041B\u041E\u041C\\\u041F\u041E\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "LabStend_AFAR\\MainPage.xaml.cs",
               "ToolTip": "D:\\\u0423\u0447\u0451\u0431\u0430\\\u0414\u0418\u041F\u041B\u041E\u041C\\\u041F\u041E\\LabStend_AFAR\\LabStend_AFAR\\MainPage.xaml.cs",
               "RelativeToolTip": "LabStend_AFAR\\MainPage.xaml.cs",
-              "ViewState": "AgIAAEkBAAAAAAAAAAAAACsBAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAwwIQAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T16:28:46.684Z",
               "EditorCaption": ""
