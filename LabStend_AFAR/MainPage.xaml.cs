@@ -26,11 +26,7 @@ namespace LabStend_AFAR
         Phaser ph;
         LNA lna;
 
-        // константы идентификаторов устройсты для распознавания БКУ во время адресации команд
-        const byte lnaID = 0b00000001;
-        const byte attID = 0b00000010;
-        const byte phID = 0b00000011;
-        const byte rcomID = 0b00000100;
+        
 
 
         //
@@ -205,14 +201,15 @@ namespace LabStend_AFAR
         // Радиокнопки выбора режима работы МШУ
         private void OnClickedRadioButtonLNA(object? sender, EventArgs e) {
             RadioButton radioButton = (RadioButton)sender;
-
-            OkHandlerLNA(radioButton);
+            if (radioButton.IsChecked)  { 
+                OkHandlerLNA(radioButton); 
+            }
         }
 
         // Обработчик выбора радиокнопок МШУ
         private void OkHandlerLNA(RadioButton radioButton) {
-            // Структура битовой посылки: 0000 0000
-            //                         command addr
+            // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
+            //                            command     addr        id
 
             // Определение битов адреса
             byte addr;
@@ -224,20 +221,37 @@ namespace LabStend_AFAR
                     default: addr = 0; break;
             }
             
+            byte id = lnaID;
+
             // Определение битов команды
-            byte code;
+            byte lnaMode;
             switch (radioButton.Value)
             {
-                case "1": code = 1; break;
-                case "2": code = 2; break;
-                case "0": code = 0; break;
-                default: code = 0; break;
+                case "1": lnaMode = 1; break;
+                case "2": lnaMode = 2; break;
+                case "0": lnaMode = 0; break;
+                default: lnaMode = 0; break;
             }
-            code <<= 4; // сдвиг битов команды в старшие регистры
-            code += addr;
+            StatusLabel.Text += $"\nРежим МШУ: { lnaMode}";
 
-            lna.Set(code);
-            lna.SendCommand(code, writeMode);
+            //lna.Set(code);
+            //lna.SendCommand(code, writeMode);
+
+            // Формирование буфера-массива байт
+            byte[] buffer = { id, addr, lnaMode };
+            // Проверка на доступность порта перед записью команды
+            if (serialPortBKU == null || !serialPortBKU.IsOpen)
+            {
+                WriteToStatusLabel("\nПорт не найден");
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+            else
+            {
+                StatusLabel.Text += $",     запись в порт {serialPortBKU.PortName}";
+                // запись команды в порт
+                serialPortBKU.Write(buffer, 0, 3);
+            }
         }
 
         //----------------------------
@@ -409,6 +423,8 @@ namespace LabStend_AFAR
 
             labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
 
+            // Формирование буфера-массива байт
+            byte[] buffer = { addr, phaseshiftWord};
 
             // Проверка на доступность порта перед записью команды
             if (serialPortBKU == null || !serialPortBKU.IsOpen)
@@ -420,6 +436,7 @@ namespace LabStend_AFAR
             else
             {
                 // запись команды в порт
+                serialPortBKU.Write(buffer, 0, 2);
             }
 
         }

@@ -5,8 +5,13 @@ using System.Text;
 namespace LabStend_AFAR
 {
     public class MUAF
-    {   
-
+    {
+        // константы идентификаторов устройсты для распознавания БКУ во время адресации команд
+        public const byte bkuID = 0b00001111;
+        public const byte lnaID = 0b00000001;
+        public const byte attID = 0b00000010;
+        public const byte phID = 0b00000011;
+        public const byte rcomID = 0b00000100;
     }
 
     // Класс Малошумящего усилителя (МШУ)

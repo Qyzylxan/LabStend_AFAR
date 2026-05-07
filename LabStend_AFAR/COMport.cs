@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO.Ports;
+using static LabStend_AFAR.MUAF;
 
 namespace LabStend_AFAR
 {
@@ -29,6 +30,7 @@ namespace LabStend_AFAR
 
             // Создание объекта COM-порта для БКУ
             serialPortBKU = new SerialPort("COM1", baudBKU);
+            serialPortBKU.WriteTimeout = 50;
 
             testPort = new SerialPort();
             
@@ -166,6 +168,7 @@ namespace LabStend_AFAR
         {
             statusLabel.Text += "\nАвтопоиск БКУ...";
             Thread.Sleep(500);
+            byte[] bkuRequest = { bkuID};
 
             foreach (string portName in availablePorts)
             {
@@ -180,8 +183,8 @@ namespace LabStend_AFAR
 
                     testPort.Open();
 
-                    // Отправка команду запроса идентификации
-                    testPort.WriteLine("BKU?\n");
+                    // Отправка команду запроса идентификации (бывш. "BKU?\n")
+                    testPort.Write(bkuRequest, 0, 1);
 
                     // Ожидание ответа
                     string response = "";
