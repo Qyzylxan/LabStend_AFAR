@@ -267,8 +267,9 @@ namespace LabStend_AFAR
 
         // Обработчик нажатия кнопки Ок Аттенюатора
         private void OkHandlerAtt(Button button) {
-            // Структура битовой посылки: 0000 0000 , 0000 0000
-            //                              command   addr id
+            // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
+            //                            command     addr        id
+
             // Определение битов адреса; соответствие поля ввода блоку аттенюатора
             string errorMessageBlockName = "Аттенюатор 1";
             byte addr = 0;
@@ -279,8 +280,8 @@ namespace LabStend_AFAR
             else if (button == OkButtonAtt2)    { addr = 1; entry = EntryAmp2; errorMessageBlockName = "Аттенюатор 2"; labelBit = LabelAttBitWord2; }
             else if (button == OkButtonAtt3)    { addr = 2; entry = EntryAmp3; errorMessageBlockName = "Аттенюатор 3"; labelBit = LabelAttBitWord3; }
             else if (button == OkButtonAtt4)    { addr = 3; entry = EntryAmp4; errorMessageBlockName = "Аттенюатор 4"; labelBit = LabelAttBitWord4;}
-            addr <<= 4;
-            addr += attID;
+            
+            byte id = attID;
 
             // Парсинг вводимого текста
             if (double.TryParse(entry.Text, out double attenuationValue))
@@ -331,6 +332,8 @@ namespace LabStend_AFAR
 
             labelBit.Text = Convert.ToString(attenuationWord, 2).PadLeft(8, '0');
 
+            // Формирование буфера-массива байт
+            byte[] buffer = {id, addr, attenuationWord };
 
             // Проверка на доступность порта перед записью команды
             if (serialPortBKU == null || !serialPortBKU.IsOpen)
@@ -339,8 +342,10 @@ namespace LabStend_AFAR
                 Console.WriteLine("Порт не найден");
                 return;
             }
-            else { 
+            else
+            {
                 // запись команды в порт
+                serialPortBKU.Write(buffer, 0, 3);
             }
 
         }
@@ -370,8 +375,8 @@ namespace LabStend_AFAR
             else if (button == OkButtonPh2) { addr = 1; entry = EntryPh2; errorMessageBlockName = "Фазовращатель 2"; labelBit = LabelPhBitWord2; }
             else if (button == OkButtonPh3) { addr = 2; entry = EntryPh3; errorMessageBlockName = "Фазовращатель 3"; labelBit = LabelPhBitWord3; }
             else if (button == OkButtonPh4) { addr = 3; entry = EntryPh4; errorMessageBlockName = "Фазовращатель 4"; labelBit = LabelPhBitWord4; }
-            addr <<= 4;
-            addr += phID;
+            ;
+            byte id = phID;
 
             // Парсинг вводимого текста
             if (double.TryParse(entry.Text, out double phaseshiftValue))
@@ -424,7 +429,7 @@ namespace LabStend_AFAR
             labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
 
             // Формирование буфера-массива байт
-            byte[] buffer = { addr, phaseshiftWord};
+            byte[] buffer = { id, addr, phaseshiftWord};
 
             // Проверка на доступность порта перед записью команды
             if (serialPortBKU == null || !serialPortBKU.IsOpen)
@@ -436,7 +441,7 @@ namespace LabStend_AFAR
             else
             {
                 // запись команды в порт
-                serialPortBKU.Write(buffer, 0, 2);
+                serialPortBKU.Write(buffer, 0, 3);
             }
 
         }
