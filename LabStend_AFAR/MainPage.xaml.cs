@@ -202,18 +202,18 @@ namespace LabStend_AFAR
         private void OnClickedRadioButtonLNA(object? sender, EventArgs e) {
             RadioButton radioButton = (RadioButton)sender;
             if (radioButton.IsChecked)  { 
-                OkHandlerLNA(radioButton); 
+                OkHandlerLNA(radioButton.GroupName, radioButton.Value); 
             }
         }
 
         // Обработчик выбора радиокнопок МШУ
-        private void OkHandlerLNA(RadioButton radioButton) {
+        private void OkHandlerLNA(string groupName, object Value) {
             // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
             //                            command     addr        id
 
             // Определение битов адреса
             byte addr;
-            switch (radioButton.GroupName) {
+            switch (groupName) {
                 case "Gain": addr = 0; break;
                 case "Gain2": addr = 1; break;
                 case "Gain3": addr = 2; break;
@@ -225,7 +225,7 @@ namespace LabStend_AFAR
 
             // Определение битов команды
             byte lnaMode;
-            switch (radioButton.Value)
+            switch (Value)
             {
                 case "1": lnaMode = 1; break;
                 case "2": lnaMode = 2; break;
@@ -237,77 +237,54 @@ namespace LabStend_AFAR
             //lna.Set(code);
             //lna.SendCommand(code, writeMode);
 
-            // Формирование буфера-массива байт
-            byte[] buffer = { id, addr, lnaMode };
-            // Проверка на доступность порта перед записью команды
-            if (serialPortBKU == null || !serialPortBKU.IsOpen)
-            {
-                WriteToStatusLabel("\nПорт не найден");
-                Console.WriteLine("Порт не найден");
-                return;
-            }
-            else
-            {
-                StatusLabel.Text += $",     запись в порт {serialPortBKU.PortName}";
-                // запись команды в порт
-                serialPortBKU.Write(buffer, 0, 3);
-            }
+            SendCommand(id, addr, lnaMode);
         }
 
         //----------------------------
 
-        // Кнопка Ок аттенюатора
+        // Обработчик нажатия кнопки Ок Аттенюатора
         private void OnClickedOkButtonAtt(object? sender, EventArgs e) 
         {
             Button button = (Button)sender;
 
-            OkHandlerAtt(button);
-            
-        }
-
-        // Обработчик нажатия кнопки Ок Аттенюатора
-        private void OkHandlerAtt(Button button) {
             // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
             //                            command     addr        id
-
             // Определение битов адреса; соответствие поля ввода блоку аттенюатора
             string errorMessageBlockName = "Аттенюатор 1";
             byte addr = 0;
             Entry entry = EntryAmp;
             Label labelBit = LabelAttBitWord;
 
-            if (button == OkButtonAtt)          { }
-            else if (button == OkButtonAtt2)    { addr = 1; entry = EntryAmp2; errorMessageBlockName = "Аттенюатор 2"; labelBit = LabelAttBitWord2; }
-            else if (button == OkButtonAtt3)    { addr = 2; entry = EntryAmp3; errorMessageBlockName = "Аттенюатор 3"; labelBit = LabelAttBitWord3; }
-            else if (button == OkButtonAtt4)    { addr = 3; entry = EntryAmp4; errorMessageBlockName = "Аттенюатор 4"; labelBit = LabelAttBitWord4;}
-            
+            if (button == OkButtonAtt) { }
+            else if (button == OkButtonAtt2) { addr = 1; entry = EntryAmp2; errorMessageBlockName = "Аттенюатор 2"; labelBit = LabelAttBitWord2; }
+            else if (button == OkButtonAtt3) { addr = 2; entry = EntryAmp3; errorMessageBlockName = "Аттенюатор 3"; labelBit = LabelAttBitWord3; }
+            else if (button == OkButtonAtt4) { addr = 3; entry = EntryAmp4; errorMessageBlockName = "Аттенюатор 4"; labelBit = LabelAttBitWord4; }
+
             byte id = attID;
 
             // Парсинг вводимого текста
-            if (double.TryParse(entry.Text, out double attenuationValue))
-            {
-                if (attenuationValue < 0)
-                {
-                    attenuationValue = 0;
-                    entry.Text = $"{attenuationValue}";
-                }
-                if (attenuationValue > 31.5)
-                {
-                    attenuationValue = 31.5;
-                    entry.Text = $"{attenuationValue}";
-                }
-            }
-            else
+            if (!double.TryParse(entry.Text, out double attenuationValue))
             {
                 // Если не распарсил текст с ввода
                 WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 31,5", errorMessageBlockName);
                 return;
             }
 
-            
+            if (attenuationValue < 0)
+            {
+                attenuationValue = 0;
+                entry.Text = $"{attenuationValue}";
+            }
+            if (attenuationValue > 31.5)
+            {
+                attenuationValue = 31.5;
+                entry.Text = $"{attenuationValue}";
+            }
+
             byte attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
             double value = attenuationValue;
-            byte flag = 1<<6;
+            byte flag = 1 << 6;
+
             // Цикл перевода полученного значения в битовую посылку
             for (int i = 5; i >= 0; i--)
             {
@@ -318,9 +295,10 @@ namespace LabStend_AFAR
                 }
                 flag >>= 1;
             }
-
+            
             // Проверка на кратность шагу
-            if (value > eps) {
+            if (value > eps)
+            {
                 WriteToStatusLabel("Значение ослабления не кратно шагу 0,5 дБ. Округление...", errorMessageBlockName);
                 entry.Text = $"{attenuationValue - value}";
             }
@@ -329,24 +307,9 @@ namespace LabStend_AFAR
             Console.WriteLine(attenuationWord);
             Console.WriteLine(Convert.ToString(attenuationWord, 2));
 
-
             labelBit.Text = Convert.ToString(attenuationWord, 2).PadLeft(8, '0');
 
-            // Формирование буфера-массива байт
-            byte[] buffer = {id, addr, attenuationWord };
-
-            // Проверка на доступность порта перед записью команды
-            if (serialPortBKU == null || !serialPortBKU.IsOpen)
-            {
-                WriteToStatusLabel("\nПорт не найден");
-                Console.WriteLine("Порт не найден");
-                return;
-            }
-            else
-            {
-                // запись команды в порт
-                serialPortBKU.Write(buffer, 0, 3);
-            }
+            SendCommand(id, addr, attenuationWord);
 
         }
 
@@ -357,12 +320,6 @@ namespace LabStend_AFAR
         {
             Button button = (Button)sender;
 
-            OkHandlerPh(button);
-
-        }
-        // Обработчик нажатия кнопки Ок Фазовращателя
-        private void OkHandlerPh(Button button)
-        {
             // Структура битовой посылки: 0000 0000 , 0000 0000
             //                              command   addr id
             // Определение битов адреса; соответствие поля ввода блоку фазовращателя
@@ -379,26 +336,23 @@ namespace LabStend_AFAR
             byte id = phID;
 
             // Парсинг вводимого текста
-            if (double.TryParse(entry.Text, out double phaseshiftValue))
-            {
-                if (phaseshiftValue < 0)
-                {
-                    phaseshiftValue = 0;
-                    entry.Text = $"{phaseshiftValue}";
-                }
-                if (phaseshiftValue > 354.4)
-                {
-                    phaseshiftValue = 354.4;
-                    entry.Text = $"{phaseshiftValue}";
-                }
-            }
-            else
+            if (!double.TryParse(entry.Text, out double phaseshiftValue))
             {
                 // Если не распарсил текст с ввода
                 WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 354,4", errorMessageBlockName);
                 return;
             }
 
+            if (phaseshiftValue < 0)
+            {
+                phaseshiftValue = 0;
+                entry.Text = $"{phaseshiftValue}";
+            }
+            if (phaseshiftValue > 354.4)
+            {
+                phaseshiftValue = 354.4;
+                entry.Text = $"{phaseshiftValue}";
+            }
 
             byte phaseshiftWord = 0; // установка значения битовой посылки в исходный 00000000
             double value = phaseshiftValue;
@@ -428,32 +382,35 @@ namespace LabStend_AFAR
 
             labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
 
-            // Формирование буфера-массива байт
-            byte[] buffer = { id, addr, phaseshiftWord};
-
-            // Проверка на доступность порта перед записью команды
-            if (serialPortBKU == null || !serialPortBKU.IsOpen)
-            {
-                WriteToStatusLabel("\nПорт не найден");
-                Console.WriteLine("Порт не найден");
-                return;
-            }
-            else
-            {
-                // запись команды в порт
-                serialPortBKU.Write(buffer, 0, 3);
-            }
+            SendCommand(id, addr, phaseshiftWord);
 
         }
 
+        // Отправка команды на устройство
+        private void SendCommand(byte id, byte addr, byte byteWord)
+        {
 
+            // Формирование буфера-массива байт
+            byte[] buffer = { id, addr, byteWord };
 
-        public void OnToggledMode(object? sender, EventArgs a) {
+            if (writeMode == true)
+            {
+                
+            }
+            else {
+                COMport.WriteBKU(buffer, StatusLabel);
+            }
+            
+
+        }
+
+        // Обработчик выбора способа управления БУАФ (БКУ <-> ПИ)
+        public void OnToggledControlMode(object? sender, EventArgs a)
+        {
             Switch switcher = (Switch)sender;
             writeMode = switcher.IsToggled;
         }
-
-
+        
 
         // Обработчик кнопки выбора режима коммутатора
         private void OnClickedRadioButtonRCOM(object? sender, EventArgs e) { 
@@ -500,7 +457,7 @@ namespace LabStend_AFAR
 
     // ------------- КЛАССЫ -------------------------------
 
-    
+
     // Добавить класс/функции в Main битовых посылок
 }
 

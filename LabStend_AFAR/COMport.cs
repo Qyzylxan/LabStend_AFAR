@@ -223,10 +223,41 @@ namespace LabStend_AFAR
 
         }
 
-        // Запись состояний МШУ в БКУ
-        public static void WriteBKU() { 
-            
-            
+        // Запись команд в БКУ
+        public static void WriteBKU(byte[] buffer, Label StatusLabel) {
+            // Проверка на доступность порта перед записью команды
+            if (serialPortBKU == null || !serialPortBKU.IsOpen)
+            {
+                StatusLabel.Text += "\nПорт не найден";
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+            else
+            {
+                StatusLabel.Text += $",     запись в порт {serialPortBKU.PortName}";
+                // запись команды в порт
+                serialPortBKU.Write(buffer, 0, 3);
+            }
+
+        }
+
+        // Запись команд в ПИ
+        public static void WritePI(byte[] buffer, Label StatusLabel)
+        {
+            // Проверка на доступность порта перед записью команды
+            if (serialPortPI == null || !serialPortPI.IsOpen)
+            {
+                StatusLabel.Text += "\nПорт не найден";
+                Console.WriteLine("Порт не найден");
+                return;
+            }
+            else
+            {
+                StatusLabel.Text += $",     запись в порт {serialPortPI.PortName}";
+                // запись команды в порт
+                serialPortPI.Write(buffer, 0, 3);
+            }
+
         }
 
     }

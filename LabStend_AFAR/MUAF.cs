@@ -42,6 +42,7 @@ namespace LabStend_AFAR
 
             }
         }
+
     }
 
     // Класс Аттенюатора
