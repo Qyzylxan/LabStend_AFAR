@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net10.0-android36.0": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "GoogleGson/2.13.1.1": {
         "type": "package",
         "dependencies": {
@@ -3641,6 +3654,19 @@
       }
     },
     "net10.0-android36.0/android-arm64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "GoogleGson/2.13.1.1": {
         "type": "package",
         "dependencies": {
@@ -6262,6 +6288,19 @@
       }
     },
     "net10.0-android36.0/android-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "GoogleGson/2.13.1.1": {
         "type": "package",
         "dependencies": {
@@ -8883,6 +8922,19 @@
       }
     },
     "net10.0-android36.0/iossimulator-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "GoogleGson/2.13.1.1": {
         "type": "package",
         "dependencies": {
@@ -11456,6 +11508,19 @@
       }
     },
     "net10.0-android36.0/maccatalyst-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "GoogleGson/2.13.1.1": {
         "type": "package",
         "dependencies": {
@@ -14077,6 +14142,19 @@
       }
     },
     "net10.0-android36.0/win-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "GoogleGson/2.13.1.1": {
         "type": "package",
         "dependencies": {
@@ -16650,6 +16728,19 @@
       }
     },
     "net10.0-ios26.2": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -18269,6 +18360,19 @@
       }
     },
     "net10.0-ios26.2/android-arm64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -18870,6 +18974,19 @@
       }
     },
     "net10.0-ios26.2/android-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -19471,6 +19588,19 @@
       }
     },
     "net10.0-ios26.2/iossimulator-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -20024,6 +20154,19 @@
       }
     },
     "net10.0-ios26.2/maccatalyst-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -20625,6 +20768,19 @@
       }
     },
     "net10.0-ios26.2/win-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -21178,6 +21334,19 @@
       }
     },
     "net10.0-maccatalyst26.2": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -22797,6 +22966,19 @@
       }
     },
     "net10.0-maccatalyst26.2/android-arm64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -23398,6 +23580,19 @@
       }
     },
     "net10.0-maccatalyst26.2/android-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -23999,6 +24194,19 @@
       }
     },
     "net10.0-maccatalyst26.2/iossimulator-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -24552,6 +24760,19 @@
       }
     },
     "net10.0-maccatalyst26.2/maccatalyst-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -25153,6 +25374,19 @@
       }
     },
     "net10.0-maccatalyst26.2/win-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -25706,6 +25940,19 @@
       }
     },
     "net10.0-windows10.0.19041": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -27576,6 +27823,19 @@
       }
     },
     "net10.0-windows10.0.19041/android-arm64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -28366,6 +28626,19 @@
       }
     },
     "net10.0-windows10.0.19041/android-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -29156,6 +29429,19 @@
       }
     },
     "net10.0-windows10.0.19041/iossimulator-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -29898,6 +30184,19 @@
       }
     },
     "net10.0-windows10.0.19041/maccatalyst-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -30688,6 +30987,19 @@
       }
     },
     "net10.0-windows10.0.19041/win-x64": {
+      "FTD2XX_NET/1.0.14": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/FTD2XX_NET.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -31441,6 +31753,22 @@
     }
   },
   "libraries": {
+    "FTD2XX_NET/1.0.14": {
+      "sha512": "6q0G72pfCyUzX41H9f2X9OYwWzVC+++G5MtWsSnmzORBpQF/9Sz3jjpIeTqoaMMz2oLZkvCTHZcUisiOZMnExQ==",
+      "type": "package",
+      "path": "ftd2xx_net/1.0.14",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ftd2xx_net.1.0.14.nupkg.sha512",
+        "ftd2xx_net.nuspec",
+        "lib/net35/FTD2XX_NET.XML",
+        "lib/net35/FTD2XX_NET.dll",
+        "lib/net40/FTD2XX_NET.XML",
+        "lib/net40/FTD2XX_NET.dll",
+        "src/FTD2XX_NET.cs"
+      ]
+    },
     "GoogleGson/2.13.1.1": {
       "sha512": "1yD5W1UPmgEEHrqdtVJI7330h1foGWiehVC07er3NiZxJPMmphTmPz2kuSXawIo8xmeIvd92WpiTOEmYpk6mzQ==",
       "type": "package",
@@ -36473,24 +36801,28 @@
   },
   "projectFileDependencyGroups": {
     "net10.0-android36.0": [
+      "FTD2XX_NET >= 1.0.14",
       "Microsoft.Extensions.Logging.Debug >= 10.0.0",
       "Microsoft.Maui.Controls >= 10.0.20",
       "Microsoft.NET.ILLink.Tasks >= 10.0.6",
       "System.IO.Ports >= 10.0.6"
     ],
     "net10.0-ios26.2": [
+      "FTD2XX_NET >= 1.0.14",
       "Microsoft.Extensions.Logging.Debug >= 10.0.0",
       "Microsoft.Maui.Controls >= 10.0.20",
       "Microsoft.NET.ILLink.Tasks >= 10.0.6",
       "System.IO.Ports >= 10.0.6"
     ],
     "net10.0-maccatalyst26.2": [
+      "FTD2XX_NET >= 1.0.14",
       "Microsoft.Extensions.Logging.Debug >= 10.0.0",
       "Microsoft.Maui.Controls >= 10.0.20",
       "Microsoft.NET.ILLink.Tasks >= 10.0.6",
       "System.IO.Ports >= 10.0.6"
     ],
     "net10.0-windows10.0.19041": [
+      "FTD2XX_NET >= 1.0.14",
       "Microsoft.Extensions.Logging.Debug >= 10.0.0",
       "Microsoft.Maui.Controls >= 10.0.20",
       "System.IO.Ports >= 10.0.6"
@@ -36563,6 +36895,10 @@
       "net10.0-android36.0": {
         "targetAlias": "net10.0-android",
         "dependencies": {
+          "FTD2XX_NET": {
+            "target": "Package",
+            "version": "[1.0.14, )"
+          },
           "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",
             "version": "[10.0.0, )"
@@ -36609,6 +36945,10 @@
       "net10.0-ios26.2": {
         "targetAlias": "net10.0-ios",
         "dependencies": {
+          "FTD2XX_NET": {
+            "target": "Package",
+            "version": "[1.0.14, )"
+          },
           "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",
             "version": "[10.0.0, )"
@@ -36935,6 +37275,10 @@
       "net10.0-maccatalyst26.2": {
         "targetAlias": "net10.0-maccatalyst",
         "dependencies": {
+          "FTD2XX_NET": {
+            "target": "Package",
+            "version": "[1.0.14, )"
+          },
           "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",
             "version": "[10.0.0, )"
@@ -37262,6 +37606,10 @@
       "net10.0-windows10.0.19041": {
         "targetAlias": "net10.0-windows10.0.19041.0",
         "dependencies": {
+          "FTD2XX_NET": {
+            "target": "Package",
+            "version": "[1.0.14, )"
+          },
           "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",
             "version": "[10.0.0, )"
@@ -37594,5 +37942,17 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"FTD2XX_NET 1.0.14\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net10.0-android36.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "FTD2XX_NET",
+      "targetGraphs": [
+        "net10.0-android36.0"
+      ]
+    }
+  ]
 }

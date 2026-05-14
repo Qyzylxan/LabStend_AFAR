@@ -66,6 +66,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="FTD2XX_NET" Version="1.0.14" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 		<PackageReference Include="System.IO.Ports" Version="10.0.6" />

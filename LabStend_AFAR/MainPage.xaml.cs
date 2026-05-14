@@ -3,7 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using static LabStend_AFAR.MUAF;
 
-using static LabStend_AFAR.COMport;
+using static LabStend_AFAR.BKU;
+using LabStend_AFAR.D2XX;
 
 namespace LabStend_AFAR
 {
@@ -20,7 +21,8 @@ namespace LabStend_AFAR
         double deg = Math.PI / 180;
         double eps = 0.001; // Машинный эпсилон
 
-
+        // Объявление объектов устройств
+        FT245 PI;
         // нужно по 4 устройства 
         Attenuator att;
         Phaser ph;
@@ -51,7 +53,7 @@ namespace LabStend_AFAR
             Console.WriteLine("Запуск СПО...");
 
             // Запуск COM-портов
-            COMport.Init();
+            BKU.Init();
 
             // Создание команды выхода как объекта команды
             ExitCommand = new Command(OnExit);
@@ -59,6 +61,8 @@ namespace LabStend_AFAR
 
 
             // Объявление объетов классов Устройств
+            PI = new FT245();
+
             att = new Attenuator(LabelAttBitWord);
             ph = new Phaser(LabelPhBitWord);
             lna = new LNA();
@@ -67,7 +71,7 @@ namespace LabStend_AFAR
             Picker[] COMportPickers = { COMportPickerBKU, COMportPickerPI };
 
             Thread.Sleep(1000);
-            COMport.Init();
+            // BKU.Init();
 
             LoadAvailablePorts(StatusLabel, COMportPickers, availablePorts);
             AutoConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPickerBKU, availablePorts); 
@@ -87,7 +91,7 @@ namespace LabStend_AFAR
         private void OnClickedPIConnect(object? sender, EventArgs e)
         {
             Button button = (Button)sender;
-            ConnectToCOM(serialPortPI, LabelStatus_PI, StatusLabel, COMportPickerPI.SelectedIndex, 'f');
+            PI.OpenPort();
 
         }
 
@@ -320,8 +324,8 @@ namespace LabStend_AFAR
         {
             Button button = (Button)sender;
 
-            // Структура битовой посылки: 0000 0000 , 0000 0000
-            //                              command   addr id
+            // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
+            //                              command   addr        id
             // Определение битов адреса; соответствие поля ввода блоку фазовращателя
             string errorMessageBlockName = "Фазовращатель 1";
             byte addr = 0;
@@ -398,7 +402,7 @@ namespace LabStend_AFAR
                 
             }
             else {
-                COMport.WriteBKU(buffer, StatusLabel);
+                BKU.WriteBKU(buffer, StatusLabel);
             }
             
 

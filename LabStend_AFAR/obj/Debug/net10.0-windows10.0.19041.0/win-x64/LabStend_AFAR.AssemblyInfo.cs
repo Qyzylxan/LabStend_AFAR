@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LabStend_AFAR")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+285a36ad659e1acdd528055f715ce0763a0a29ca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+236ed8c91609c19769e481cc06533d6b4541a041")]
 [assembly: System.Reflection.AssemblyProductAttribute("LabStend_AFAR")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LabStend_AFAR")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
