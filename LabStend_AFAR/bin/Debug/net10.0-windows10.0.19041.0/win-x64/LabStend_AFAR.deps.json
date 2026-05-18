@@ -9,7 +9,7 @@
     ".NETCoreApp,Version=v10.0/win-x64": {
       "LabStend_AFAR/1.0": {
         "dependencies": {
-          "FTD2XX_NET": "1.0.14",
+          "FTD2XX.Net": "1.2.1",
           "Microsoft.Extensions.Logging.Debug": "10.0.0",
           "Microsoft.Maui.Controls": "10.0.20",
           "System.IO.Ports": "10.0.6",
@@ -32,11 +32,11 @@
           }
         }
       },
-      "FTD2XX_NET/1.0.14": {
+      "FTD2XX.Net/1.2.1": {
         "runtime": {
-          "lib/net40/FTD2XX_NET.dll": {
-            "assemblyVersion": "1.0.14.39395",
-            "fileVersion": "1.0.14.0"
+          "lib/netstandard2.1/FTDI2XX.dll": {
+            "assemblyVersion": "1.2.1.0",
+            "fileVersion": "1.2.1.0"
           }
         }
       },
@@ -548,12 +548,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "FTD2XX_NET/1.0.14": {
+    "FTD2XX.Net/1.2.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-6q0G72pfCyUzX41H9f2X9OYwWzVC+++G5MtWsSnmzORBpQF/9Sz3jjpIeTqoaMMz2oLZkvCTHZcUisiOZMnExQ==",
-      "path": "ftd2xx_net/1.0.14",
-      "hashPath": "ftd2xx_net.1.0.14.nupkg.sha512"
+      "sha512": "sha512-mfUBsxQLhF9oyCKyz+ClNeYtuTar1bn8I2BU3w8Z4jjz3nqFeMJONvbIgDExOxjZbi40C77nkd2SY8jONDAd+Q==",
+      "path": "ftd2xx.net/1.2.1",
+      "hashPath": "ftd2xx.net.1.2.1.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/10.0.0": {
       "type": "package",

@@ -13,6 +13,46 @@
     <SourceRoot Include="C:\Users\a.tan\.nuget\packages\" />
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net10.0-android' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml" Condition="Exists('$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml')">
+      <NuGetPackageId>FTD2XX.Net</NuGetPackageId>
+      <NuGetPackageVersion>1.2.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FTDI2XX.xml</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net10.0-ios' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml" Condition="Exists('$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml')">
+      <NuGetPackageId>FTD2XX.Net</NuGetPackageId>
+      <NuGetPackageVersion>1.2.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FTDI2XX.xml</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net10.0-maccatalyst' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml" Condition="Exists('$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml')">
+      <NuGetPackageId>FTD2XX.Net</NuGetPackageId>
+      <NuGetPackageVersion>1.2.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FTDI2XX.xml</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net10.0-windows10.0.19041.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml" Condition="Exists('$(NuGetPackageRoot)ftd2xx.net\1.2.1\contentFiles\any\netstandard2.1\FTDI2XX.xml')">
+      <NuGetPackageId>FTD2XX.Net</NuGetPackageId>
+      <NuGetPackageVersion>1.2.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FTDI2XX.xml</Link>
+    </Content>
+  </ItemGroup>
   <ImportGroup Condition=" '$(TargetFramework)' == 'net10.0-android' AND '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.net.illink.tasks\10.0.6\build\Microsoft.NET.ILLink.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.illink.tasks\10.0.6\build\Microsoft.NET.ILLink.Tasks.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.maui.resizetizer\10.0.20\buildTransitive\Microsoft.Maui.Resizetizer.props" Condition="Exists('$(NuGetPackageRoot)microsoft.maui.resizetizer\10.0.20\buildTransitive\Microsoft.Maui.Resizetizer.props')" />
