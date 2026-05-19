@@ -24,10 +24,10 @@ namespace LabStend_AFAR.D2XX
             port = new FTDI();
             portIndex = 0;
             baudRate = 9600;
-            pinConfig = ' ';
+            pinConfig = 'w';
             writeTimeout = 500;
             readTimeout = 500;
-
+            //OpenPort();
         }
         
         // Запись команд в ПИ
@@ -53,11 +53,14 @@ namespace LabStend_AFAR.D2XX
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
             //                          LE_Ph4  LE_Ph3  LE_Ph2  LE_Ph1                                  DAT_Ph4 DAT_Ph3 DAT_Ph2 DAT_Ph1
 
-            int delay = 200; // задержка в миллисекундах
+            int delay = 10; // задержка в миллисекундах
 
-            OpenPort();
-            Thread.Sleep(100);
+            if (!port.IsOpen){
+                StatusLabel.Text += OpenPort().ToString();
+                Thread.Sleep(100);
+            }
 
+            FT_STATUS writeStatus;
             // Маршрутизация
             // выбор типа устройства из первого байта команды
             int selectedDeviceBit = 0; // Номер бита, приписанного к устройству
@@ -84,6 +87,7 @@ namespace LabStend_AFAR.D2XX
             byte commandBit; // Приведённый байт команды
 
             dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
+
             for (int i = 0; i < 8; i++)
             {
                 dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "0"
@@ -93,12 +97,14 @@ namespace LabStend_AFAR.D2XX
                 dataBuffer[0] = (byte)(commandBit | deviceNo);
 
                 Thread.Sleep(delay);
+                WriteCommand(dataBuffer);
+
                 dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
-                if (WriteCommand(dataBuffer) == FT_STATUS.FT_OK) Console.WriteLine("\tОК");
+                WriteCommand(dataBuffer);
                 Thread.Sleep(delay);
             }
             // Триггер LE после отправки команды
-            dataBuffer[0] = deviceNo;
+            dataBuffer[0] = (byte)(deviceNo | 0b1000000); // Переключение мультиплексора на выводы LE
             
             dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
@@ -107,7 +113,10 @@ namespace LabStend_AFAR.D2XX
 
             // Сброс в "0" всех битов перед завершением отправки данных
             dataBuffer[0] = 0x00;
-            WriteCommand(dataBuffer);
+            writeStatus = WriteCommand(dataBuffer);
+            if (writeStatus != FT_STATUS.FT_OK) {
+                Console.WriteLine("\nOK");
+            }
 
         port.Close();
         }

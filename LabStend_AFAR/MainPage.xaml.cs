@@ -399,7 +399,7 @@ namespace LabStend_AFAR
 
             if (writeMode == true)
             {
-                
+                PI.WritePI(buffer, StatusLabel);
             }
             else {
                 BKU.WriteBKU(buffer, StatusLabel);
