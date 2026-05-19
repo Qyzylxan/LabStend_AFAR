@@ -104,12 +104,15 @@ namespace LabStend_AFAR.D2XX
                 Thread.Sleep(delay);
             }
             // Триггер LE после отправки команды
-            dataBuffer[0] = (byte)(deviceNo | 0b1000000); // Переключение мультиплексора на выводы LE
+            dataBuffer[0] = (byte)(deviceNo | 0b10000000); // Переключение мультиплексора на выводы LE
             
             dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
+            Thread.Sleep(delay);
+
             dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
+            
 
             // Сброс в "0" всех битов перед завершением отправки данных
             dataBuffer[0] = 0x00;
