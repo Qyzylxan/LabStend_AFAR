@@ -53,7 +53,7 @@ namespace LabStend_AFAR.D2XX
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
             //                          LE_Ph4  LE_Ph3  LE_Ph2  LE_Ph1                                  DAT_Ph4 DAT_Ph3 DAT_Ph2 DAT_Ph1
 
-            int delay = 10; // задержка в миллисекундах
+            int delay = 10;         // задержка в миллисекундах
 
             if (!port.IsOpen){
                 StatusLabel.Text += OpenPort().ToString();
@@ -73,7 +73,7 @@ namespace LabStend_AFAR.D2XX
 
             // выбор устройства по номеру из второго байта команды
             byte deviceNo = 0b00000000;
-            deviceNo |= buffer[1];
+            deviceNo = buffer[1];
             deviceNo++;
             deviceNo <<= 4;
 
@@ -86,22 +86,21 @@ namespace LabStend_AFAR.D2XX
             dataBuffer[0] = deviceNo;
             byte commandBit; // Приведённый байт команды
 
-            dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
+            dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
 
             for (int i = 0; i < 8; i++)
             {
-                dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "0"
 
                 commandBit = buffer[2];
                 commandBit = (byte)(((commandBit >> i) & 0x00000001) << selectedDeviceBit);
                 dataBuffer[0] = (byte)(commandBit | deviceNo);
 
-                Thread.Sleep(delay);
                 WriteCommand(dataBuffer);
-
+                Thread.Sleep(delay);
                 dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
                 WriteCommand(dataBuffer);
                 Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
             }
             // Триггер LE после отправки команды
             dataBuffer[0] = (byte)(deviceNo | 0b10000000); // Переключение мультиплексора на выводы LE
