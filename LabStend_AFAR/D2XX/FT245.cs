@@ -38,12 +38,20 @@ namespace LabStend_AFAR.D2XX
 
             // Структура посылки в ПИ:
             //  0   0   0   0       0   0   0   0
-            //  s3  s2  s1  s0      sig clk Dph Dat
+            //  s3  s2  s1  s0      Dg Dat Dph clk
 
-            // Структура выводов в Мультиплексоре
-            //  15  14  13  12  11  10  9   8   7   6   5   4   3   2   1   0
-            //  LE4 LE3 LE2 LE1 LE4 LE3 LE2 LE1 LE4 LE3 LE2 LE1 Da4 Da3 Da2 Da1
-            //  |   Ph      |   |   At      |   |           LNA             |
+            // Структура выводов в Мультиплексорах
+            //  Мультиплексор №1 (МШУ)
+            //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
+            //                          LE_G4   LE_G3   LE_G2   LE_G1                                   DAT_G4  DAT_G3  DAT_G2  DAT_G1
+
+            //  Мультиплексор №2 (Аттенюатор)
+            //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
+            //                          LE_At4  LE_At3  LE_At2  LE_At1                                  DAT_At4 DAT_At3 DAT_At2 DAT_At1
+
+            //  Мультиплексор №3 (Фазовращатель)
+            //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
+            //                          LE_Ph4  LE_Ph3  LE_Ph2  LE_Ph1                                  DAT_Ph4 DAT_Ph3 DAT_Ph2 DAT_Ph1
 
             int delay = 200; // задержка в миллисекундах
 
@@ -51,60 +59,50 @@ namespace LabStend_AFAR.D2XX
             Thread.Sleep(100);
 
             // Маршрутизация
-            // выбор типа устройства
-            byte sn = 0b00000000; // Биты данных для переключателей (задействовать 2-4 биты, считая от младшего)
+            // выбор типа устройства из первого байта команды
+            int selectedDeviceBit = 0; // Номер бита, приписанного к устройству
             switch (buffer[0]) {
-                case MUAF.lnaID: sn |= 0b00000100; break;
-                case MUAF.attID: sn |= 0b00001000; break;
-                case MUAF.phID: sn |= 0b00001100; break;
+                case MUAF.lnaID: selectedDeviceBit = 3; break;
+                case MUAF.attID: selectedDeviceBit = 2; break;
+                case MUAF.phID: selectedDeviceBit = 1; break;
                 default: break;
             }
-            // выбор устройства по номеру
-            sn |= buffer[1];
 
-            // Массив буфера данных для работы с FT_Write();
+            // выбор устройства по номеру из второго байта команды
+            byte deviceNo = 0b00000000;
+            deviceNo |= buffer[1];
+            deviceNo++;
+            deviceNo <<= 4;
+
+            // Массив буфера данных, нужен для работы с функцией FT_Write();
             byte[] dataBuffer = { 0x00 };
             // Сброс в "0" всех битов перед началом отправки данных
             dataBuffer[0] = 0x00;
             WriteCommand(dataBuffer);
 
-            byte commandBit;
-            if (buffer[0] != MUAF.lnaID) {
-                for (int i = 0; i < 8; i++)
-                {
-                    commandBit = buffer[2];
-                    dataBuffer[0] = (byte)((commandBit >> i) & 0x00000001);
-                    dataBuffer[0] <<= ((sn & 0b00000100) >> 2); // Dph или Dat, при этом на LNA отдельной шины не выделено!
+            dataBuffer[0] = deviceNo;
+            byte commandBit; // Приведённый байт команды
 
-                    Thread.Sleep(delay);
-                    if (WriteCommand(dataBuffer) == FT_STATUS.FT_OK) Console.WriteLine("\tОК");
-                    Thread.Sleep(delay);
-                }
-            }
-            if (buffer[0] == MUAF.lnaID)
+            dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
+            for (int i = 0; i < 8; i++)
             {
-                for (int i = 0; i < 8; i++)
-                {
-                    dataBuffer[0] = sn;
-                    dataBuffer[0] <<= 1;
+                dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "0"
 
-                    commandBit = buffer[2];
-                    dataBuffer[0] |= (byte)((commandBit >> i) & 0x00000001);
-                    dataBuffer[0] <<= 4; // Dlna
+                commandBit = buffer[2];
+                commandBit = (byte)(((commandBit >> i) & 0x00000001) << selectedDeviceBit);
+                dataBuffer[0] = (byte)(commandBit | deviceNo);
 
-                    Thread.Sleep(delay);
-                    if (WriteCommand(dataBuffer) == FT_STATUS.FT_OK) Console.WriteLine("\tОК");
-                    Thread.Sleep(delay);
-                }
+                Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
+                if (WriteCommand(dataBuffer) == FT_STATUS.FT_OK) Console.WriteLine("\tОК");
+                Thread.Sleep(delay);
             }
-            else { }
-
-                // Триггер LE после отправки команды
-                dataBuffer[0] = sn;
-            dataBuffer[0] <<= 4;
-            dataBuffer[0] ^= 0b00001000;
+            // Триггер LE после отправки команды
+            dataBuffer[0] = deviceNo;
+            
+            dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
-            dataBuffer[0] ^= 0b00001000;
+            dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
 
             // Сброс в "0" всех битов перед завершением отправки данных
