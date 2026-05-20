@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using static LabStend_AFAR.MUAF;
+using LabStend_AFAR.Potentiometer; 
 
 using static LabStend_AFAR.BKU;
 using LabStend_AFAR.D2XX;
