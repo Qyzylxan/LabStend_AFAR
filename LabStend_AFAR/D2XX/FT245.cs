@@ -53,7 +53,7 @@ namespace LabStend_AFAR.D2XX
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
             //                          LE_Ph4  LE_Ph3  LE_Ph2  LE_Ph1                                  DAT_Ph4 DAT_Ph3 DAT_Ph2 DAT_Ph1
 
-            int delay = 10;         // задержка в миллисекундах
+            int delay = 100;         // задержка в миллисекундах
 
             if (!port.IsOpen){
                 StatusLabel.Text += OpenPort().ToString();

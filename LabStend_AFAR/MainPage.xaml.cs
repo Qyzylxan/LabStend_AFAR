@@ -10,12 +10,12 @@ namespace LabStend_AFAR
 {
     public partial class MainPage : ContentPage
     {
-        double f = 2; // ГГц
-        double c = 0.3; // м/с * 10^9 
+        double f = 2;       // ГГц
+        double c = 0.3;     // м/с * 10^9 
         double thetaMax = 30; // Макс. угол отклонения луча, град
 
         double lambda; // Длина волны, м
-        double d; // Шаг решётки, м
+        double d;   // Шаг решётки, м
 
 
         double deg = Math.PI / 180;
@@ -28,17 +28,9 @@ namespace LabStend_AFAR
         Phaser ph;
         LNA lna;
 
-        
-
-
-        //
+        // Флаг выбора режима записи команд (БКУ <-> ПИ)
         bool writeMode = false;
 
-        //
-        //byte attenuationWord;
-        //byte phaseshiftWord;
-
-        //
 
         public Command ExitCommand { get; }
 
@@ -121,9 +113,7 @@ namespace LabStend_AFAR
                 }
                 else {
                     phaseShift = PhaseDelay(angle);
-
                 }
-
             }
             else
             {
@@ -132,19 +122,21 @@ namespace LabStend_AFAR
                 return;
             }
 
-            // написать код установки значений сдвигов фазы на каждый ФВ -------------------------------------
+            byte id = phID;
+
+            // Установка значений сдвигов фазы на каждый ФВ -------------------------------------
             if (phaseShift >= 0)
             {
-                PhaseWriter(0, EntryPh, LabelPhBitWord, "Фазовращатель 1");
-                PhaseWriter(phaseShift, EntryPh2, LabelPhBitWord2, "Фазовращатель 2");
-                PhaseWriter(2 * phaseShift, EntryPh3, LabelPhBitWord3, "Фазовращатель 3");
-                PhaseWriter(3 * phaseShift, EntryPh4, LabelPhBitWord4, "Фазовращатель 4");
+                PhaseWrite(0, EntryPh, LabelPhBitWord, id, 0, "Фазовращатель 1");
+                PhaseWrite(phaseShift, EntryPh2, LabelPhBitWord2, id, 1, "Фазовращатель 2");
+                PhaseWrite(2 * phaseShift, EntryPh3, LabelPhBitWord3, id, 2, "Фазовращатель 3");
+                PhaseWrite(3 * phaseShift, EntryPh4, LabelPhBitWord4, id, 3, "Фазовращатель 4");
             }
             else {
-                PhaseWriter(-3 * phaseShift, EntryPh, LabelPhBitWord, "Фазовращатель 1");
-                PhaseWriter(-2 * phaseShift, EntryPh2, LabelPhBitWord2, "Фазовращатель 2");
-                PhaseWriter(-phaseShift, EntryPh3, LabelPhBitWord3, "Фазовращатель 3");
-                PhaseWriter(0, EntryPh4, LabelPhBitWord4, "Фазовращатель 4");
+                PhaseWrite(-3 * phaseShift, EntryPh, LabelPhBitWord, id, 3, "Фазовращатель 1");
+                PhaseWrite(-2 * phaseShift, EntryPh2, LabelPhBitWord2, id, 2, "Фазовращатель 2");
+                PhaseWrite(-phaseShift, EntryPh3, LabelPhBitWord3, id, 1, "Фазовращатель 3");
+                PhaseWrite(0, EntryPh4, LabelPhBitWord4, id, 0, "Фазовращатель 4");
             }
         }
 
@@ -152,7 +144,7 @@ namespace LabStend_AFAR
         double PhaseDelay(double angle) {
             return 360*d*Math.Sin(angle*deg)/lambda; // Результат возвращается в градусах
         }
-
+        /*
         private void PhaseWriter(double phaseshiftValue, Entry entry, Label labelBit, string errorMessageBlockName) {
             byte phaseshiftWord = 0; // установка значения битовой посылки в исходный 00000000
             double value = phaseshiftValue;
@@ -196,7 +188,7 @@ namespace LabStend_AFAR
                 // запись команды в порт
             }
 
-        }
+        }*/
 
 
 
@@ -346,7 +338,11 @@ namespace LabStend_AFAR
                 WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 354,4", errorMessageBlockName);
                 return;
             }
+            PhaseWrite(phaseshiftValue, entry, labelBit, id, addr, errorMessageBlockName);
+        }
 
+        // Функция обработки введённого значения сдвига фазы
+        private void PhaseWrite(double phaseshiftValue, Entry entry, Label labelBit, byte id, byte addr, string errorMessageBlockName) {
             if (phaseshiftValue < 0)
             {
                 phaseshiftValue = 0;
@@ -383,7 +379,6 @@ namespace LabStend_AFAR
             Console.WriteLine(phaseshiftWord);
             Console.WriteLine(Convert.ToString(phaseshiftWord, 2));
 
-
             labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
 
             SendCommand(id, addr, phaseshiftWord);
@@ -414,11 +409,34 @@ namespace LabStend_AFAR
             Switch switcher = (Switch)sender;
             writeMode = switcher.IsToggled;
         }
-        
+
 
         // Обработчик кнопки выбора режима коммутатора
-        private void OnClickedRadioButtonRCOM(object? sender, EventArgs e) { 
-            
+        private void OnClickedRadioButtonRCOM(object? sender, EventArgs e) {
+            RadioButton radioButton = (RadioButton)sender;
+            if (radioButton.IsChecked)
+            {
+                OkHandlerRCOM(radioButton.Value);
+            }
+        }
+        private void OkHandlerRCOM(object Value) {
+            byte id = rcomID;
+            byte addr = 0;
+            // Определение битов команды
+            byte rcomMode;
+            switch (Value)
+            {
+                case "1": rcomMode = 1; break;
+                case "2": rcomMode = 2; break;
+                case "0": rcomMode = 0; break;
+                default: rcomMode = 0; break;
+            }
+            StatusLabel.Text += $"\nРежим Коммутатора: {rcomMode}";
+
+            //lna.Set(code);
+            //lna.SendCommand(code, writeMode);
+
+            SendCommand(id, addr, rcomMode);
         }
 
 
