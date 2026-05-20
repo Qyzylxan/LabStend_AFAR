@@ -144,53 +144,6 @@ namespace LabStend_AFAR
         double PhaseDelay(double angle) {
             return 360*d*Math.Sin(angle*deg)/lambda; // Результат возвращается в градусах
         }
-        /*
-        private void PhaseWriter(double phaseshiftValue, Entry entry, Label labelBit, string errorMessageBlockName) {
-            byte phaseshiftWord = 0; // установка значения битовой посылки в исходный 00000000
-            double value = phaseshiftValue;
-            byte flag = 1 << 6;
-            // Цикл перевода полученного значения в битовую посылку
-            for (int i = 5; i >= 0; i--)
-            {
-                if (value / ph.PhaseShifts[i] > (1 - eps))
-                {
-                    phaseshiftWord = (byte)(phaseshiftWord ^ flag);
-                    value -= ph.PhaseShifts[i];
-                }
-                flag >>= 1;
-            }
-
-            // Проверка на кратность шагу
-            if (value > eps)
-            {
-                WriteToStatusLabel("Значение сдвига фазы не кратно шагу 5,6 град. Округление...", errorMessageBlockName);
-                entry.Text = $"{phaseshiftValue - value}";
-            }
-            else entry.Text = $"{phaseshiftValue}";
-
-            // Вывод команды в поля
-            Console.WriteLine(phaseshiftWord);
-            Console.WriteLine(Convert.ToString(phaseshiftWord, 2));
-
-
-            labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
-
-
-            // Проверка на доступность порта перед записью команды
-            if (serialPortBKU == null || !serialPortBKU.IsOpen)
-            {
-                WriteToStatusLabel("\nПорт не найден");
-                Console.WriteLine("Порт не найден");
-                return;
-            }
-            else
-            {
-                // запись команды в порт
-            }
-
-        }*/
-
-
 
         //-------------------------------------
 
@@ -388,7 +341,6 @@ namespace LabStend_AFAR
         // Отправка команды на устройство
         private void SendCommand(byte id, byte addr, byte byteWord)
         {
-
             // Формирование буфера-массива байт
             byte[] buffer = { id, addr, byteWord };
 
@@ -399,9 +351,22 @@ namespace LabStend_AFAR
             else {
                 BKU.WriteBKU(buffer, StatusLabel);
             }
-            
-
         }
+        private void SendCommand(byte id, byte addr, byte byteWord, bool mode)
+        {
+            // Формирование буфера-массива байт
+            byte[] buffer = { id, addr, byteWord };
+
+            if (mode == true)
+            {
+                PI.WritePI(buffer, StatusLabel);
+            }
+            else
+            {
+                BKU.WriteBKU(buffer, StatusLabel);
+            }
+        }
+
 
         // Обработчик выбора способа управления БУАФ (БКУ <-> ПИ)
         public void OnToggledControlMode(object? sender, EventArgs a)
@@ -433,10 +398,8 @@ namespace LabStend_AFAR
             }
             StatusLabel.Text += $"\nРежим Коммутатора: {rcomMode}";
 
-            //lna.Set(code);
-            //lna.SendCommand(code, writeMode);
 
-            SendCommand(id, addr, rcomMode);
+            SendCommand(id, addr, rcomMode, false);
         }
 
 
