@@ -33,8 +33,8 @@ namespace LabStend_AFAR.D2XX
         // Запись команд в ПИ
         public void WritePI(byte[] buffer, Label StatusLabel)
         {
-            // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
-            //                              command   addr        id
+            // Структура битовой посылки buffer:    0000 0000 , 0000 0000 , 0000 0000
+            //                                      command     addr        id
 
             // Структура посылки в ПИ:
             //  0   0   0   0       0   0   0   0
@@ -43,17 +43,17 @@ namespace LabStend_AFAR.D2XX
             // Структура выводов в Мультиплексорах
             //  Мультиплексор №1 (МШУ)
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
-            //                          LE_G4   LE_G3   LE_G2   LE_G1                                   DAT_G4  DAT_G3  DAT_G2  DAT_G1
+            //                                                  LE_G4   DAT_G4  LE_G3   DAT_G3  LE_G2   DAT_G2  LE_G1   DAT_G1  выкл    выкл
 
             //  Мультиплексор №2 (Аттенюатор)
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
-            //                          LE_At4  LE_At3  LE_At2  LE_At1                                  DAT_At4 DAT_At3 DAT_At2 DAT_At1
+            //                                                  LE_At4  DAT_At4 LE_At3  DAT_At3 LE_At2  DAT_At2 LE_At1  DAT_At1 выкл    выкл
 
             //  Мультиплексор №3 (Фазовращатель)
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
-            //                          LE_Ph4  LE_Ph3  LE_Ph2  LE_Ph1                                  DAT_Ph4 DAT_Ph3 DAT_Ph2 DAT_Ph1
+            //                                                  LE_Ph4  DAT_Ph4 LE_Ph3  DAT_Ph3 LE_Ph2  DAT_Ph2 LE_Ph1  DAT_Ph1 выкл    выкл
 
-            int delay = 10;         // задержка в миллисекундах
+            int delay = 100;         // задержка в миллисекундах
 
             if (!port.IsOpen){
                 StatusLabel.Text += OpenPort().ToString();
@@ -74,8 +74,9 @@ namespace LabStend_AFAR.D2XX
             // выбор устройства по номеру из второго байта команды
             byte deviceNo = 0b00000000;
             deviceNo = buffer[1];
-            deviceNo++;
-            deviceNo <<= 4;
+            deviceNo++;             // начало отсчёта не с 0, а с 1
+            deviceNo <<= 4;         // форматирование номера устройства под структуру посылки с ПИ
+            deviceNo <<= 1;         // смещение на 1 (младшие биты резервированы под "выкл")
 
             // Массив буфера данных, нужен для работы с функцией FT_Write();
             byte[] dataBuffer = { 0x00 };
@@ -83,8 +84,8 @@ namespace LabStend_AFAR.D2XX
             dataBuffer[0] = 0x00;
             WriteCommand(dataBuffer);
 
-            dataBuffer[0] = deviceNo;
-            byte commandBit; // Приведённый байт команды
+            //dataBuffer[0] = deviceNo;
+            byte commandBit;        // Приведённый байт команды
 
             dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
 
@@ -103,7 +104,7 @@ namespace LabStend_AFAR.D2XX
                 dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
             }
             // Триггер LE после отправки команды
-            dataBuffer[0] = (byte)(deviceNo | 0b10000000); // Переключение мультиплексора на выводы LE
+            dataBuffer[0] = (byte)(deviceNo | 0b00010000); // Переключение мультиплексора на выводы LE
             
             dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);

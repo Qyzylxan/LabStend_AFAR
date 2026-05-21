@@ -212,7 +212,7 @@ namespace LabStend_AFAR
                 }
                 catch
                 {
-                    statusLabel.Text += "\nОшибка автопоиска БКУ";
+                    statusLabel.Text += "\nБКУ: Ошибка автопоиска";
                     statusLabel.TextColor = Colors.Red;
                     
                 }
