@@ -228,8 +228,8 @@ namespace LabStend_AFAR
             // Проверка на доступность порта перед записью команды
             if (serialPortBKU == null || !serialPortBKU.IsOpen)
             {
-                StatusLabel.Text += "\nПорт не найден";
-                Console.WriteLine("Порт не найден");
+                StatusLabel.Text += "\nБКУ: Порт не найден";
+                Console.WriteLine("БКУ: Порт не найден");
                 return;
             }
             else

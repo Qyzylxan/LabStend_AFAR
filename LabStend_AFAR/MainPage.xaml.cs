@@ -13,7 +13,7 @@ namespace LabStend_AFAR
     {
         double f = 2;       // ГГц
         double c = 0.3;     // м/с * 10^9 
-        double thetaMax = 30; // Макс. угол отклонения луча, град
+        double thetaMax = 90; // Макс. угол отклонения луча по модулю, град
 
         double lambda; // Длина волны, м
         double d;   // Шаг решётки, м
@@ -113,7 +113,7 @@ namespace LabStend_AFAR
                     EntryAngle.Text = $"{thetaMax}";
                 }
                 else {
-                    phaseShift = PhaseDelay(angle);
+                    phaseShift = PhaseShift(angle);
                 }
             }
             else
@@ -141,8 +141,8 @@ namespace LabStend_AFAR
             }
         }
 
-        // Функция расчёта угла отклонения луча АФАР
-        double PhaseDelay(double angle) {
+        // Функция расчёта сдвига фазы по заданному углу отклонения луча АФАР
+        double PhaseShift(double angle) {
             return 360*d*Math.Sin(angle*deg)/lambda; // Результат возвращается в градусах
         }
 
@@ -184,8 +184,6 @@ namespace LabStend_AFAR
             }
             StatusLabel.Text += $"\nРежим МШУ: { lnaMode}";
 
-            //lna.Set(code);
-            //lna.SendCommand(code, writeMode);
 
             SendCommand(id, addr, lnaMode);
         }
