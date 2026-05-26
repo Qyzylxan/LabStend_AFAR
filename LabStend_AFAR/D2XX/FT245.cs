@@ -148,7 +148,7 @@ namespace LabStend_AFAR.D2XX
 
             dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 8; i++)
             {
 
                 commandBit = buffer[2];

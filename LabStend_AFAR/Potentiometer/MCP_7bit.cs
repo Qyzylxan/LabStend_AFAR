@@ -5,7 +5,7 @@ using System.Text;
 namespace LabStend_AFAR.Potentiometer
 {
 
-    public class MCP_12bit
+    public class MCP_7bit
     {
         // Структура команд потенциометра
         // Инкремент/Декремент - 8 бит:
@@ -34,7 +34,7 @@ namespace LabStend_AFAR.Potentiometer
         public static readonly byte pot2_MOSI = 0b00010000;
 
 
-        public static int Get(char mode) {
+        public static int GetMode(char mode) {
             if (mode == 'w') {
                 return ((int)writeData<<8);
             }
