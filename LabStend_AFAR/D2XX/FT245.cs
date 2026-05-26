@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 using static FTD2XX_NET.FTDI;
 using static LabStend_AFAR.MUAF;
 
@@ -53,23 +54,15 @@ namespace LabStend_AFAR.D2XX
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
             //                                                  LE_Ph4  DAT_Ph4 LE_Ph3  DAT_Ph3 LE_Ph2  DAT_Ph2 LE_Ph1  DAT_Ph1 выкл    выкл
 
-            int delay = 100;         // задержка в миллисекундах
+            int delay = 10;         // задержка в миллисекундах
 
             if (!port.IsOpen){
                 StatusLabel.Text += OpenPort().ToString();
                 Thread.Sleep(100);
             }
 
-            FT_STATUS writeStatus;
-            // Маршрутизация
-            // выбор типа устройства из первого байта команды
-            int selectedDeviceBit = 0; // Номер бита, приписанного к устройству
-            switch (buffer[0]) {
-                case MUAF.lnaID: selectedDeviceBit = 3; break;
-                case MUAF.attID: selectedDeviceBit = 2; break;
-                case MUAF.phID: selectedDeviceBit = 1; break;
-                default: break;
-            }
+            
+            
 
             // выбор устройства по номеру из второго байта команды
             byte deviceNo = 0b00000000;
@@ -78,6 +71,25 @@ namespace LabStend_AFAR.D2XX
             deviceNo <<= 4;         // форматирование номера устройства под структуру посылки с ПИ
             deviceNo <<= 1;         // смещение на 1 (младшие биты резервированы под "выкл")
 
+            // Маршрутизация
+            // выбор типа устройства из первого байта команды
+            int selectedDeviceBit = 0; // Номер бита, приписанного к устройству
+            switch (buffer[0])
+            {
+                case MUAF.lnaID: selectedDeviceBit = 3; WriteAt(buffer, selectedDeviceBit, deviceNo, delay); break;
+                case MUAF.attID: selectedDeviceBit = 2; WriteAt(buffer, selectedDeviceBit, deviceNo, delay); break;
+                case MUAF.phID: selectedDeviceBit = 1; WritePh(buffer, selectedDeviceBit, deviceNo, delay); break;
+                default: break;
+            }
+            
+
+        port.Close();
+        }
+
+
+        public void WriteAt(byte[] buffer, int selectedDeviceBit, byte deviceNo, int delay)
+        {
+            FT_STATUS writeStatus;
             // Массив буфера данных, нужен для работы с функцией FT_Write();
             byte[] dataBuffer = { 0x00 };
             // Сброс в "0" всех битов перед началом отправки данных
@@ -105,24 +117,72 @@ namespace LabStend_AFAR.D2XX
             }
             // Триггер LE после отправки команды
             dataBuffer[0] = (byte)(deviceNo | 0b00010000); // Переключение мультиплексора на выводы LE
-            
+
             dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
             Thread.Sleep(delay);
 
             dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
-            
+
 
             // Сброс в "0" всех битов перед завершением отправки данных
             dataBuffer[0] = 0x00;
             writeStatus = WriteCommand(dataBuffer);
-            if (writeStatus != FT_STATUS.FT_OK) {
+            if (writeStatus != FT_STATUS.FT_OK)
+            {
                 Console.WriteLine("\nOK");
             }
-
-        port.Close();
         }
+        public void WritePh(byte[] buffer, int selectedDeviceBit, byte deviceNo, int delay)
+        {
+            FT_STATUS writeStatus;
+            // Массив буфера данных, нужен для работы с функцией FT_Write();
+            byte[] dataBuffer = { 0x00 };
+            // Сброс в "0" всех битов перед началом отправки данных
+            dataBuffer[0] = 0x00;
+            WriteCommand(dataBuffer);
+
+            //dataBuffer[0] = deviceNo;
+            byte commandBit;        // Приведённый байт команды
+
+            dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
+
+            for (int i = 0; i < 6; i++)
+            {
+
+                commandBit = buffer[2];
+                commandBit = (byte)(((commandBit >> i) & 0x00000001) << selectedDeviceBit);
+                dataBuffer[0] = (byte)(commandBit | deviceNo);
+
+                WriteCommand(dataBuffer);
+                Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
+                WriteCommand(dataBuffer);
+                Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
+            }
+            // Триггер LE после отправки команды
+            dataBuffer[0] = (byte)(deviceNo | 0b00010000); // Переключение мультиплексора на выводы LE
+
+            dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
+            WriteCommand(dataBuffer);
+            Thread.Sleep(delay);
+
+            dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
+            WriteCommand(dataBuffer);
+
+
+            // Сброс в "0" всех битов перед завершением отправки данных
+            dataBuffer[0] = 0x00;
+            writeStatus = WriteCommand(dataBuffer);
+            if (writeStatus != FT_STATUS.FT_OK)
+            {
+                Console.WriteLine("\nOK");
+            }
+        }
+
+
         // --------------------------------- Служебные функции-обёртки
         public FT_STATUS OpenPort()
         {
