@@ -76,7 +76,7 @@ namespace LabStend_AFAR.D2XX
             int selectedDeviceBit = 0; // Номер бита, приписанного к устройству
             switch (buffer[0])
             {
-                case MUAF.lnaID: selectedDeviceBit = 3; WriteAt(buffer, selectedDeviceBit, deviceNo, delay); break;
+                case MUAF.lnaID: selectedDeviceBit = 3; WriteLNA(buffer, selectedDeviceBit, deviceNo, delay); break;
                 case MUAF.attID: selectedDeviceBit = 2; WriteAt(buffer, selectedDeviceBit, deviceNo, delay); break;
                 case MUAF.phID: selectedDeviceBit = 1; WritePh(buffer, selectedDeviceBit, deviceNo, delay); break;
                 default: break;
@@ -86,6 +86,67 @@ namespace LabStend_AFAR.D2XX
         port.Close();
         }
 
+        public void WriteLNA(byte[] buffer, int selectedDeviceBit, byte deviceNo, int delay)
+        {
+            FT_STATUS writeStatus;
+            // Массив буфера данных, нужен для работы с функцией FT_Write();
+            byte[] dataBuffer = { 0x00 };
+            // Сброс в "0" всех битов перед началом отправки данных
+            dataBuffer[0] = 0x00;
+            WriteCommand(dataBuffer);
+
+            //dataBuffer[0] = deviceNo;
+            byte commandBit;        // Приведённый байт команды
+
+            dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
+
+            for (int i = 0; i < 8; i++)
+            {
+                commandBit = buffer[2];
+                commandBit = (byte)(((commandBit >> i) & 0x00000001) << selectedDeviceBit);
+                dataBuffer[0] = (byte)(commandBit | deviceNo);
+
+                WriteCommand(dataBuffer);
+                Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
+                WriteCommand(dataBuffer);
+                Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
+            }
+            for (int i = 0; i < 8; i++)
+            {
+
+                commandBit = buffer[3];
+                commandBit = (byte)(((commandBit >> i) & 0x00000001) << selectedDeviceBit);
+                dataBuffer[0] = (byte)(commandBit | deviceNo);
+
+                WriteCommand(dataBuffer);
+                Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000001; // Синхроимпульс (на первом бите) в положении "1"
+                WriteCommand(dataBuffer);
+                Thread.Sleep(delay);
+                dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
+            }
+
+            // Триггер LE после отправки команды
+            dataBuffer[0] = (byte)(deviceNo | 0b00010000); // Переключение мультиплексора на выводы LE
+
+            dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
+            WriteCommand(dataBuffer);
+            Thread.Sleep(delay);
+
+            dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
+            WriteCommand(dataBuffer);
+
+
+            // Сброс в "0" всех битов перед завершением отправки данных
+            dataBuffer[0] = 0x00;
+            writeStatus = WriteCommand(dataBuffer);
+            if (writeStatus != FT_STATUS.FT_OK)
+            {
+                Console.WriteLine("\nOK");
+            }
+        }
 
         public void WriteAt(byte[] buffer, int selectedDeviceBit, byte deviceNo, int delay)
         {

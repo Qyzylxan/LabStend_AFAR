@@ -7,6 +7,9 @@ namespace LabStend_AFAR.Potentiometer
 
     public class MCP_7bit
     {
+        public static readonly int Vmax = 5;
+        public static readonly int Nmax = 128;
+
         // Структура команд потенциометра
         // Инкремент/Декремент - 8 бит:
 

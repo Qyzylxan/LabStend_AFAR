@@ -236,7 +236,7 @@ namespace LabStend_AFAR
             {
                 StatusLabel.Text += $",     запись в порт {serialPortBKU.PortName}";
                 // запись команды в порт
-                serialPortBKU.Write(buffer, 0, 3);
+                serialPortBKU.Write(buffer, 0, buffer.Length);
             }
 
         }

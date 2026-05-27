@@ -162,6 +162,7 @@ namespace LabStend_AFAR
             //                            command     addr        id
 
             // Определение битов адреса
+            int gainByte = 0;
             byte addr;
             switch (groupName) {
                 case "Gain": addr = 0; break;
@@ -174,18 +175,25 @@ namespace LabStend_AFAR
             byte id = lnaID;
 
             // Определение битов команды
-            byte lnaMode;
+            int lnaMode;
             switch (Value)
             {
-                case "1": lnaMode = 1; break;
+                case "1": lnaMode = 5; break;
                 case "2": lnaMode = 2; break;
                 case "0": lnaMode = 0; break;
                 default: lnaMode = 0; break;
             }
-            StatusLabel.Text += $"\nРежим МШУ: { lnaMode}";
+            StatusLabel.Text += $"\nРежим МШУ: { lnaMode} В";
 
+            
+            gainByte = MCP_7bit.Nmax / MCP_7bit.Vmax * lnaMode; // Запись команды на установку значений
 
-            SendCommand(id, addr, lnaMode);
+            byte addrPOT = addr%2 == 0? MCP_7bit.pot1_MOSI: MCP_7bit.pot2_MOSI;
+
+            gainByte = gainByte | (addrPOT<<8);
+            gainByte = gainByte | (MCP_7bit.writeData << 8);
+
+            SendCommand(id, addr, gainByte, writeMode);
         }
 
         //----------------------------
@@ -257,7 +265,7 @@ namespace LabStend_AFAR
 
             labelBit.Text = Convert.ToString(attenuationWord, 2).PadLeft(8, '0');
 
-            SendCommand(id, addr, attenuationWord);
+            SendCommand(id, addr, attenuationWord, writeMode);
 
         }
 
@@ -333,30 +341,35 @@ namespace LabStend_AFAR
 
             labelBit.Text = Convert.ToString(phaseshiftWord, 2).PadLeft(8, '0');
 
-            SendCommand(id, addr, phaseshiftWord);
+            SendCommand(id, addr, phaseshiftWord, writeMode);
 
         }
 
         // Отправка команды на устройство
-        private void SendCommand(byte id, byte addr, byte byteWord)
-        {
-            // Формирование буфера-массива байт
-            byte[] buffer = { id, addr, byteWord };
-
-            if (writeMode == true)
-            {
-                PI.WritePI(buffer, StatusLabel);
-            }
-            else {
-                BKU.WriteBKU(buffer, StatusLabel);
-            }
-        }
+        
         private void SendCommand(byte id, byte addr, byte byteWord, bool mode)
         {
             // Формирование буфера-массива байт
             byte[] buffer = { id, addr, byteWord };
 
             if (mode == true)
+            {
+                PI.WritePI(buffer, StatusLabel);
+            }
+            else
+            {
+                BKU.WriteBKU(buffer, StatusLabel);
+            }
+        }
+        private void SendCommand(byte id, byte addr, int twoByteWord, bool mode)
+        {
+            byte addrByte2 = (byte)((twoByteWord & 0b1111111100000000) >> 8);
+            byte addrByte1 = (byte)(twoByteWord);
+
+            // Формирование буфера-массива байт
+            byte[] buffer = { id, addr, addrByte2 ,addrByte1 };
+
+            if (writeMode == true)
             {
                 PI.WritePI(buffer, StatusLabel);
             }
