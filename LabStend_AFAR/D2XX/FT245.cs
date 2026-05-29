@@ -34,11 +34,12 @@ namespace LabStend_AFAR.D2XX
         // Запись команд в ПИ
         public void WritePI(byte[] buffer, Label StatusLabel)
         {
-            // Структура битовой посылки buffer:    0000 0000 , 0000 0000 , 0000 0000
-            //                                      command     addr        id
+            // Структура битовой посылки buffer, поступающей в функцию WritePI:
+            // 0000 0000 , 0000 0000 , 0000 0000
+            // command     addr        id
 
             // Структура посылки в ПИ:
-            //  0   0   0   0       0   0   0   0
+            //  7   6   5   4       3   2   1   0
             //  s3  s2  s1  s0      Dg Dat Dph clk
 
             // Структура выводов в Мультиплексорах
