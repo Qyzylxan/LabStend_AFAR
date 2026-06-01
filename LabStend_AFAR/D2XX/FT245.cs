@@ -129,6 +129,7 @@ namespace LabStend_AFAR.D2XX
                 dataBuffer[0] ^= 0b00000000; // Синхроимпульс (на первом бите) в положении "0"
             }
 
+            /*
             // Триггер LE после отправки команды
             dataBuffer[0] = (byte)(deviceNo | 0b00010000); // Переключение мультиплексора на выводы LE
 
@@ -139,14 +140,14 @@ namespace LabStend_AFAR.D2XX
             dataBuffer[0] ^= (byte)(0b00000001 << selectedDeviceBit);
             WriteCommand(dataBuffer);
 
-
+            
             // Сброс в "0" всех битов перед завершением отправки данных
             dataBuffer[0] = 0x00;
             writeStatus = WriteCommand(dataBuffer);
             if (writeStatus != FT_STATUS.FT_OK)
             {
                 Console.WriteLine("\nOK");
-            }
+            */
         }
 
         public void WriteAt(byte[] buffer, int selectedDeviceBit, byte deviceNo, int delay)

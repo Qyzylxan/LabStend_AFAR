@@ -183,7 +183,7 @@ namespace LabStend_AFAR
                 case "0": lnaMode = 0; break;
                 default: lnaMode = 0; break;
             }
-            StatusLabel.Text += $"\nРежим МШУ: { lnaMode} В";
+            StatusLabel.Text += $"\nРежим МШУ: { lnaMode} В \n";
 
             
             gainByte = MCP_7bit.Nmax / MCP_7bit.Vmax * lnaMode; // Запись команды на установку значений
