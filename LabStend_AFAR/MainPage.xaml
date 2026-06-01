@@ -19,398 +19,468 @@
             </MenuBarItem>
             
         </ContentPage.MenuBarItems> -->
+    <Shell.TitleView>
         
+            <Grid ColumnDefinitions="Auto,Auto,*" Padding="0">
+                <!-- Кнопка "Файл" -->
+                <Button Text="Файл" 
+                Grid.Column="0"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                FontSize="14"
+                Padding="10,5"
+                BorderWidth="0" />
 
-    <!--Основная часть окна программы-->
-    <VerticalStackLayout Padding="30,0" Spacing="25">
-        <Border>
-            
-        </Border>
-        <!--Режим управления БУАФ-->
+                <!-- Кнопка "Справка" -->
+                <Button Text="Справка" 
+                Grid.Column="1"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                FontSize="14"
+                Padding="10,5"
+                BorderWidth="0" />
+            </Grid>
+        
+        
+    </Shell.TitleView>
+
+    <Grid RowDefinitions="*,Auto, Auto">
+        <!--Основная часть окна программы-->
+        <VerticalStackLayout Grid.Row="0" Padding="30,0" Spacing="25">
+            <Border>
+
+            </Border>
+            <!--Режим управления БУАФ-->
             <Label
                 Text=""
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
-        
-        <Border>
-            <HorizontalStackLayout>
-                <Border>
-                    <StackLayout>
-                        <Border>
-                            <Label Text="Управление БУАФ через:" FontSize="Medium" HorizontalTextAlignment="Center"/>
-                        </Border>
-                        <Grid HorizontalOptions="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition  />
-                                <ColumnDefinition  />
-                                <ColumnDefinition  />
-                                <ColumnDefinition  />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-
-                            <Label Text="БКУ"  Grid.Column="1" Grid.Row="0" FontSize="Medium" />
-                            <Switch x:Name="controllerSwitch" Grid.Column="2" Grid.Row="0" Toggled="OnToggledControlMode"/>
-                            <Label Text="Преобразователь" Grid.Column="3" Grid.Row="0" FontSize="Medium" />
-                            
-                            <Label x:Name="LabelStatus_BKU"  Text="(не подключён)" Grid.Column="1" Grid.Row="1" FontSize="Micro" />
-                            <Label x:Name="LabelStatus_PI" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
-                            
-                            <!--Выбор портов БКУ-->
-                            <Picker x:Name="COMportPickerBKU" Title="Доступные COM-порты" Grid.Column="1" Grid.Row="2">
-                                <Picker.Items>
-
-                                </Picker.Items>
-                            </Picker>
-                            <Button x:Name="BKU_connect" Text="Подключиться" Clicked="OnClickedBKUConnect" Grid.Column="1" Grid.Row="3"/>
-
-                            <!--Выбор портов ПИ-->
-                            <Picker x:Name="COMportPickerPI" Title="Доступные COM-порты" Grid.Column="3" Grid.Row="2">
-                                <Picker.Items>
-
-                                </Picker.Items>
-                            </Picker>
-                            <Button x:Name="PI_connect" Text="Подключиться" Clicked="OnClickedPIConnect" Grid.Column="3" Grid.Row="3"/>
-                        </Grid>
-
-
-                        <ActivityIndicator x:Name="ConnectionActivity"
-                                           IsRunning="False"
-                                           IsVisible="False" />
-                    </StackLayout>
-            </Border>
 
             <Border>
-                <StackLayout>
-                        <Border>
-                            <Label FontSize="Title" Text="Состояние коммутатора" />
-                        </Border>
-                        <RadioButton GroupName="RFcom" Content="RF1" Value="0" CheckedChanged="OnClickedRadioButtonRCOM" />
-                        <RadioButton GroupName="RFcom" Content="RF2" Value="1" CheckedChanged="OnClickedRadioButtonRCOM" />
-                        <RadioButton GroupName="RFcom" Content="RF3" Value="2" CheckedChanged="OnClickedRadioButtonRCOM" />
-                        <RadioButton GroupName="RFcom" Content="RF4" Value="3" CheckedChanged="OnClickedRadioButtonRCOM" />
-                </StackLayout>
-
-            </Border>
-        </HorizontalStackLayout>
-        </Border>
-
-        <Border>
-        <ScrollView HeightRequest="500">
-            
-            <!--Блок с управлениями МШУ, Атт, ФВ-->
-            <Border>
-                <VerticalStackLayout>
-                    <Border>
-                        <HorizontalStackLayout>
-                            <Label FontSize="Title"  Text="БУАФ"/>
-                            <Label FontSize="Title" Text="                                           ." Opacity="255"/>
-                            <Label FontSize="Title" Text="                                                    ." Opacity="255"/>
-                            <Border>
-                                <StackLayout>
-
-                                    <HorizontalStackLayout>
-
-
-                                        <Label FontSize="Subtitle" Text="Угол отклонения луча АФАР"/>
-                                        <Entry x:Name="EntryAngle" MaxLength="4" Keyboard="Numeric"/>
-                                        <Label Text=" град"/>
-                                    </HorizontalStackLayout>
-
-                                    <Button class="OK_buttonAngle" Text="ОК" Clicked="OnClickedOkBUAF"/>
-                                </StackLayout>
-                            </Border>
-                        </HorizontalStackLayout>
-                    </Border>
-
-
-                        <!--                                МУАФ 1                              -->
-                    <HorizontalStackLayout>
-                        <!--Номер МУАФ-->
-                        <Border>
-                            <Label FontSize="Title"  Text="МУАФ 1" />
-                        </Border>
-                        <!--Управление МШУ-->
-                        <Border>
-                            <StackLayout>
-                                <Label x:Name="header_Gain" FontSize="Title" Text="Режим работы МШУ" />
-                                <RadioButton GroupName="Gain" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                                <RadioButton GroupName="Gain" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
-                                <RadioButton GroupName="Gain" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
-                            </StackLayout>
-                        </Border>
-
-                        <!--Управление амплитудой-->
-                        <Border>
-                            <StackLayout>
-                                <Label x:Name="header_Amp" FontSize="Title" Text="Управление аттенюаторами"/>
-                                <HorizontalStackLayout>
-                                    <Label Text="Ослабление амплитуды "/>
-                                    <Entry x:Name="EntryAmp"  MaxLength="5" Keyboard="Numeric"/>
-                                    <Label Text=" дБ"/>
-                                </HorizontalStackLayout>
-                                <Button x:Name="OkButtonAtt" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
-
-                                <Border>
-                                    <Label Text="Кодовая посылка" />
-                                </Border>
-                                <!--Текст кодовой посылки-->
-                                <Border>
-                                    <Label x:Name="LabelAttBitWord" Text="00000000"/>
-                                </Border>
-
-                            </StackLayout>
-                        </Border>
-
-                        <!--Управление фазой-->
-                            <Border>
-                                <StackLayout>
-                                    <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазовращателями"/>
-                                    <HorizontalStackLayout>
-                                        <Label Text="Сдвиг фазы "/>
-                                        <Entry x:Name="EntryPh" MaxLength="5" Keyboard="Numeric"/>
-                                        <Label Text=" град"/>
-                                    </HorizontalStackLayout>
-
-                                    <Button x:Name="OkButtonPh" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
-
-                                    <Border>
-                                        <Label Text="Кодовая посылка" />
-                                    </Border>
-                                    <Border>
-                                        <Label x:Name="LabelPhBitWord" Text="00000000" />
-                                    </Border>
-
-                                </StackLayout>
-                            </Border>
-
-                        </HorizontalStackLayout>
-
-
-                    <!--                                МУАФ 2                              -->
-                    <HorizontalStackLayout>
-                    <!--Номер МУАФ-->
-                    <Border>
-                        <Label FontSize="Title"  Text="МУАФ 2" />
-                    </Border>
-                    <!--Управление МШУ-->
+                <HorizontalStackLayout>
                     <Border>
                         <StackLayout>
-                            <Label x:Name="header_Gain2" FontSize="Title" Text="Режим работы МШУ" />
-                            <RadioButton GroupName="Gain2" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                            <RadioButton GroupName="Gain2" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
-                            <RadioButton GroupName="Gain2" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
+                            <Border>
+                                <Label Text="Управление БУАФ через:" FontSize="Medium" HorizontalTextAlignment="Center"/>
+                            </Border>
+                            <Grid HorizontalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+
+                                <Label Text="БКУ"  Grid.Column="1" Grid.Row="0" FontSize="Medium" />
+                                <Switch x:Name="controllerSwitch" Grid.Column="2" Grid.Row="0" Toggled="OnToggledControlMode"/>
+                                <Label Text="Преобразователь" Grid.Column="3" Grid.Row="0" FontSize="Medium" />
+
+                                <Label x:Name="LabelStatus_BKU"  Text="(не подключён)" Grid.Column="1" Grid.Row="1" FontSize="Micro" />
+                                <Label x:Name="LabelStatus_PI" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
+
+                                <!--Выбор портов БКУ-->
+                                <Picker x:Name="COMportPickerBKU" Title="Доступные COM-порты" Grid.Column="1" Grid.Row="2">
+                                    <Picker.Items>
+
+                                    </Picker.Items>
+                                </Picker>
+                                <Button x:Name="BKU_connect" Text="Подключиться" Clicked="OnClickedBKUConnect" Grid.Column="1" Grid.Row="3"/>
+
+                                <!--Выбор портов ПИ-->
+                                <Picker x:Name="COMportPickerPI" Title="Доступные COM-порты" Grid.Column="3" Grid.Row="2">
+                                    <Picker.Items>
+
+                                    </Picker.Items>
+                                </Picker>
+                                <Button x:Name="PI_connect" Text="Подключиться" Clicked="OnClickedPIConnect" Grid.Column="3" Grid.Row="3"/>
+                            </Grid>
+
+
+                            <ActivityIndicator x:Name="ConnectionActivity"
+                                           IsRunning="False"
+                                           IsVisible="False" />
                         </StackLayout>
                     </Border>
 
-                    <!--Управление амплитудой-->
                     <Border>
                         <StackLayout>
-                            <Label x:Name="header_Amp2" FontSize="Title" Text="Управление аттенюаторами"/>
-                            <HorizontalStackLayout>
-                                <Label Text="Ослабление амплитуды "/>
-                                <Entry x:Name="EntryAmp2"  MaxLength="5" Keyboard="Numeric"/>
-                                <Label Text=" дБ"/>
-                            </HorizontalStackLayout>
-                            <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
-
                             <Border>
-                                <Label Text="Кодовая посылка" />
+                                <Label FontSize="Title" Text="Состояние коммутатора" />
                             </Border>
+                            <RadioButton GroupName="RFcom" Content="RF1" Value="0" CheckedChanged="OnClickedRadioButtonRCOM" />
+                            <RadioButton GroupName="RFcom" Content="RF2" Value="1" CheckedChanged="OnClickedRadioButtonRCOM" />
+                            <RadioButton GroupName="RFcom" Content="RF3" Value="2" CheckedChanged="OnClickedRadioButtonRCOM" />
+                            <RadioButton GroupName="RFcom" Content="RF4" Value="3" CheckedChanged="OnClickedRadioButtonRCOM" />
+                        </StackLayout>
 
-                                    <!--Текст кодовой посылки-->
-                                    <Border>
-                                        <Label x:Name="LabelAttBitWord2" Text="00000000"/>
-                                    </Border>
-
-                                </StackLayout>
                     </Border>
-
-                    <!--Управление фазой-->
-                    <Border>
-                        <StackLayout>
-                            <Label x:Name="header_Ph2" FontSize="Title" Text="Управление фазовращателями"/>
-                            <HorizontalStackLayout>
-                                <Label Text="Сдвиг фазы "/>
-                                <Entry x:Name="EntryPh2" MaxLength="5" Keyboard="Numeric"/>
-                                <Label Text=" град"/>
-                            </HorizontalStackLayout>
-
-
-                                    <Button x:Name="OkButtonPh2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
-
-
-                            <Border>
-                                <Label Text="Кодовая посылка" />
-                            </Border>
-
-                                    <!--Текст кодовой посылки-->
-                                    <Border>
-                                        <Label x:Name="LabelPhBitWord2" Text="00000000"/>
-                                    </Border>
-
-
-                                </StackLayout>
-                    </Border>
-
-
                 </HorizontalStackLayout>
+            </Border>
 
+            <Border>
+                <ScrollView HeightRequest="500">
 
-                    <!--                                МУАФ 3                              -->
-                    <HorizontalStackLayout>
-                        <!--Номер МУАФ-->
-                        <Border>
-                            <Label FontSize="Title"  Text="МУАФ 3" />
-                        </Border>
-                        <!--Управление МШУ-->
-                        <Border>
-                            <StackLayout>
-                                <Label x:Name="header_Gain3" FontSize="Title" Text="Режим работы МШУ" />
-                                <RadioButton GroupName="Gain3" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                                <RadioButton GroupName="Gain3" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
-                                <RadioButton GroupName="Gain3" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
-                            </StackLayout>
-                        </Border>
-
-                        <!--Управление амплитудой-->
-                        <Border>
-                            <StackLayout>
-                                <Label x:Name="header_Amp3" FontSize="Title" Text="Управление аттенюаторами"/>
+                    <!--Блок с управлениями МШУ, Атт, ФВ-->
+                    <Border>
+                        <VerticalStackLayout>
+                            <Border>
                                 <HorizontalStackLayout>
-                                    <Label Text="Ослабление амплитуды "/>
-                                    <Entry x:Name="EntryAmp3"  MaxLength="5" Keyboard="Numeric"/>
-                                    <Label Text=" дБ"/>
-                                </HorizontalStackLayout>
-                                <Button x:Name="OkButtonAtt3" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
+                                    <Label FontSize="Title"  Text="БУАФ"/>
+                                    <Label FontSize="Title" Text="                                           ." Opacity="255"/>
+                                    <Label FontSize="Title" Text="                                                    ." Opacity="255"/>
+                                    <Border>
+                                        <StackLayout>
 
+                                            <HorizontalStackLayout>
+
+
+                                                <Label FontSize="Subtitle" Text="Угол отклонения луча АФАР"/>
+                                                <Entry x:Name="EntryAngle" MaxLength="4" Keyboard="Numeric"/>
+                                                <Label Text=" град"/>
+                                            </HorizontalStackLayout>
+
+                                            <Button class="OK_buttonAngle" Text="ОК" Clicked="OnClickedOkBUAF"/>
+                                        </StackLayout>
+                                    </Border>
+                                </HorizontalStackLayout>
+                            </Border>
+
+
+                            <!--                                МУАФ 1                              -->
+                            <HorizontalStackLayout>
+                                <!--Номер МУАФ-->
                                 <Border>
-                                    <Label Text="Кодовая посылка" />
+                                    <Label FontSize="Title"  Text="МУАФ 1" />
+                                </Border>
+                                <!--Управление МШУ-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Gain" FontSize="Title" Text="Режим работы МШУ" />
+                                        <RadioButton GroupName="Gain" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
+                                    </StackLayout>
                                 </Border>
 
-                                    <!--Текст кодовой посылки-->
-                                    <Border>
-                                        <Label x:Name="LabelAttBitWord3" Text="00000000"/>
-                                    </Border>
+                                <!--Управление амплитудой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Amp" FontSize="Title" Text="Управление аттенюаторами"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Ослабление амплитуды "/>
+                                            <Entry x:Name="EntryAmp"  MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" дБ"/>
+                                        </HorizontalStackLayout>
+                                        <Button x:Name="OkButtonAtt" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
 
-                                </StackLayout>
-                        </Border>
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+                                        <!--Текст кодовой посылки-->
+                                        <Border>
+                                            <Label x:Name="LabelAttBitWord" Text="00000000"/>
+                                        </Border>
 
-                        <!--Управление фазой-->
-                        <Border>
-                            <StackLayout>
-                                <Label x:Name="header_Ph3" FontSize="Title" Text="Управление фазовращателями"/>
-                                <HorizontalStackLayout>
-                                    <Label Text="Сдвиг фазы "/>
-                                    <Entry x:Name="EntryPh3" MaxLength="5" Keyboard="Numeric"/>
-                                    <Label Text=" град"/>
-                                </HorizontalStackLayout>
-
-                                    <Button x:Name="OkButtonPh3" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
-
-                                    <Border>
-                                    <Label Text="Кодовая посылка" />
+                                    </StackLayout>
                                 </Border>
 
-                                    <Border>
-                                        <Label x:Name="LabelPhBitWord3" Text="00000000" />
-                                    </Border>
+                                <!--Управление фазой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Ph" FontSize="Title" Text="Управление фазовращателями"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Сдвиг фазы "/>
+                                            <Entry x:Name="EntryPh" MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" град"/>
+                                        </HorizontalStackLayout>
+
+                                        <Button x:Name="OkButtonPh" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
+
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+                                        <Border>
+                                            <Label x:Name="LabelPhBitWord" Text="00000000" />
+                                        </Border>
+
+                                    </StackLayout>
+                                </Border>
+
+                            </HorizontalStackLayout>
 
 
-                                </StackLayout>
-                        </Border>
+                            <!--                                МУАФ 2                              -->
+                            <HorizontalStackLayout>
+                                <!--Номер МУАФ-->
+                                <Border>
+                                    <Label FontSize="Title"  Text="МУАФ 2" />
+                                </Border>
+                                <!--Управление МШУ-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Gain2" FontSize="Title" Text="Режим работы МШУ" />
+                                        <RadioButton GroupName="Gain2" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain2" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain2" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
+                                    </StackLayout>
+                                </Border>
+
+                                <!--Управление амплитудой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Amp2" FontSize="Title" Text="Управление аттенюаторами"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Ослабление амплитуды "/>
+                                            <Entry x:Name="EntryAmp2"  MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" дБ"/>
+                                        </HorizontalStackLayout>
+                                        <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
+
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+
+                                        <!--Текст кодовой посылки-->
+                                        <Border>
+                                            <Label x:Name="LabelAttBitWord2" Text="00000000"/>
+                                        </Border>
+
+                                    </StackLayout>
+                                </Border>
+
+                                <!--Управление фазой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Ph2" FontSize="Title" Text="Управление фазовращателями"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Сдвиг фазы "/>
+                                            <Entry x:Name="EntryPh2" MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" град"/>
+                                        </HorizontalStackLayout>
 
 
-                    </HorizontalStackLayout>
-
-                        <!--                                МУАФ 4                              -->
-                        <HorizontalStackLayout>
-                            <!--Номер МУАФ-->
-                            <Border>
-                                <Label FontSize="Title"  Text="МУАФ 4" />
-                            </Border>
-                            <!--Управление МШУ-->
-                            <Border>
-                                <StackLayout>
-                                    <Label x:Name="header_Gain4" FontSize="Title" Text="Режим работы МШУ" />
-                                    <RadioButton GroupName="Gain4" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                                    <RadioButton GroupName="Gain4" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
-                                    <RadioButton GroupName="Gain4" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
-                                </StackLayout>
-                            </Border>
-
-                            <!--Управление амплитудой-->
-                            <Border>
-                                <StackLayout>
-                                    <Label x:Name="header_Amp4" FontSize="Title" Text="Управление аттенюаторами"/>
-                                    <HorizontalStackLayout>
-                                        <Label Text="Ослабление амплитуды "/>
-                                        <Entry x:Name="EntryAmp4"  MaxLength="5" Keyboard="Numeric"/>
-                                        <Label Text=" дБ"/>
-                                    </HorizontalStackLayout>
-                                    <Button x:Name="OkButtonAtt4" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
-
-                                    <Border>
-                                        <Label Text="Кодовая посылка" />
-                                    </Border>
-
-                                    <!--Текст кодовой посылки-->
-                                    <Border>
-                                        <Label x:Name="LabelAttBitWord4" Text="00000000"/>
-                                    </Border>
-
-                                </StackLayout>
-                            </Border>
-
-                            <!--Управление фазой-->
-                            <Border>
-                                <StackLayout>
-                                    <Label x:Name="header_Ph4" FontSize="Title" Text="Управление фазовращателями"/>
-                                    <HorizontalStackLayout>
-                                        <Label Text="Сдвиг фазы "/>
-                                        <Entry x:Name="EntryPh4" MaxLength="5" Keyboard="Numeric"/>
-                                        <Label Text=" град"/>
-                                    </HorizontalStackLayout>
-
-                                    <Button x:Name="OkButtonPh4" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
-
-                                    <Border>
-                                        <Label Text="Кодовая посылка" />
-                                    </Border>
-
-                                    <Border>
-                                        <Label x:Name="LabelPhBitWord4" Text="00000000" />
-                                    </Border>
+                                        <Button x:Name="OkButtonPh2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
 
 
-                                </StackLayout>
-                            </Border>
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+
+                                        <!--Текст кодовой посылки-->
+                                        <Border>
+                                            <Label x:Name="LabelPhBitWord2" Text="00000000"/>
+                                        </Border>
 
 
-                        </HorizontalStackLayout>
+                                    </StackLayout>
+                                </Border>
 
-                        <!--Button
+
+                            </HorizontalStackLayout>
+
+
+                            <!--                                МУАФ 3                              -->
+                            <HorizontalStackLayout>
+                                <!--Номер МУАФ-->
+                                <Border>
+                                    <Label FontSize="Title"  Text="МУАФ 3" />
+                                </Border>
+                                <!--Управление МШУ-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Gain3" FontSize="Title" Text="Режим работы МШУ" />
+                                        <RadioButton GroupName="Gain3" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain3" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain3" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
+                                    </StackLayout>
+                                </Border>
+
+                                <!--Управление амплитудой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Amp3" FontSize="Title" Text="Управление аттенюаторами"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Ослабление амплитуды "/>
+                                            <Entry x:Name="EntryAmp3"  MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" дБ"/>
+                                        </HorizontalStackLayout>
+                                        <Button x:Name="OkButtonAtt3" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
+
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+
+                                        <!--Текст кодовой посылки-->
+                                        <Border>
+                                            <Label x:Name="LabelAttBitWord3" Text="00000000"/>
+                                        </Border>
+
+                                    </StackLayout>
+                                </Border>
+
+                                <!--Управление фазой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Ph3" FontSize="Title" Text="Управление фазовращателями"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Сдвиг фазы "/>
+                                            <Entry x:Name="EntryPh3" MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" град"/>
+                                        </HorizontalStackLayout>
+
+                                        <Button x:Name="OkButtonPh3" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
+
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+
+                                        <Border>
+                                            <Label x:Name="LabelPhBitWord3" Text="00000000" />
+                                        </Border>
+
+
+                                    </StackLayout>
+                                </Border>
+
+
+                            </HorizontalStackLayout>
+
+                            <!--                                МУАФ 4                              -->
+                            <HorizontalStackLayout>
+                                <!--Номер МУАФ-->
+                                <Border>
+                                    <Label FontSize="Title"  Text="МУАФ 4" />
+                                </Border>
+                                <!--Управление МШУ-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Gain4" FontSize="Title" Text="Режим работы МШУ" />
+                                        <RadioButton GroupName="Gain4" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain4" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain4" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
+                                    </StackLayout>
+                                </Border>
+
+                                <!--Управление амплитудой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Amp4" FontSize="Title" Text="Управление аттенюаторами"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Ослабление амплитуды "/>
+                                            <Entry x:Name="EntryAmp4"  MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" дБ"/>
+                                        </HorizontalStackLayout>
+                                        <Button x:Name="OkButtonAtt4" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />
+
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+
+                                        <!--Текст кодовой посылки-->
+                                        <Border>
+                                            <Label x:Name="LabelAttBitWord4" Text="00000000"/>
+                                        </Border>
+
+                                    </StackLayout>
+                                </Border>
+
+                                <!--Управление фазой-->
+                                <Border>
+                                    <StackLayout>
+                                        <Label x:Name="header_Ph4" FontSize="Title" Text="Управление фазовращателями"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Сдвиг фазы "/>
+                                            <Entry x:Name="EntryPh4" MaxLength="5" Keyboard="Numeric"/>
+                                            <Label Text=" град"/>
+                                        </HorizontalStackLayout>
+
+                                        <Button x:Name="OkButtonPh4" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonPh"/>
+
+                                        <Border>
+                                            <Label Text="Кодовая посылка" />
+                                        </Border>
+
+                                        <Border>
+                                            <Label x:Name="LabelPhBitWord4" Text="00000000" />
+                                        </Border>
+
+
+                                    </StackLayout>
+                                </Border>
+
+
+                            </HorizontalStackLayout>
+
+                            <!--Button
                 x:Name="CounterBtn"
                 Text="Click me" 
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" /-->
-                </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </ScrollView>
             </Border>
-        </ScrollView>
-        </Border>
 
-        <Border>
-            <ScrollView>
-                <Label x:Name="StatusLabel" Text=""/>
-            </ScrollView>
-        </Border>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+        
+        <Grid Grid.Row="1" 
+              BackgroundColor="White" 
+              HeightRequest="100"
+              Padding="10,0"
+              VerticalOptions="End">
+            
+            <Border>
+                <ScrollView>
+                    <Label x:Name="StatusLabel" VerticalOptions="End" VerticalTextAlignment="End">
+                        <Label.Text>
+                            <x:String>
+                            </x:String>
+                        </Label.Text>
+                    </Label>
+                </ScrollView>
+            </Border>
+        </Grid>
+        
+        
+        <!-- Нижняя панель состояния -->
+        <Grid Grid.Row="2" 
+      BackgroundColor="{StaticResource Primary}" 
+      HeightRequest="25"
+      Padding="10,0"
+      VerticalOptions="End">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-    
+            <!-- Статус готовности -->
+            <Label Text="Готов" 
+           Grid.Column="0"
+           TextColor="White"
+           FontSize="12"
+           VerticalOptions="Center" />
+
+            <!-- Дополнительная информация (пустая область) -->
+            <Label Text="" 
+           Grid.Column="1" />
+
+            <!-- Информация о проекте/файле -->
+            <Label Text="Версия 1.0" 
+           Grid.Column="2"
+           TextColor="White"
+           FontSize="12"
+           VerticalOptions="Center" />
+        </Grid>
+        
+        
+    </Grid>
 
 </ContentPage>
