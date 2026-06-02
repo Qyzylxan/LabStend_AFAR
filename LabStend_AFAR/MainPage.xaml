@@ -46,7 +46,7 @@
 
     <Grid RowDefinitions="*,Auto, Auto">
         <!--Основная часть окна программы-->
-        <VerticalStackLayout Grid.Row="0" Padding="30,0" Spacing="25">
+        <VerticalStackLayout Grid.Row="0" Padding="30,0" Spacing="0">
             <Border>
 
             </Border>
@@ -419,38 +419,54 @@
 
                             </HorizontalStackLayout>
 
-                            <!--Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" /-->
                         </VerticalStackLayout>
                     </Border>
                 </ScrollView>
             </Border>
 
         </VerticalStackLayout>
+
+        <!-- Окно вывода логов -->
         
-        <Grid Grid.Row="1" 
-              BackgroundColor="White" 
-              HeightRequest="100"
-              Padding="10,0"
-              VerticalOptions="End">
-            
-            <Border>
-                <ScrollView>
-                    <Label x:Name="StatusLabel" VerticalOptions="End" VerticalTextAlignment="End">
-                        <Label.Text>
-                            <x:String>
-                            </x:String>
-                        </Label.Text>
-                    </Label>
-                </ScrollView>
-            </Border>
-        </Grid>
-        
-        
+        <Border Grid.Row="1" 
+            BackgroundColor="White">
+            <Grid HeightRequest="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок окна вывода -->
+            <Grid Grid.Row="0" 
+          BackgroundColor="White" 
+          Padding="10,5" 
+          HeightRequest="25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Вывод" 
+               Grid.Column="0"
+               TextColor="Black"
+               FontSize="12"
+               VerticalOptions="Center" />
+
+            </Grid>
+
+            <!-- Список логов с прокруткой -->
+            <ScrollView Grid.Row="1">
+                <Label x:Name="StatusLabel"
+               Text=""
+               TextColor="Black"
+               FontSize="11"
+               FontFamily="Consolas"
+               Padding="10,5"
+               LineBreakMode="WordWrap" />
+            </ScrollView>
+            </Grid>
+        </Border>
+
         <!-- Нижняя панель состояния -->
         <Grid Grid.Row="2" 
       BackgroundColor="{StaticResource Primary}" 

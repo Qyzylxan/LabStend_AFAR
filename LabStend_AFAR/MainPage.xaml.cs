@@ -417,7 +417,7 @@ namespace LabStend_AFAR
                 case "0": rcomMode = 0; break;
                 default: rcomMode = 0; break;
             }
-            WriteToStatusLabel($"\nПереключение на выход: {rcomMode+1}", "Коммутатор");       
+            WriteToStatusLabel($"Переключение на выход: {rcomMode+1}", "Коммутатор");       
             SendCommand(id, addr, rcomMode, false);
         }
 
@@ -457,6 +457,7 @@ namespace LabStend_AFAR
         {
             string timestamp = DateTime.Now.ToString("HH:mm:ss");
             StatusLabel.Text += $"[{timestamp}] {blockName}: {message}\n";
+            
         }
 
         
