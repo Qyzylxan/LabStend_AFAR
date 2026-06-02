@@ -28,6 +28,7 @@ namespace LabStend_AFAR
         Attenuator att;
         Phaser ph;
         LNA lna;
+        
 
         // Флаг выбора режима записи команд (БКУ <-> ПИ)
         bool writeMode = false;
@@ -55,10 +56,12 @@ namespace LabStend_AFAR
 
             // Объявление объетов классов Устройств
             PI = new FT245();
+            PI.OpenPort(LabelStatus_PI);
 
             att = new Attenuator(LabelAttBitWord);
             ph = new Phaser(LabelPhBitWord);
             lna = new LNA();
+
 
             // Списки портов
             Picker[] COMportPickers = { COMportPickerBKU, COMportPickerPI };
@@ -84,7 +87,7 @@ namespace LabStend_AFAR
         private void OnClickedPIConnect(object? sender, EventArgs e)
         {
             Button button = (Button)sender;
-            PI.OpenPort();
+            PI.OpenPort(LabelStatus_PI);
 
         }
 

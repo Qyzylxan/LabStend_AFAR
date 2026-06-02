@@ -55,11 +55,11 @@ namespace LabStend_AFAR.D2XX
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
             //                                                  LE_Ph4  DAT_Ph4 LE_Ph3  DAT_Ph3 LE_Ph2  DAT_Ph2 LE_Ph1  DAT_Ph1 выкл    выкл
 
-            int delay = 10;         // задержка в миллисекундах
+            int delay = 1;         // задержка в миллисекундах
 
             if (!port.IsOpen){
                 StatusLabel.Text += OpenPort().ToString();
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
 
             
@@ -285,6 +285,49 @@ namespace LabStend_AFAR.D2XX
                 return status;
 
             }
+
+            return status;
+        }
+        public FT_STATUS OpenPort(Label statusLabelPI)
+        {
+            FT_STATUS status;
+
+            // Установка скорости
+            port.SetBaudRate(baudRate);
+            port.SetTimeouts(readTimeout, writeTimeout);
+
+            // Открытие порта Преобразователя (по индексу 0)
+            status = port.OpenByIndex(portIndex);
+            if (status != FTDI.FT_STATUS.FT_OK)
+            {
+                Console.WriteLine("Не удалось открыть устройство");
+                return status;
+            }
+
+            // ucMask требуемое значение для битовой маски режима.
+            // Это устанавливает, какие биты работают как входы, какие как выходы.
+            // Значение бита 0 устанавливает соответствующий вывод как вход,
+            // а 1 устанавливает соответствующий вывод как выход. 
+            byte mask = 0xFF;   // Все выводы как выходы
+            switch (pinConfig)
+            {
+                case 'w': mask = 0xFF; break;
+                case 'r': mask = 0x00; break;
+                default: break;
+            }
+
+            // Включение асинхронного режима Bit Bang
+            status = port.SetBitMode(mask, FTDI.FT_BIT_MODES.FT_BIT_MODE_ASYNC_BITBANG);
+
+            if (status != FTDI.FT_STATUS.FT_OK)
+            {
+                Console.WriteLine("Не удалось включить Bit Bang режим");
+                port.Close();
+                return status;
+
+            }
+            statusLabelPI.Text = "(подключён)";
+
             return status;
         }
 

@@ -27,8 +27,8 @@
                 Grid.Column="0"
                 BackgroundColor="Transparent"
                 TextColor="White"
-                FontSize="14"
-                Padding="10,5"
+                FontSize="12"
+                Padding="8"
                 BorderWidth="0" />
 
                 <!-- Кнопка "Справка" -->
@@ -36,8 +36,8 @@
                 Grid.Column="1"
                 BackgroundColor="Transparent"
                 TextColor="White"
-                FontSize="14"
-                Padding="10,5"
+                FontSize="12"
+                Padding="8"
                 BorderWidth="0" />
             </Grid>
         
@@ -85,13 +85,15 @@
                                 <Label x:Name="LabelStatus_PI" Text="(не подключён)" Grid.Column="3" Grid.Row="1" FontSize="Micro" />
 
                                 <!--Выбор портов БКУ-->
+                                
                                 <Picker x:Name="COMportPickerBKU" Title="Доступные COM-порты" Grid.Column="1" Grid.Row="2">
                                     <Picker.Items>
 
                                     </Picker.Items>
                                 </Picker>
+                                
                                 <Button x:Name="BKU_connect" Text="Подключиться" Clicked="OnClickedBKUConnect" Grid.Column="1" Grid.Row="3"/>
-
+                                
                                 <!--Выбор портов ПИ-->
                                 <Picker x:Name="COMportPickerPI" Title="Доступные COM-порты" Grid.Column="3" Grid.Row="2">
                                     <Picker.Items>
@@ -163,7 +165,7 @@
                                     <StackLayout>
                                         <Label x:Name="header_Gain" FontSize="Title" Text="Режим работы МШУ" />
                                         <RadioButton GroupName="Gain" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                                        <RadioButton GroupName="Gain" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain" Content="Проходной" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
                                         <RadioButton GroupName="Gain" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
                                     </StackLayout>
                                 </Border>
@@ -226,7 +228,7 @@
                                     <StackLayout>
                                         <Label x:Name="header_Gain2" FontSize="Title" Text="Режим работы МШУ" />
                                         <RadioButton GroupName="Gain2" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                                        <RadioButton GroupName="Gain2" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain2" Content="Проходной" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
                                         <RadioButton GroupName="Gain2" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
                                     </StackLayout>
                                 </Border>
@@ -296,7 +298,7 @@
                                     <StackLayout>
                                         <Label x:Name="header_Gain3" FontSize="Title" Text="Режим работы МШУ" />
                                         <RadioButton GroupName="Gain3" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                                        <RadioButton GroupName="Gain3" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain3" Content="Проходной" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
                                         <RadioButton GroupName="Gain3" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
                                     </StackLayout>
                                 </Border>
@@ -362,7 +364,7 @@
                                     <StackLayout>
                                         <Label x:Name="header_Gain4" FontSize="Title" Text="Режим работы МШУ" />
                                         <RadioButton GroupName="Gain4" Content="Усиление" Value="0"  CheckedChanged="OnClickedRadioButtonLNA" />
-                                        <RadioButton GroupName="Gain4" Content="Проход" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
+                                        <RadioButton GroupName="Gain4" Content="Проходной" Value="1" CheckedChanged="OnClickedRadioButtonLNA" />
                                         <RadioButton GroupName="Gain4" Content="Выкл." Value="2" CheckedChanged="OnClickedRadioButtonLNA" />
                                     </StackLayout>
                                 </Border>
