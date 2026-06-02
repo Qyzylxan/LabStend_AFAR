@@ -288,7 +288,7 @@ namespace LabStend_AFAR.D2XX
 
             return status;
         }
-        public FT_STATUS OpenPort(Label statusLabelPI)
+        public string OpenPort(Label statusLabelPI)
         {
             FT_STATUS status;
 
@@ -301,7 +301,7 @@ namespace LabStend_AFAR.D2XX
             if (status != FTDI.FT_STATUS.FT_OK)
             {
                 Console.WriteLine("Не удалось открыть устройство");
-                return status;
+                return "Не удалось открыть устройство";
             }
 
             // ucMask требуемое значение для битовой маски режима.
@@ -323,12 +323,12 @@ namespace LabStend_AFAR.D2XX
             {
                 Console.WriteLine("Не удалось включить Bit Bang режим");
                 port.Close();
-                return status;
+                return "Не удалось включить Bit Bang режим";
 
             }
             statusLabelPI.Text = "(подключён)";
 
-            return status;
+            return "Подключён";
         }
 
         FT_STATUS WriteCommand(byte[] commandBytes)

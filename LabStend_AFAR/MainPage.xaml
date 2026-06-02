@@ -95,7 +95,7 @@
                                 <Button x:Name="BKU_connect" Text="Подключиться" Clicked="OnClickedBKUConnect" Grid.Column="1" Grid.Row="3"/>
                                 
                                 <!--Выбор портов ПИ-->
-                                <Picker x:Name="COMportPickerPI" Title="Доступные COM-порты" Grid.Column="3" Grid.Row="2">
+                                <Picker x:Name="COMportPickerPI" Title="Доступные устройства" Grid.Column="3" Grid.Row="2">
                                     <Picker.Items>
 
                                     </Picker.Items>
@@ -239,7 +239,7 @@
                                         <Label x:Name="header_Amp2" FontSize="Title" Text="Управление аттенюаторами"/>
                                         <HorizontalStackLayout>
                                             <Label Text="Ослабление амплитуды "/>
-                                            <Entry x:Name="EntryAmp2"  MaxLength="5" Keyboard="Numeric"/>
+                                            <Entry x:Name="EntryAmp2" MaxLength="5" Keyboard="Numeric"/>
                                             <Label Text=" дБ"/>
                                         </HorizontalStackLayout>
                                         <Button x:Name="OkButtonAtt2" class="OK_button" Text="ОК" Clicked="OnClickedOkButtonAtt" />

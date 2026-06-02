@@ -45,6 +45,7 @@ namespace LabStend_AFAR
             // Инициализация
             InitializeComponent();
             Console.WriteLine("Запуск СПО...");
+            WriteToStatusLabel("Запуск СПО...");
 
             // Запуск COM-портов
             BKU.Init();
@@ -56,7 +57,6 @@ namespace LabStend_AFAR
 
             // Объявление объетов классов Устройств
             PI = new FT245();
-            PI.OpenPort(LabelStatus_PI);
 
             att = new Attenuator(LabelAttBitWord);
             ph = new Phaser(LabelPhBitWord);
@@ -66,11 +66,13 @@ namespace LabStend_AFAR
             // Списки портов
             Picker[] COMportPickers = { COMportPickerBKU, COMportPickerPI };
 
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
             // BKU.Init();
 
-            LoadAvailablePorts(StatusLabel, COMportPickers, availablePorts);
-            AutoConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPickerBKU, availablePorts); 
+            WriteToStatusLabel(PI.OpenPort(LabelStatus_PI), "ПИ");
+
+            LoadAvailablePorts(StatusLabel, COMportPickers, "БКУ");
+            WriteToStatusLabel(AutoConnectToBKU(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPickerBKU, availablePorts), "Автопоиск БКУ"); 
             // В будущем заменить здесь и в COMport.cs на множество портов
 
         }
@@ -80,14 +82,15 @@ namespace LabStend_AFAR
         private void OnClickedBKUConnect(object? sender, EventArgs e)
         {
             Button button = (Button)sender;
-            ConnectToCOM(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPickerBKU.SelectedIndex, 'e');
+            string message = ConnectToCOM(serialPortBKU, LabelStatus_BKU, StatusLabel, COMportPickerBKU.SelectedIndex, 'e');
+            WriteToStatusLabel(message, "БКУ");
 
         }
         // Функция нажатия кнопки ручного подключения к ПИ
         private void OnClickedPIConnect(object? sender, EventArgs e)
         {
             Button button = (Button)sender;
-            PI.OpenPort(LabelStatus_PI);
+            WriteToStatusLabel(PI.OpenPort(LabelStatus_PI), "ПИ");
 
         }
 
@@ -98,7 +101,7 @@ namespace LabStend_AFAR
         private void OnClickedOkBUAF(object? sender, EventArgs e) {
             Button button = (Button)sender;
 
-            string errorMessageBlockName = "БУАФ";
+            string blockName = "БУАФ";
 
             double phaseShift = 0;  // фазовый сдвиг между соседними элементами АФАР
             // Парсинг введённых данных
@@ -122,7 +125,7 @@ namespace LabStend_AFAR
             else
             {
                 // Если не распарсил текст с ввода
-                WriteToStatusLabel($"Текст с поля ввода не распознан. Введите число от {-thetaMax} до {thetaMax}", errorMessageBlockName);
+                WriteToStatusLabel($"Текст с поля ввода не распознан. Введите число от {-thetaMax} до {thetaMax}", blockName);
                 return;
             }
 
@@ -164,15 +167,16 @@ namespace LabStend_AFAR
             // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
             //                            command     addr        id
 
+            string blockName = "МШУ 1";
             // Определение битов адреса
             int gainByte = 0;
             byte addr;
             switch (groupName) {
                 case "Gain": addr = 0; break;
-                case "Gain2": addr = 1; break;
-                case "Gain3": addr = 2; break;
-                case "Gain4": addr = 3; break;
-                    default: addr = 0; break;
+                case "Gain2": addr = 1; blockName = "МШУ 2"; break;
+                case "Gain3": addr = 2; blockName = "МШУ 3"; break;
+                case "Gain4": addr = 3; blockName = "МШУ 4"; break;
+                    default: addr = 0; blockName = "МШУ 1"; break;
             }
             
             byte id = lnaID;
@@ -186,7 +190,8 @@ namespace LabStend_AFAR
                 case "0": lnaMode = 0; break;
                 default: lnaMode = 0; break;
             }
-            StatusLabel.Text += $"\nРежим МШУ: { lnaMode} В \t";
+            WriteToStatusLabel($"Уровень напряжения контроля: {lnaMode} В \t", blockName);
+            
 
             
             gainByte = MCP_7bit.Nmax / MCP_7bit.Vmax * lnaMode; // Запись команды на установку значений
@@ -209,15 +214,15 @@ namespace LabStend_AFAR
             // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
             //                            command     addr        id
             // Определение битов адреса; соответствие поля ввода блоку аттенюатора
-            string errorMessageBlockName = "Аттенюатор 1";
+            string blockName = "Аттенюатор 1";
             byte addr = 0;
             Entry entry = EntryAmp;
             Label labelBit = LabelAttBitWord;
 
             if (button == OkButtonAtt) { }
-            else if (button == OkButtonAtt2) { addr = 1; entry = EntryAmp2; errorMessageBlockName = "Аттенюатор 2"; labelBit = LabelAttBitWord2; }
-            else if (button == OkButtonAtt3) { addr = 2; entry = EntryAmp3; errorMessageBlockName = "Аттенюатор 3"; labelBit = LabelAttBitWord3; }
-            else if (button == OkButtonAtt4) { addr = 3; entry = EntryAmp4; errorMessageBlockName = "Аттенюатор 4"; labelBit = LabelAttBitWord4; }
+            else if (button == OkButtonAtt2) { addr = 1; entry = EntryAmp2; blockName = "Аттенюатор 2"; labelBit = LabelAttBitWord2; }
+            else if (button == OkButtonAtt3) { addr = 2; entry = EntryAmp3; blockName = "Аттенюатор 3"; labelBit = LabelAttBitWord3; }
+            else if (button == OkButtonAtt4) { addr = 3; entry = EntryAmp4; blockName = "Аттенюатор 4"; labelBit = LabelAttBitWord4; }
 
             byte id = attID;
 
@@ -225,7 +230,7 @@ namespace LabStend_AFAR
             if (!double.TryParse(entry.Text, out double attenuationValue))
             {
                 // Если не распарсил текст с ввода
-                WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 31,5", errorMessageBlockName);
+                WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 31,5", blockName);
                 return;
             }
 
@@ -258,7 +263,7 @@ namespace LabStend_AFAR
             // Проверка на кратность шагу
             if (value > eps)
             {
-                WriteToStatusLabel("Значение ослабления не кратно шагу 0,5 дБ. Округление...", errorMessageBlockName);
+                WriteToStatusLabel("Значение ослабления не кратно шагу 0,5 дБ. Округление...", blockName);
                 entry.Text = $"{attenuationValue - value}";
             }
 
@@ -281,16 +286,17 @@ namespace LabStend_AFAR
 
             // Структура битовой посылки: 0000 0000 , 0000 0000 , 0000 0000
             //                              command   addr        id
+
             // Определение битов адреса; соответствие поля ввода блоку фазовращателя
-            string errorMessageBlockName = "Фазовращатель 1";
+            string blockName = "Фазовращатель 1";
             byte addr = 0;
             Entry entry = EntryPh;
             Label labelBit = LabelPhBitWord;
 
             if (button == OkButtonPh) { }
-            else if (button == OkButtonPh2) { addr = 1; entry = EntryPh2; errorMessageBlockName = "Фазовращатель 2"; labelBit = LabelPhBitWord2; }
-            else if (button == OkButtonPh3) { addr = 2; entry = EntryPh3; errorMessageBlockName = "Фазовращатель 3"; labelBit = LabelPhBitWord3; }
-            else if (button == OkButtonPh4) { addr = 3; entry = EntryPh4; errorMessageBlockName = "Фазовращатель 4"; labelBit = LabelPhBitWord4; }
+            else if (button == OkButtonPh2) { addr = 1; entry = EntryPh2; blockName = "Фазовращатель 2"; labelBit = LabelPhBitWord2; }
+            else if (button == OkButtonPh3) { addr = 2; entry = EntryPh3; blockName = "Фазовращатель 3"; labelBit = LabelPhBitWord3; }
+            else if (button == OkButtonPh4) { addr = 3; entry = EntryPh4; blockName = "Фазовращатель 4"; labelBit = LabelPhBitWord4; }
             ;
             byte id = phID;
 
@@ -298,14 +304,14 @@ namespace LabStend_AFAR
             if (!double.TryParse(entry.Text, out double phaseshiftValue))
             {
                 // Если не распарсил текст с ввода
-                WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 354,4", errorMessageBlockName);
+                WriteToStatusLabel("Текст с поля ввода не распознан. Введите число от 0 до 354,4", blockName);
                 return;
             }
-            PhaseWrite(phaseshiftValue, entry, labelBit, id, addr, errorMessageBlockName);
+            PhaseWrite(phaseshiftValue, entry, labelBit, id, addr, blockName);
         }
 
         // Функция обработки введённого значения сдвига фазы
-        private void PhaseWrite(double phaseshiftValue, Entry entry, Label labelBit, byte id, byte addr, string errorMessageBlockName) {
+        private void PhaseWrite(double phaseshiftValue, Entry entry, Label labelBit, byte id, byte addr, string blockName) {
             if (phaseshiftValue < 0)
             {
                 phaseshiftValue = 0;
@@ -334,7 +340,7 @@ namespace LabStend_AFAR
             // Проверка на кратность шагу
             if (value > eps)
             {
-                WriteToStatusLabel("Значение сдвига фазы не кратно шагу 5,6 град. Округление...", errorMessageBlockName);
+                WriteToStatusLabel("Значение сдвига фазы не кратно шагу 5,6 град. Округление...", blockName);
                 entry.Text = $"{phaseshiftValue - value}";
             }
 
@@ -349,7 +355,6 @@ namespace LabStend_AFAR
         }
 
         // Отправка команды на устройство
-        
         private void SendCommand(byte id, byte addr, byte byteWord, bool mode)
         {
             // Формирование буфера-массива байт
@@ -361,7 +366,7 @@ namespace LabStend_AFAR
             }
             else
             {
-                BKU.WriteBKU(buffer, StatusLabel);
+                WriteToStatusLabel(BKU.WriteBKU(buffer, StatusLabel), "БКУ");
             }
         }
         private void SendCommand(byte id, byte addr, int twoByteWord, bool mode)
@@ -378,7 +383,7 @@ namespace LabStend_AFAR
             }
             else
             {
-                BKU.WriteBKU(buffer, StatusLabel);
+                WriteToStatusLabel(BKU.WriteBKU(buffer, StatusLabel), "БКУ");
             }
         }
 
@@ -403,17 +408,16 @@ namespace LabStend_AFAR
             byte id = rcomID;
             byte addr = 0;
             // Определение битов команды
-            byte rcomMode;
+            int rcomMode;
             switch (Value)
             {
                 case "1": rcomMode = 1; break;
                 case "2": rcomMode = 2; break;
+                case "3": rcomMode = 3; break;
                 case "0": rcomMode = 0; break;
                 default: rcomMode = 0; break;
             }
-            StatusLabel.Text += $"\nРежим Коммутатора: {rcomMode}";
-
-
+            WriteToStatusLabel($"\nПереключение на выход: {rcomMode+1}", "Коммутатор");       
             SendCommand(id, addr, rcomMode, false);
         }
 
@@ -438,26 +442,27 @@ namespace LabStend_AFAR
             }
         }
 
+        // Функции-обработчики для работы с библиотеками
+        void LoadAvailablePorts(Label StatusLabel, Picker[] COMportPickers, string blockName) {
+            WriteToStatusLabel(BKU.LoadAvailablePorts(StatusLabel, COMportPickers));
+        }
+
+
+        // Функция вывода сообщений в StatusLabel
         public void WriteToStatusLabel(string message) {
-            StatusLabel.Text += message;
+            string timestamp = DateTime.Now.ToString("HH:mm:ss");
+            StatusLabel.Text += $"[{timestamp}] {message}\n";
         }
         public void WriteToStatusLabel(string message, string blockName)
         {
-            StatusLabel.Text += "\n" + blockName + ": " + message;
+            string timestamp = DateTime.Now.ToString("HH:mm:ss");
+            StatusLabel.Text += $"[{timestamp}] {blockName}: {message}\n";
         }
 
-        private void PI_connect_Clicked(System.Object sender, System.EventArgs e)
-        {
-
-        }
+        
     }
+  
 
-
-
-
-    // ------------- КЛАССЫ -------------------------------
-
-
-    // Добавить класс/функции в Main битовых посылок
+    
 }
 

@@ -21,7 +21,7 @@ namespace LabStend_AFAR
         public static List<string> availablePortNames = new List<string>();
 
         static SerialPort testPort;
-
+        static int delay = 100;
 
         // Функция инициализации COM-портов
         public static void Init() {
@@ -30,7 +30,7 @@ namespace LabStend_AFAR
 
             // Создание объекта COM-порта для БКУ
             serialPortBKU = new SerialPort("COM1", baudBKU);
-            serialPortBKU.WriteTimeout = 50;
+            serialPortBKU.WriteTimeout = 500;
 
             testPort = new SerialPort();
             
@@ -38,11 +38,18 @@ namespace LabStend_AFAR
 
 
         // Функция ручного подключения к COM-порту
-        public static void ConnectToCOM(SerialPort port, Label labelStatusBKU, Label statusLabel,
+        public static string ConnectToCOM(SerialPort port, Label labelStatusBKU, Label statusLabel,
                                             int pickedPortIndex, char device)
         {
-            
-            string pickedPort = availablePortNames.ElementAt(pickedPortIndex);
+            string pickedPort;
+            try
+            { 
+                pickedPort = availablePortNames.ElementAt(pickedPortIndex); 
+            }
+            catch (ArgumentOutOfRangeException e) {
+                return "Нет доступных портов либо порт не выбран";    
+            }
+
             int baudRate = 9600;
             switch (device) {
                 case 'e': baudRate = 115200; break;
@@ -56,21 +63,21 @@ namespace LabStend_AFAR
 
                 labelStatusBKU.Text = "(подключён)";
 
-                return;
+                return "Подключён";
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Ошибка подключения COM-порта: {e.Message}");
-                statusLabel.Text += $"\nРучное подключение к порту {pickedPort} не удалось.";
-                statusLabel.TextColor = Colors.Red;
+                //statusLabel.TextColor = Colors.Red;
+
+                labelStatusBKU.Text = "(не подключён)";
+                return $"\nРучное подключение к порту {pickedPort} не удалось.";
             }
-            labelStatusBKU.Text = "(не подключён)";
             
-            return;
         }
 
         // Функция автоподключения к COM-порту
-        public static void AutoConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel, 
+        public static string AutoConnectToBKU(SerialPort port, Label labelStatusBKU, Label statusLabel, 
                                                     Picker COMportPicker, List<string> availablePorts)
         {
             // LoadAvailablePorts(statusLabel, COMportPicker, availablePorts);
@@ -78,8 +85,8 @@ namespace LabStend_AFAR
 
             // Автоматический поиск БКУ (ESP32 с загруженным СПО БКУ)
             
-            AutoDetectBKU(statusLabel, COMportPicker, availablePortNames, port, labelStatusBKU);
-            Thread.Sleep(500);
+            AutoDetectBKU(statusLabel, COMportPicker, port, labelStatusBKU);
+            Thread.Sleep(delay);
             
             try
             {
@@ -87,7 +94,7 @@ namespace LabStend_AFAR
                 port.Open();
                 labelStatusBKU.Text = "(подключён)";
                 
-                return;
+                return "Подключён";
                 
             }
             catch (Exception e)
@@ -97,12 +104,12 @@ namespace LabStend_AFAR
             }
             labelStatusBKU.Text = "(не подключён)";
              
-            return;
+            return "Ошибка подключения COM-порта";
         }
 
 
         // Загрузка списка доступных COM-портов
-        public static void LoadAvailablePorts(Label statusLabel, Picker[] COMportPickers, List<string> availablePorts)
+        public static string LoadAvailablePorts(Label statusLabel, Picker[] COMportPickers)
         {
             availablePorts = null;
             availablePorts = new List<string>();
@@ -113,8 +120,8 @@ namespace LabStend_AFAR
                 //ConnectionActivity.IsRunning = true;
                 //ConnectionActivity.IsVisible = true;
                 
-                statusLabel.Text += "Поиск COM-порта...";
-                statusLabel.TextColor = Colors.Orange;
+                //statusLabel.Text += "\nПоиск COM-порта...";
+                //statusLabel.TextColor = Colors.Orange;
 
                 // Запускаем сканирование в отдельном потоке
                 // var ports = await Task.Run(() => SerialPort.GetPortNames());
@@ -134,8 +141,8 @@ namespace LabStend_AFAR
                     {
                         p.Title = "Нет COM-портов";
                     }
-                    statusLabel.Text += "\nНет достуных COM-портов.";
-                    statusLabel.TextColor = Colors.Red;
+                    return "Нет достуных COM-портов.";
+                    //statusLabel.TextColor = Colors.Red;
                 }
                 else
                 {
@@ -143,15 +150,15 @@ namespace LabStend_AFAR
                     {
                         p.Title = "Список COM-портов";
                     }
-                    statusLabel.Text += "\nНайдены COM-порты";
-                    statusLabel.TextColor = Colors.Green;
+                    return "Найдены COM-порты";
+                    //statusLabel.TextColor = Colors.Green;
 
                 }
             }
             catch (Exception ex)
             {
-                statusLabel.Text += "\nОшибка поиска COM-порта";
-                statusLabel.TextColor = Colors.Red;
+                return "Ошибка поиска COM-порта";
+                //statusLabel.TextColor = Colors.Red;
                 
             }
             finally
@@ -164,10 +171,10 @@ namespace LabStend_AFAR
             }
         }
 
-        private static void AutoDetectBKU(Label statusLabel, Picker COMportPicker, List<string> availablePorts, SerialPort portBKU, Label labelStatusBKU)
+        private static string AutoDetectBKU(Label statusLabel, Picker COMportPicker, SerialPort portBKU, Label labelStatusBKU)
         {
-            statusLabel.Text += "\nАвтопоиск БКУ...";
-            Thread.Sleep(500);
+            //statusLabel.Text += "\nАвтопоиск БКУ...";
+            Thread.Sleep(delay);
             byte[] bkuRequest = { bkuID};
 
             foreach (string portName in availablePorts)
@@ -178,8 +185,8 @@ namespace LabStend_AFAR
                     //using (var testPort = new SerialPort(portName, baudBKU))
 
                     var testPort = new SerialPort(portName, baudBKU);
-                    testPort.ReadTimeout = 50;
-                    testPort.WriteTimeout = 50;
+                    testPort.ReadTimeout = 100;
+                    testPort.WriteTimeout = 100;
 
                     testPort.Open();
 
@@ -198,12 +205,12 @@ namespace LabStend_AFAR
                     {
                         // ESP32 найден
                         COMportPicker.SelectedItem = portName;
-                        statusLabel.Text += $"\nБКУ обнаружен на порту {portName}";
-                        statusLabel.TextColor = Colors.Green;
+                        //statusLabel.Text += $"\nБКУ обнаружен на порту {portName}";
+                        //statusLabel.TextColor = Colors.Green;
 
                         portNameBKU = portName;
                         testPort.Close();
-                        return;
+                        return $"\nБКУ обнаружен на порту {portName}";
                     }
                         
                     testPort.Close();
@@ -212,31 +219,30 @@ namespace LabStend_AFAR
                 }
                 catch
                 {
-                    statusLabel.Text += "\nБКУ: Ошибка автопоиска";
-                    statusLabel.TextColor = Colors.Red;
-                    
+                    //statusLabel.Text += "\nБКУ: Ошибка автопоиска";
+                    //statusLabel.TextColor = Colors.Red;
+                    return "Ошибка автопоиска";
                 }
             }
-            statusLabel.Text += "\nБКУ не найден автоматически. Выберите порт вручную.";
-            statusLabel.TextColor = Colors.Orange;
-            return;
+            //statusLabel.Text += "\nБКУ не найден автоматически. Выберите порт вручную.";
+            //statusLabel.TextColor = Colors.Orange;
+            return "БКУ не найден автоматически. Выберите порт вручную.";
 
         }
 
         // Запись команд в БКУ
-        public static void WriteBKU(byte[] buffer, Label StatusLabel) {
+        public static string WriteBKU(byte[] buffer, Label StatusLabel) {
             // Проверка на доступность порта перед записью команды
             if (serialPortBKU == null || !serialPortBKU.IsOpen)
             {
-                StatusLabel.Text += "\nБКУ: Порт не найден";
                 Console.WriteLine("БКУ: Порт не найден");
-                return;
+                return "Порт не найден";
             }
             else
             {
-                StatusLabel.Text += $",     запись в порт {serialPortBKU.PortName}";
                 // запись команды в порт
                 serialPortBKU.Write(buffer, 0, buffer.Length);
+                return $"Запись в порт {serialPortBKU.PortName}";
             }
 
         }
