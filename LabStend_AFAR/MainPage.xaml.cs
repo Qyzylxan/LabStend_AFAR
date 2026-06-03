@@ -237,13 +237,14 @@ namespace LabStend_AFAR
             if (attenuationValue < 0)
             {
                 attenuationValue = 0;
-                entry.Text = $"{attenuationValue}";
+                //entry.Text = $"{attenuationValue}";
             }
             if (attenuationValue > 31.5)
             {
                 attenuationValue = 31.5;
-                entry.Text = $"{attenuationValue}";
+                //entry.Text = $"{attenuationValue}";
             }
+            entry.Text = $"{attenuationValue}";
 
             byte attenuationWord = 0; // установка значения битовой посылки в исходный 00000000
             double value = attenuationValue;
@@ -315,13 +316,14 @@ namespace LabStend_AFAR
             if (phaseshiftValue < 0)
             {
                 phaseshiftValue = 0;
-                entry.Text = $"{phaseshiftValue}";
+                //entry.Text = $"{phaseshiftValue}";
             }
             if (phaseshiftValue > 354.4)
             {
                 phaseshiftValue = 354.4;
-                entry.Text = $"{phaseshiftValue}";
+                //entry.Text = $"{phaseshiftValue}";
             }
+            entry.Text = $"{phaseshiftValue}";
 
             byte phaseshiftWord = 0; // установка значения битовой посылки в исходный 00000000
             double value = phaseshiftValue;
@@ -362,7 +364,7 @@ namespace LabStend_AFAR
 
             if (mode == true)
             {
-                PI.WritePI(buffer, StatusLabel);
+                PI.WritePI(buffer, LabelStatus_PI);
             }
             else
             {
@@ -379,7 +381,7 @@ namespace LabStend_AFAR
 
             if (writeMode == true)
             {
-                PI.WritePI(buffer, StatusLabel);
+                PI.WritePI(buffer, LabelStatus_PI);
             }
             else
             {

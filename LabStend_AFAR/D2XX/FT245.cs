@@ -32,7 +32,7 @@ namespace LabStend_AFAR.D2XX
         }
         
         // Запись команд в ПИ
-        public void WritePI(byte[] buffer, Label StatusLabel)
+        public string WritePI(byte[] buffer, Label statusLabelPI)
         {
             // Структура битовой посылки buffer, поступающей в функцию WritePI:
             // 0000 0000 , 0000 0000 , 0000 0000
@@ -55,16 +55,15 @@ namespace LabStend_AFAR.D2XX
             //  15      14      13      12      11      10      9       8       7       6       5       4       3       2       1       0
             //                                                  LE_Ph4  DAT_Ph4 LE_Ph3  DAT_Ph3 LE_Ph2  DAT_Ph2 LE_Ph1  DAT_Ph1 выкл    выкл
 
-            int delay = 1;         // задержка в миллисекундах
+            int delay = 10;         // задержка в миллисекундах
+            string message = "";
 
-            if (!port.IsOpen){
-                StatusLabel.Text += OpenPort().ToString();
+            if (!port.IsOpen) {                 
+                message = OpenPort(statusLabelPI);
                 Thread.Sleep(10);
             }
-
+                    
             
-            
-
             // выбор устройства по номеру из второго байта команды
             byte deviceNo = 0b00000000;
             deviceNo = buffer[1];
@@ -83,8 +82,9 @@ namespace LabStend_AFAR.D2XX
                 default: break;
             }
             
-
         port.Close();
+            return message;
+
         }
 
         public void WriteLNA(byte[] buffer, int selectedDeviceBit, byte deviceNo, int delay)
@@ -215,7 +215,7 @@ namespace LabStend_AFAR.D2XX
             {
 
                 commandBit = buffer[2];
-                commandBit = (byte)(((commandBit >> i) & 0x00000001) << selectedDeviceBit);
+                commandBit = (byte)(((commandBit >> 8-i) & 0x00000001) << selectedDeviceBit);
                 dataBuffer[0] = (byte)(commandBit | deviceNo);
 
                 WriteCommand(dataBuffer);
