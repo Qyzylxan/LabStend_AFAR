@@ -377,7 +377,7 @@ namespace LabStend_AFAR
             byte addrByte1 = (byte)(twoByteWord);
 
             // Формирование буфера-массива байт
-            byte[] buffer = { id, addr, addrByte2 ,addrByte1 };
+            byte[] buffer = { id, addr, addrByte2, addrByte1 };
 
             if (writeMode == true)
             {
